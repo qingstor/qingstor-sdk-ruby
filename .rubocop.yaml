@@ -1,0 +1,38 @@
+# This is the configuration used to check the rubocop source code.
+# Read all default settings here:
+#   https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+
+AllCops:
+  TargetRubyVersion: 2.1
+
+Documentation:
+    Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/BracesAroundHashParameters:
+  EnforcedStyle: braces
+
+Style/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+Lint/DefEndAlignment:
+  AlignWith: def
+  AutoCorrect: true
+
+Style/BracesAroundHashParameters:
+  EnforcedStyle: no_braces

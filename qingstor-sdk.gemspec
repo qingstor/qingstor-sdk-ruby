@@ -22,8 +22,8 @@ require 'qingstor/sdk/version'
 Gem::Specification.new do |spec|
   spec.name    = 'qingstor-sdk'
   spec.version = QingStor::SDK::VERSION
-  spec.authors = ['Jingwen Peng']
-  spec.email   = ['pengsrc@yunify.com']
+  spec.authors = ['Yunify SDK Group']
+  spec.email   = ['sdk_group@yunify.com']
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org' if spec.respond_to?(:metadata)
 

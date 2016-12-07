@@ -94,10 +94,10 @@ module QingStor
       private
 
       def check
-        unless !self.input[:config][:access_key_id].nil? && !self.input[:config][:access_key_id].empty?
+        unless !input[:config][:access_key_id].nil? && !input[:config][:access_key_id].empty?
           raise SDKError, 'access key not provided'
         end
-        unless !self.input[:config][:secret_access_key].nil? && !self.input[:config][:secret_access_key].empty?
+        unless !input[:config][:secret_access_key].nil? && !input[:config][:secret_access_key].empty?
           raise SDKError, 'secret access key not provided'
         end
       end

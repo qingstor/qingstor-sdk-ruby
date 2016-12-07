@@ -496,6 +496,7 @@ module QingStor
                      x_qs_encryption_customer_algorithm: '',
                      x_qs_encryption_customer_key: '',
                      x_qs_encryption_customer_key_md5: '',
+                     x_qs_fetch_if_unmodified_since: '',
                      x_qs_fetch_source: '',
                      x_qs_move_source: '',
                      body: nil)
@@ -514,6 +515,7 @@ module QingStor
                                                  x_qs_encryption_customer_algorithm:             x_qs_encryption_customer_algorithm,
                                                  x_qs_encryption_customer_key:                   x_qs_encryption_customer_key,
                                                  x_qs_encryption_customer_key_md5:               x_qs_encryption_customer_key_md5,
+                                                 x_qs_fetch_if_unmodified_since:                 x_qs_fetch_if_unmodified_since,
                                                  x_qs_fetch_source:                              x_qs_fetch_source,
                                                  x_qs_move_source:                               x_qs_move_source,
                                                  body:                                           body
@@ -535,6 +537,7 @@ module QingStor
                              x_qs_encryption_customer_algorithm: '',
                              x_qs_encryption_customer_key: '',
                              x_qs_encryption_customer_key_md5: '',
+                             x_qs_fetch_if_unmodified_since: '',
                              x_qs_fetch_source: '',
                              x_qs_move_source: '',
                              body: nil)
@@ -563,6 +566,7 @@ module QingStor
             'X-QS-Encryption-Customer-Algorithm'             => x_qs_encryption_customer_algorithm,
             'X-QS-Encryption-Customer-Key'                   => x_qs_encryption_customer_key,
             'X-QS-Encryption-Customer-Key-MD5'               => x_qs_encryption_customer_key_md5,
+            'X-QS-Fetch-If-Unmodified-Since'                 => x_qs_fetch_if_unmodified_since,
             'X-QS-Fetch-Source'                              => x_qs_fetch_source,
             'X-QS-Move-Source'                               => x_qs_move_source,
           },

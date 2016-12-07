@@ -40,7 +40,7 @@ $ bundle install
 Get code from GitHub:
 
 ``` bash
-$ git clone git@https://github.com/yunify/qingstor-sdk-ruby.git
+$ git clone git@github.com:yunify/qingstor-sdk-ruby.git
 ```
 
 Build and install with bundler:

@@ -17,7 +17,7 @@
 require 'rspec/core/rake_task'
 
 task :update do
-  system 'git submodule update --init'
+  system 'git submodule update --remote'
 end
 
 task :generate do

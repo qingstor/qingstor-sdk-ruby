@@ -66,7 +66,7 @@ module QingStor
         self.request_url = "#{input[:request_endpoint]}#{Signer.escape input[:request_uri]}#{query_string}"
 
         request      = new_http_request input[:request_method], request_url
-        request.body = build_request_body input[:request_body], input[:request_elements]
+        request.body = input[:request_body]
         input[:request_headers].each { |k, v| request[k.to_s] = v }
 
         self.http_request = request
@@ -99,18 +99,6 @@ module QingStor
         end
         unless !input[:config][:secret_access_key].nil? && !input[:config][:secret_access_key].empty?
           raise SDKError, 'secret access key not provided'
-        end
-      end
-
-      def build_request_body(request_body, request_elements)
-        if request_body
-          request_body
-        elsif request_elements
-          unless request_elements.empty?
-            json_body = JSON.generate request_elements
-            Logger.info "QingStor request json: [#{input[:id]}] #{json_body}"
-            json_body
-          end
         end
       end
 

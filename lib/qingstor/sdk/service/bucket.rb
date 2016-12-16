@@ -46,9 +46,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             204, # Bucket deleted
           ],
@@ -86,9 +84,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -126,9 +122,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             204, # No content
           ],
@@ -166,9 +160,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             204, # No content
           ],
@@ -188,14 +180,14 @@ module QingStor
 
       # delete_multiple_objects: Delete multiple objects from the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/delete_multiple.html
-      def delete_multiple_objects(content_md5: '', objects: [],
+      def delete_multiple_objects(objects: [],
                                   quiet: nil)
-        request = delete_multiple_objects_request content_md5: content_md5, objects: objects,
-          quiet: quiet
+        request = delete_multiple_objects_request objects: objects,
+                                                  quiet:   quiet
         request.send
       end
 
-      def delete_multiple_objects_request(content_md5: '', objects: [],
+      def delete_multiple_objects_request(objects: [],
                                           quiet: nil)
         input = {
           config:           config,
@@ -206,15 +198,12 @@ module QingStor
           request_params:   {
           },
           request_headers:  {
-            'Content-MD5' => content_md5,
           },
           request_elements: {
             'objects' => objects,
             'quiet'   => quiet,
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -228,10 +217,6 @@ module QingStor
 
       def delete_multiple_objects_input_validate(input)
         input.deep_stringify_keys!
-
-        unless !input['request_headers']['Content-MD5'].nil? && !input['request_headers']['Content-MD5'].to_s.empty?
-          raise ParameterRequiredError.new('Content-MD5', 'DeleteMultipleObjectsInput')
-        end
 
         unless !input['request_elements']['objects'].nil? && !input['request_elements']['objects'].to_s.empty?
           raise ParameterRequiredError.new('objects', 'DeleteMultipleObjectsInput')
@@ -263,9 +248,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -303,9 +286,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -343,9 +324,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -383,9 +362,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -423,9 +400,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -463,9 +438,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -516,9 +489,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -556,9 +527,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             201, # Bucket created
           ],
@@ -597,9 +566,7 @@ module QingStor
           request_elements: {
             'acl' => acl,
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -678,9 +645,7 @@ module QingStor
           request_elements: {
             'cors_rules' => cors_rules,
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -733,9 +698,7 @@ module QingStor
           request_elements: {
             'source_site' => source_site,
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -778,9 +741,7 @@ module QingStor
           request_elements: {
             'statement' => statement,
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],

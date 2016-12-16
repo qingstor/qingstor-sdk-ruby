@@ -15,8 +15,6 @@
 #  +-------------------------------------------------------------------------
 
 require 'json'
-require 'digest'
-require 'base64'
 
 require 'qingstor/sdk'
 
@@ -95,12 +93,8 @@ When(/^delete multiple objects:$/) do |delete_objects_string|
   raise unless output_2[:status_code] == 201
 
   delete_objects = JSON.parse delete_objects_string
-  md5 = Base64.encode64(Digest::MD5.digest(JSON.generate(
-                                             objects: delete_objects['objects'],
-                                             quiet:   delete_objects['quiet'],
-  ))).strip
   @delete_multiple_objects_output = bucket.delete_multiple_objects(
-    objects: delete_objects['objects'], quiet: delete_objects['quiet'], content_md5: md5,
+    objects: delete_objects['objects'], quiet: delete_objects['quiet'],
   )
 end
 

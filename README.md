@@ -164,6 +164,17 @@ connection_retries: 3
 log_level: 'warn'
 ```
 
+## Change Log
+All notable changes to QingStor SDK for Ruby will be documented here.
+
+### [v2.0.1] - 2016-12-16
+#### Changed
+- Improve the implementation of deleting multiple objects.
+
+### v2.0.0 - 2016-12-14
+#### Added
+- QingStor SDK for the Ruby programming language.
+
 ## Reference Documentations
 
 - [QingStor Documentation](https://docs.qingcloud.com/qingstor/index.html)
@@ -181,3 +192,5 @@ log_level: 'warn'
 ## LICENSE
 
 The Apache License (Version 2.0, January 2004).
+
+[v2.0.1]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.0.0...v2.0.1

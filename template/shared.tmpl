@@ -8,25 +8,29 @@
 {{end}}
 
 {{define "CustomizedTypeRequestParams"}}
-  {{- $customizedType := . -}}
+  {{- $customizedType := index . 0 -}}
+  {{- $operationName := index . 1 -}}
+
   {{- $firstPropertyID := $customizedType | firstPropertyIDInCustomizedType -}}
   {{- range $_, $property := $customizedType.Properties -}}
-    {{- if ne $property.ID $firstPropertyID -}},
-    {{end -}}
-    {{- if eq $property.Type "string" -}}
-      {{$property.ID | snakeCase}}: ''
-    {{- else if eq $property.Type "timestamp" -}}
-      {{$property.ID | snakeCase}}: ''
-    {{- else if eq $property.Type "array" -}}
-      {{$property.ID | snakeCase}}: []
-    {{- else if eq $property.Type "object" -}}
-      {{$property.ID | snakeCase}}: []
-    {{- else if eq $property.Type "map" -}}
-      {{$property.ID | snakeCase}}: []
-    {{- else if eq $property.Type "any" -}}
-      {{$property.ID | snakeCase}}: []
-    {{- else -}}
-      {{$property.ID | snakeCase}}: nil
+    {{- if or (ne $operationName "Delete Multiple Objects") (ne $property.ID "Content-MD5") -}}
+      {{- if ne $property.ID $firstPropertyID -}},
+      {{end -}}
+      {{- if eq $property.Type "string" -}}
+        {{$property.ID | snakeCase}}: ''
+      {{- else if eq $property.Type "timestamp" -}}
+        {{$property.ID | snakeCase}}: ''
+      {{- else if eq $property.Type "array" -}}
+        {{$property.ID | snakeCase}}: []
+      {{- else if eq $property.Type "object" -}}
+        {{$property.ID | snakeCase}}: []
+      {{- else if eq $property.Type "map" -}}
+        {{$property.ID | snakeCase}}: []
+      {{- else if eq $property.Type "any" -}}
+        {{$property.ID | snakeCase}}: []
+      {{- else -}}
+        {{$property.ID | snakeCase}}: nil
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{end}}
@@ -35,8 +39,10 @@
   {{- $service := index . 0 -}}
   {{- $operation := index . 1 -}}
 
+  {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
+
   {{- $hasParams := gt (len $operation.Request.Params.Properties) 0 -}}
-  {{- $hasHeaders := gt (len $operation.Request.Headers.Properties) 0 -}}
+  {{- $hasHeaders := and (gt (len $operation.Request.Headers.Properties) 0) (not $ignoreHeaders) -}}
   {{- $hasElements := gt (len $operation.Request.Elements.Properties) 0 -}}
 
   {{- if eq $service.Name "Object" -}}
@@ -44,11 +50,11 @@
     {{- if or $hasParams $hasHeaders $hasElements -}},{{- end -}}
   {{- end -}}
 
-  {{- template "CustomizedTypeRequestParams" $operation.Request.Params -}}
+  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Params $operation.Name -}}
   {{- if and $hasParams $hasHeaders -}},{{end}}
-  {{- template "CustomizedTypeRequestParams" $operation.Request.Headers -}}
+  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Headers $operation.Name -}}
   {{- if and (or $hasParams $hasHeaders) $hasElements -}},{{end}}
-  {{- template "CustomizedTypeRequestParams" $operation.Request.Elements -}}
+  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Elements $operation.Name -}}
 
   {{- if eq $operation.Request.Body.Type "string" -}}
     {{- if or $hasParams $hasHeaders $hasElements -}},{{end}}
@@ -63,8 +69,10 @@
   {{- $service := index . 0 -}}
   {{- $operation := index . 1 -}}
 
+  {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
+
   {{- $hasParams := gt (len $operation.Request.Params.Properties) 0 -}}
-  {{- $hasHeaders := gt (len $operation.Request.Headers.Properties) 0 -}}
+  {{- $hasHeaders := and (gt (len $operation.Request.Headers.Properties) 0) (not $ignoreHeaders) -}}
   {{- $hasElements := gt (len $operation.Request.Elements.Properties) 0 -}}
 
   {{- if eq $service.Name "Object" -}}
@@ -79,13 +87,15 @@
     {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
   {{- end -}}
 
-  {{- if and $hasParams $hasHeaders -}},{{end}}
+  {{- if not $ignoreHeaders -}}
+    {{- if and $hasParams $hasHeaders -}},{{end}}
 
-  {{- $firstID := $operation.Request.Headers | firstPropertyIDInCustomizedType -}}
-  {{- range $_, $property := $operation.Request.Headers.Properties -}}
+    {{- $firstID := $operation.Request.Headers | firstPropertyIDInCustomizedType -}}
+    {{- range $_, $property := $operation.Request.Headers.Properties -}}
     {{- if ne $property.ID $firstID -}},
     {{end -}}
     {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
+    {{- end -}}
   {{- end -}}
 
   {{- if and (or $hasParams $hasHeaders) $hasElements -}},{{end}}
@@ -150,7 +160,9 @@
         },
         request_headers: {
           {{range $_, $property := $operation.Request.Headers.Properties -}}
-            '{{$property.Name}}'=> {{$property.ID | snakeCase}},
+            {{- if or (ne $operation.Name "Delete Multiple Objects") (ne $property.ID "Content-MD5") -}}
+              '{{$property.Name}}'=> {{$property.ID | snakeCase}},
+            {{end -}}
           {{end -}}
         },
         request_elements: {
@@ -158,14 +170,14 @@
             '{{$property.Name}}'=> {{$property.ID | snakeCase}},
           {{end -}}
         },
-        {{if eq $operation.Request.Body.Type "string"}}
+        {{- if eq $operation.Request.Body.Type "string"}}
           request_body: body,
         {{else if eq $operation.Request.Body.Type "binary"}}
           request_body: body,
         {{else}}
           request_body: nil,
         {{end}}
-        {{- if $operation.Response.StatusCodes}}
+        {{- if $operation.Response.StatusCodes -}}
           status_code: [
             {{range $statusCodeNumber, $statusCode := $operation.Response.StatusCodes -}}
               {{$statusCodeNumber}},
@@ -257,10 +269,16 @@
   def {{$operation.ID | snakeCase}}_input_validate(input)
     input.deep_stringify_keys!
 
+    {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
+
     {{$x := passThrough "input['request_params']" $request.Params $customizedTypes}}
     {{template "RenderCustomizedTypeValidation" $x}}
-    {{$x := passThrough "input['request_headers']" $request.Headers $customizedTypes}}
-    {{template "RenderCustomizedTypeValidation" $x}}
+
+    {{if not $ignoreHeaders}}
+      {{$x := passThrough "input['request_headers']" $request.Headers $customizedTypes}}
+      {{template "RenderCustomizedTypeValidation" $x}}
+    {{end}}
+
     {{$x := passThrough "input['request_elements']" $request.Elements $customizedTypes}}
     {{template "RenderCustomizedTypeValidation" $x}}
   end

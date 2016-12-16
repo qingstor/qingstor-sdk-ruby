@@ -43,9 +43,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             204, # Object multipart deleted
           ],
@@ -103,9 +101,7 @@ module QingStor
           request_elements: {
             'object_parts' => object_parts,
           },
-
           request_body:     nil,
-
           status_code:      [
             201, # Object created
           ],
@@ -154,9 +150,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             204, # Object deleted
           ],
@@ -224,9 +218,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
             206,  # Partial content
@@ -293,9 +285,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -347,9 +337,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -397,9 +385,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -451,9 +437,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],
@@ -572,9 +556,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     body,
-
           status_code:      [
             201, # Object created
           ],
@@ -638,9 +620,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     body,
-
           status_code:      [
             201, # Object multipart created
           ],

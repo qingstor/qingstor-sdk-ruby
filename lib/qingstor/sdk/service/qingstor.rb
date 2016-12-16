@@ -48,9 +48,7 @@ module QingStor
           },
           request_elements: {
           },
-
           request_body:     nil,
-
           status_code:      [
             200, # OK
           ],

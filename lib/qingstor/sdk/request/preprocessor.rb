@@ -14,6 +14,9 @@
 #  | limitations under the License.
 #  +-------------------------------------------------------------------------
 
+require 'base64'
+require 'digest'
+
 require 'active_support/core_ext/hash/keys'
 require 'mimemagic'
 
@@ -54,7 +57,14 @@ module QingStor
 
       def self.request_body(input)
         body = input[:request_body]
-        body.is_a?(File) ? body.read : body
+        body = body.is_a?(File) ? body.read : body
+        return body if body
+
+        if input[:request_elements] && !input[:request_elements].empty?
+          json_body = JSON.generate input[:request_elements]
+          Logger.info "QingStor request json: [#{input[:id]}] #{json_body}"
+          json_body
+        end
       end
 
       def self.request_headers(input)
@@ -82,6 +92,11 @@ module QingStor
           ua = "qingstor-sdk-ruby/#{QingStor::SDK::VERSION} (Ruby v#{RUBY_VERSION}; #{RUBY_PLATFORM})"
           input[:request_headers][:'User-Agent'] = ua
         end
+
+        if input[:api_name] == 'Delete Multiple Objects'
+          input[:request_headers][:'Content-MD5'] = Base64.encode64(Digest::MD5.digest(input[:request_body])).strip
+        end
+
         input[:request_headers]
       end
 

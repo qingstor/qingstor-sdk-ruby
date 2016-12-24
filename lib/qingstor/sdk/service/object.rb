@@ -170,7 +170,12 @@ module QingStor
 
       # get_object: Retrieve the object.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/get.html
-      def get_object(object_key, if_match: '',
+      def get_object(object_key, response_cache_control: '',
+                     response_content_disposition: '',
+                     response_content_encoding: '',
+                     response_content_language: '',
+                     response_content_type: '',
+                     response_expires: '', if_match: '',
                      if_modified_since: '',
                      if_none_match: '',
                      if_unmodified_since: '',
@@ -178,18 +183,28 @@ module QingStor
                      x_qs_encryption_customer_algorithm: '',
                      x_qs_encryption_customer_key: '',
                      x_qs_encryption_customer_key_md5: '')
-        request = get_object_request object_key, if_match:                           if_match,
-                                                 if_modified_since:                  if_modified_since,
-                                                 if_none_match:                      if_none_match,
-                                                 if_unmodified_since:                if_unmodified_since,
-                                                 range:                              range,
-                                                 x_qs_encryption_customer_algorithm: x_qs_encryption_customer_algorithm,
-                                                 x_qs_encryption_customer_key:       x_qs_encryption_customer_key,
-                                                 x_qs_encryption_customer_key_md5:   x_qs_encryption_customer_key_md5
+        request = get_object_request object_key, response_cache_control: response_cache_control,
+          response_content_disposition: response_content_disposition,
+          response_content_encoding: response_content_encoding,
+          response_content_language: response_content_language,
+          response_content_type: response_content_type,
+          response_expires: response_expires, if_match: if_match,
+          if_modified_since: if_modified_since,
+          if_none_match: if_none_match,
+          if_unmodified_since: if_unmodified_since,
+          range: range,
+          x_qs_encryption_customer_algorithm: x_qs_encryption_customer_algorithm,
+          x_qs_encryption_customer_key: x_qs_encryption_customer_key,
+          x_qs_encryption_customer_key_md5: x_qs_encryption_customer_key_md5
         request.send
       end
 
-      def get_object_request(object_key, if_match: '',
+      def get_object_request(object_key, response_cache_control: '',
+                             response_content_disposition: '',
+                             response_content_encoding: '',
+                             response_content_language: '',
+                             response_content_type: '',
+                             response_expires: '', if_match: '',
                              if_modified_since: '',
                              if_none_match: '',
                              if_unmodified_since: '',
@@ -205,6 +220,12 @@ module QingStor
           request_method:   'GET',
           request_uri:      '/<bucket-name>/<object-key>',
           request_params:   {
+            'response-cache-control'       => response_cache_control,
+            'response-content-disposition' => response_content_disposition,
+            'response-content-encoding'    => response_content_encoding,
+            'response-content-language'    => response_content_language,
+            'response-content-type'        => response_content_type,
+            'response-expires'             => response_expires,
           },
           request_headers:  {
             'If-Match'                           => if_match,

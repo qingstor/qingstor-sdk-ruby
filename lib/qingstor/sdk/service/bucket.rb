@@ -767,7 +767,15 @@ module QingStor
 
           unless x['condition'].nil?
 
+            unless x['condition']['ip_address'].nil?
+
+            end
+
             unless x['condition']['is_null'].nil?
+
+            end
+
+            unless x['condition']['not_ip_address'].nil?
 
             end
 

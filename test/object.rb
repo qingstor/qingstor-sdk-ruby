@@ -83,6 +83,15 @@ Then(/^get object content length is (\d+)$/) do |length|
   raise unless @get_object_output[:body].length.to_s == length
 end
 
+When(/^get object with content type "([^"]*)"$/) do |content_type|
+  @get_object_output = bucket.get_object the_object_key,
+                                         response_content_type: content_type
+end
+
+Then(/^get object content type is "([^"]*)"$/) do |content_type|
+  raise unless @get_object_output[:content_type] == content_type
+end
+
 When(/^get object with query signature$/) do
   @get_object_request = bucket.get_object_request the_object_key
   @get_object_request.input[:request_headers][:'Content-Type'] = ''

@@ -63,7 +63,7 @@ module QingStor
       def build
         params           = input[:request_params].map { |k, v| "#{k}=#{v}" }
         query_string     = !params.empty? ? "?#{params.join '&'}" : ''
-        self.request_url = "#{input[:request_endpoint]}#{Signer.escape input[:request_uri]}#{query_string}"
+        self.request_url = "#{input[:request_endpoint]}#{input[:request_uri]}#{query_string}"
 
         request      = new_http_request input[:request_method], request_url
         request.body = input[:request_body]

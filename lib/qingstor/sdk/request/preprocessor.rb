@@ -14,6 +14,7 @@
 #  | limitations under the License.
 #  +-------------------------------------------------------------------------
 
+require 'cgi'
 require 'base64'
 require 'digest'
 
@@ -29,6 +30,7 @@ module QingStor
         input[:request_uri]      = request_uri input
         input[:request_body]     = request_body input
         input[:request_headers]  = request_headers input
+        input[:request_params]   = request_params input
 
         display = {}
         input.each { |k, v| display[k] = v unless k.to_s == 'request_body' }
@@ -98,6 +100,16 @@ module QingStor
         end
 
         input[:request_headers]
+      end
+
+      def self.request_params(input)
+        unless input[:request_params].nil?
+          input[:request_params].map do |k, v|
+            input[:request_params][k] = CGI.escape v.to_s
+            input[:request_params][k].gsub! '+', '%20'
+          end
+        end
+        input[:request_params]
       end
 
       def self.decorate_input(input)

@@ -3,7 +3,7 @@
 #   https://github.com/bbatsov/rubocop/blob/master/config/default.yml
 
 AllCops:
-  TargetRubyVersion: 2.1
+  TargetRubyVersion: 1.9
 
 Documentation:
     Enabled: false

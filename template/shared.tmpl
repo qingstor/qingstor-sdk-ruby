@@ -35,85 +35,6 @@
   {{- end -}}
 {{end}}
 
-{{define "OperationInitParams"}}
-  {{- $service := index . 0 -}}
-  {{- $operation := index . 1 -}}
-
-  {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
-
-  {{- $hasParams := gt (len $operation.Request.Params.Properties) 0 -}}
-  {{- $hasHeaders := and (gt (len $operation.Request.Headers.Properties) 0) (not $ignoreHeaders) -}}
-  {{- $hasElements := gt (len $operation.Request.Elements.Properties) 0 -}}
-
-  {{- if eq $service.Name "Object" -}}
-    object_key
-    {{- if or $hasParams $hasHeaders $hasElements -}},{{- end -}}
-  {{- end -}}
-
-  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Params $operation.Name -}}
-  {{- if and $hasParams $hasHeaders -}},{{end}}
-  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Headers $operation.Name -}}
-  {{- if and (or $hasParams $hasHeaders) $hasElements -}},{{end}}
-  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Elements $operation.Name -}}
-
-  {{- if eq $operation.Request.Body.Type "string" -}}
-    {{- if or $hasParams $hasHeaders $hasElements -}},{{end}}
-    body:''
-  {{- else if eq $operation.Request.Body.Type "binary" -}}
-    {{- if or $hasParams $hasHeaders $hasElements -}},{{end}}
-    body:nil
-  {{- end -}}
-{{end}}
-
-{{define "OperationCallParams"}}
-  {{- $service := index . 0 -}}
-  {{- $operation := index . 1 -}}
-
-  {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
-
-  {{- $hasParams := gt (len $operation.Request.Params.Properties) 0 -}}
-  {{- $hasHeaders := and (gt (len $operation.Request.Headers.Properties) 0) (not $ignoreHeaders) -}}
-  {{- $hasElements := gt (len $operation.Request.Elements.Properties) 0 -}}
-
-  {{- if eq $service.Name "Object" -}}
-    object_key
-    {{- if or $hasParams $hasHeaders $hasElements -}},{{- end -}}
-  {{- end -}}
-
-  {{- $firstID := $operation.Request.Params | firstPropertyIDInCustomizedType -}}
-  {{- range $_, $property := $operation.Request.Params.Properties -}}
-    {{- if ne $property.ID $firstID -}},
-    {{end -}}
-    {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
-  {{- end -}}
-
-  {{- if not $ignoreHeaders -}}
-    {{- if and $hasParams $hasHeaders -}},{{end}}
-
-    {{- $firstID := $operation.Request.Headers | firstPropertyIDInCustomizedType -}}
-    {{- range $_, $property := $operation.Request.Headers.Properties -}}
-    {{- if ne $property.ID $firstID -}},
-    {{end -}}
-    {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
-    {{- end -}}
-  {{- end -}}
-
-  {{- if and (or $hasParams $hasHeaders) $hasElements -}},{{end}}
-
-  {{- $firstID := $operation.Request.Elements | firstPropertyIDInCustomizedType -}}
-  {{- range $_, $property := $operation.Request.Elements.Properties -}}
-    {{- if ne $property.ID $firstID -}},
-    {{end -}}
-    {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
-  {{- end -}}
-
-  {{- if eq $operation.Request.Body.Type "string"}},
-    body: body
-  {{- else if eq $operation.Request.Body.Type "binary"}},
-    body: body
-  {{- end -}}
-{{end}}
-
 {{define "RenderOperation"}}
   {{$service := index . 0}}
   {{$operation := index . 1}}
@@ -124,24 +45,51 @@
   {{if $operation.DocumentationURL -}}
     # Documentation URL: {{$operation.DocumentationURL}}
   {{- end}}
+    #
+    # == Options
+    #
+      {{- range $_, $property := $operation.Request.Headers.Properties}}
+    # * +:{{$property.ID | snakeCase}}+ - {{$property.Description}}
+      {{- end}}
+      {{- range $_, $property := $operation.Request.Params.Properties}}
+    # * +:{{$property.ID | snakeCase}}+ - {{$property.Description}}
+      {{- end}}
+      {{- range $_, $property := $operation.Request.Elements.Properties}}
+    # * +:{{$property.ID | snakeCase}}+ - {{$property.Description}}
+      {{- end}}
+      {{- if eq $operation.Request.Body.Type "string" -}}
+    # * +:body+ - {{$operation.Request.Body.Description}}
+      {{- end}}
+      {{- if eq $operation.Request.Body.Type "binary" -}}
+    # * +:body+ - {{$operation.Request.Body.Description}}
+      {{- end}}
+    #
   {{if eq $service.Name "Bucket" -}}
-    def {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}({{template "OperationInitParams" passThrough $service $operation}})
+    def {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}(options={})
+  {{else if eq $service.Name "Object" -}}
+    def {{$operation.ID | snakeCase}}(object_key, options={})
   {{else -}}
-    def {{$operation.ID | snakeCase}}({{template "OperationInitParams" passThrough $service $operation}})
+    def {{$operation.ID | snakeCase}}(options={})
   {{end -}}
-    {{if eq $service.Name "Bucket" -}}
-      request = {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}_request {{template "OperationCallParams" passThrough $service $operation}}
-    {{else -}}
-      request = {{$operation.ID | snakeCase}}_request {{template "OperationCallParams" passThrough $service $operation}}
-    {{end -}}
-    request.send
-  end
+      options.deep_stringify_keys!
+      {{if eq $service.Name "Bucket" -}}
+        request = {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}_request options
+      {{else if eq $service.Name "Object" -}}
+        request = {{$operation.ID | snakeCase}}_request object_key, options
+      {{else -}}
+        request = {{$operation.ID | snakeCase}}_request options
+      {{end -}}
+      request.send
+    end
 
   {{if eq $service.Name "Bucket" -}}
-    def {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}_request({{template "OperationInitParams" passThrough $service $operation}})
+    def {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}_request(options={})
+  {{else if eq $service.Name "Object" -}}
+    def {{$operation.ID | snakeCase}}_request(object_key, options={})
   {{else -}}
-    def {{$operation.ID | snakeCase}}_request({{template "OperationInitParams" passThrough $service $operation}})
+    def {{$operation.ID | snakeCase}}_request(options={})
   {{end -}}
+      options.deep_stringify_keys!
       {{if eq $service.Name "Object" -}}
           properties[:'object-key'] = object_key
       {{end -}}
@@ -155,25 +103,25 @@
         request_uri:    '{{$operation.Request.URI}}',
         request_params: {
           {{range $_, $property := $operation.Request.Params.Properties -}}
-            '{{$property.Name}}'=> {{$property.ID | snakeCase}},
+            '{{$property.Name}}'=> options["{{$property.ID | snakeCase}}"],
           {{end -}}
         },
         request_headers: {
           {{range $_, $property := $operation.Request.Headers.Properties -}}
             {{- if or (ne $operation.Name "Delete Multiple Objects") (ne $property.ID "Content-MD5") -}}
-              '{{$property.Name}}'=> {{$property.ID | snakeCase}},
+              '{{$property.Name}}'=> options["{{$property.ID | snakeCase}}"],
             {{end -}}
           {{end -}}
         },
         request_elements: {
           {{range $_, $property := $operation.Request.Elements.Properties -}}
-            '{{$property.Name}}'=> {{$property.ID | snakeCase}},
+            '{{$property.Name}}'=> options["{{$property.ID | snakeCase}}"],
           {{end -}}
         },
         {{- if eq $operation.Request.Body.Type "string"}}
-          request_body: body,
+          request_body: options['body'],
         {{else if eq $operation.Request.Body.Type "binary"}}
-          request_body: body,
+          request_body: options['body'],
         {{else}}
           request_body: nil,
         {{end}}

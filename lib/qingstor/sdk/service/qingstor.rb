@@ -30,12 +30,19 @@ module QingStor
 
       # list_buckets: Retrieve the bucket list.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/service/get.html
-      def list_buckets(location: '')
-        request = list_buckets_request location: location
+      #
+      # == Options
+      #
+      # * +:location+ - Limits results to buckets that in the location
+      #
+      def list_buckets(options = {})
+        options.deep_stringify_keys!
+        request = list_buckets_request options
         request.send
       end
 
-      def list_buckets_request(location: '')
+      def list_buckets_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           api_name:         'Get Service',
@@ -44,7 +51,7 @@ module QingStor
           request_params:   {
           },
           request_headers:  {
-            'Location' => location,
+            'Location' => options['location'],
           },
           request_elements: {
           },

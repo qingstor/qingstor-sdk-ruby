@@ -28,12 +28,18 @@ module QingStor
 
       # delete_bucket: Delete a bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/delete.html
-      def delete
-        request = delete_request
+      #
+      # == Options
+      #
+      #
+      def delete(options = {})
+        options.deep_stringify_keys!
+        request = delete_request options
         request.send
       end
 
-      def delete_request
+      def delete_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -66,12 +72,18 @@ module QingStor
 
       # delete_bucket_cors: Delete CORS information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cors/delete_cors.html
-      def delete_cors
-        request = delete_cors_request
+      #
+      # == Options
+      #
+      #
+      def delete_cors(options = {})
+        options.deep_stringify_keys!
+        request = delete_cors_request options
         request.send
       end
 
-      def delete_cors_request
+      def delete_cors_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -104,12 +116,18 @@ module QingStor
 
       # delete_bucket_external_mirror: Delete external mirror of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/external_mirror/delete_external_mirror.html
-      def delete_external_mirror
-        request = delete_external_mirror_request
+      #
+      # == Options
+      #
+      #
+      def delete_external_mirror(options = {})
+        options.deep_stringify_keys!
+        request = delete_external_mirror_request options
         request.send
       end
 
-      def delete_external_mirror_request
+      def delete_external_mirror_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -142,12 +160,18 @@ module QingStor
 
       # delete_bucket_policy: Delete policy information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/policy/delete_policy.html
-      def delete_policy
-        request = delete_policy_request
+      #
+      # == Options
+      #
+      #
+      def delete_policy(options = {})
+        options.deep_stringify_keys!
+        request = delete_policy_request options
         request.send
       end
 
-      def delete_policy_request
+      def delete_policy_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -180,15 +204,21 @@ module QingStor
 
       # delete_multiple_objects: Delete multiple objects from the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/delete_multiple.html
-      def delete_multiple_objects(objects: [],
-                                  quiet: nil)
-        request = delete_multiple_objects_request objects: objects,
-                                                  quiet:   quiet
+      #
+      # == Options
+      #
+      # * +:content_md5+ - Object MD5sum
+      # * +:objects+ - A list of keys to delete
+      # * +:quiet+ - Whether to return the list of deleted objects
+      #
+      def delete_multiple_objects(options = {})
+        options.deep_stringify_keys!
+        request = delete_multiple_objects_request options
         request.send
       end
 
-      def delete_multiple_objects_request(objects: [],
-                                          quiet: nil)
+      def delete_multiple_objects_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -200,8 +230,8 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'objects' => objects,
-            'quiet'   => quiet,
+            'objects' => options['objects'],
+            'quiet'   => options['quiet'],
           },
           request_body:     nil,
           status_code:      [
@@ -230,12 +260,18 @@ module QingStor
 
       # get_bucket_acl: Get ACL information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/get_acl.html
-      def get_acl
-        request = get_acl_request
+      #
+      # == Options
+      #
+      #
+      def get_acl(options = {})
+        options.deep_stringify_keys!
+        request = get_acl_request options
         request.send
       end
 
-      def get_acl_request
+      def get_acl_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -268,12 +304,18 @@ module QingStor
 
       # get_bucket_cors: Get CORS information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cors/get_cors.html
-      def get_cors
-        request = get_cors_request
+      #
+      # == Options
+      #
+      #
+      def get_cors(options = {})
+        options.deep_stringify_keys!
+        request = get_cors_request options
         request.send
       end
 
-      def get_cors_request
+      def get_cors_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -306,12 +348,18 @@ module QingStor
 
       # get_bucket_external_mirror: Get external mirror of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/external_mirror/get_external_mirror.html
-      def get_external_mirror
-        request = get_external_mirror_request
+      #
+      # == Options
+      #
+      #
+      def get_external_mirror(options = {})
+        options.deep_stringify_keys!
+        request = get_external_mirror_request options
         request.send
       end
 
-      def get_external_mirror_request
+      def get_external_mirror_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -344,12 +392,18 @@ module QingStor
 
       # get_bucket_policy: Get policy information of the bucket.
       # Documentation URL: https://https://docs.qingcloud.com/qingstor/api/bucket/policy/get_policy.html
-      def get_policy
-        request = get_policy_request
+      #
+      # == Options
+      #
+      #
+      def get_policy(options = {})
+        options.deep_stringify_keys!
+        request = get_policy_request options
         request.send
       end
 
-      def get_policy_request
+      def get_policy_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -382,12 +436,18 @@ module QingStor
 
       # get_bucket_statistics: Get statistics information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/get_stats.html
-      def get_statistics
-        request = get_statistics_request
+      #
+      # == Options
+      #
+      #
+      def get_statistics(options = {})
+        options.deep_stringify_keys!
+        request = get_statistics_request options
         request.send
       end
 
-      def get_statistics_request
+      def get_statistics_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -420,12 +480,18 @@ module QingStor
 
       # head_bucket: Check whether the bucket exists and available.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/head.html
-      def head
-        request = head_request
+      #
+      # == Options
+      #
+      #
+      def head(options = {})
+        options.deep_stringify_keys!
+        request = head_request options
         request.send
       end
 
-      def head_request
+      def head_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -458,21 +524,22 @@ module QingStor
 
       # list_objects: Retrieve the object list in a bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/get.html
-      def list_objects(delimiter: '',
-                       limit: nil,
-                       marker: '',
-                       prefix: '')
-        request = list_objects_request delimiter: delimiter,
-                                       limit:     limit,
-                                       marker:    marker,
-                                       prefix:    prefix
+      #
+      # == Options
+      #
+      # * +:delimiter+ - Put all keys that share a common prefix into a list
+      # * +:limit+ - Results count limit
+      # * +:marker+ - Limit results to keys that start at this marker
+      # * +:prefix+ - Limits results to keys that begin with the prefix
+      #
+      def list_objects(options = {})
+        options.deep_stringify_keys!
+        request = list_objects_request options
         request.send
       end
 
-      def list_objects_request(delimiter: '',
-                               limit: nil,
-                               marker: '',
-                               prefix: '')
+      def list_objects_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -480,10 +547,10 @@ module QingStor
           request_method:   'GET',
           request_uri:      '/<bucket-name>',
           request_params:   {
-            'delimiter' => delimiter,
-            'limit'     => limit,
-            'marker'    => marker,
-            'prefix'    => prefix,
+            'delimiter' => options['delimiter'],
+            'limit'     => options['limit'],
+            'marker'    => options['marker'],
+            'prefix'    => options['prefix'],
           },
           request_headers:  {
           },
@@ -509,12 +576,18 @@ module QingStor
 
       # put_bucket: Create a new bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/put.html
-      def put
-        request = put_request
+      #
+      # == Options
+      #
+      #
+      def put(options = {})
+        options.deep_stringify_keys!
+        request = put_request options
         request.send
       end
 
-      def put_request
+      def put_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -547,12 +620,19 @@ module QingStor
 
       # put_bucket_acl: Set ACL information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/put_acl.html
-      def put_acl(acl: [])
-        request = put_acl_request acl: acl
+      #
+      # == Options
+      #
+      # * +:acl+ - Bucket ACL rules
+      #
+      def put_acl(options = {})
+        options.deep_stringify_keys!
+        request = put_acl_request options
         request.send
       end
 
-      def put_acl_request(acl: [])
+      def put_acl_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -564,7 +644,7 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'acl' => acl,
+            'acl' => options['acl'],
           },
           request_body:     nil,
           status_code:      [
@@ -626,12 +706,19 @@ module QingStor
 
       # put_bucket_cors: Set CORS information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cors/put_cors.html
-      def put_cors(cors_rules: [])
-        request = put_cors_request cors_rules: cors_rules
+      #
+      # == Options
+      #
+      # * +:cors_rules+ - Bucket CORS rules
+      #
+      def put_cors(options = {})
+        options.deep_stringify_keys!
+        request = put_cors_request options
         request.send
       end
 
-      def put_cors_request(cors_rules: [])
+      def put_cors_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -643,7 +730,7 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'cors_rules' => cors_rules,
+            'cors_rules' => options['cors_rules'],
           },
           request_body:     nil,
           status_code:      [
@@ -679,12 +766,19 @@ module QingStor
 
       # put_bucket_external_mirror: Set external mirror of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/external_mirror/put_external_mirror.html
-      def put_external_mirror(source_site: '')
-        request = put_external_mirror_request source_site: source_site
+      #
+      # == Options
+      #
+      # * +:source_site+ - Source site url
+      #
+      def put_external_mirror(options = {})
+        options.deep_stringify_keys!
+        request = put_external_mirror_request options
         request.send
       end
 
-      def put_external_mirror_request(source_site: '')
+      def put_external_mirror_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -696,7 +790,7 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'source_site' => source_site,
+            'source_site' => options['source_site'],
           },
           request_body:     nil,
           status_code:      [
@@ -722,12 +816,19 @@ module QingStor
 
       # put_bucket_policy: Set policy information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/policy/put_policy.html
-      def put_policy(statement: [])
-        request = put_policy_request statement: statement
+      #
+      # == Options
+      #
+      # * +:statement+ - Bucket policy statement
+      #
+      def put_policy(options = {})
+        options.deep_stringify_keys!
+        request = put_policy_request options
         request.send
       end
 
-      def put_policy_request(statement: [])
+      def put_policy_request(options = {})
+        options.deep_stringify_keys!
         input = {
           config:           config,
           properties:       properties,
@@ -739,7 +840,7 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'statement' => statement,
+            'statement' => options['statement'],
           },
           request_body:     nil,
           status_code:      [

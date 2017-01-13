@@ -11,9 +11,11 @@ The official QingStor SDK for Ruby programming language.
 
 ## Installation
 
-This Gem uses Ruby's _keyword arguments_ feature, thus Ruby 2.1.5 or higher is
+This Gem uses Ruby's _keyword arguments_ feature, thus Ruby v2.1.5 or higher is
 required.  See [this article](https://robots.thoughtbot.com/ruby-2-keyword-arguments)
 for more details about _keyword arguments_.
+
+_Notice:_ If you are using Ruby v1.9.x, please checkout the [compatible] branch.
 
 ### Install from RubyGems
 
@@ -205,5 +207,6 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 
 The Apache License (Version 2.0, January 2004).
 
+[compatible]: https://github.com/yunify/qingstor-sdk-ruby/tree/compatible
 [v2.1.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.0.1...v2.1.0
 [v2.0.1]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.0.0...v2.0.1

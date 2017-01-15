@@ -21,7 +21,7 @@ module QingStor
     RSpec.describe Signer do
       it 'signs qingstor request' do
         config = Config.init 'ENV_ACCESS_KEY_ID', 'ENV_SECRET_ACCESS_KEY'
-        # Logger.set_level 'debug'
+        Logger.set_level 'debug'
         input = {
           config:          config,
           properties:      {},
@@ -45,6 +45,30 @@ module QingStor
         result = Signer.sign input
 
         check  = 'QS ENV_ACCESS_KEY_ID:bvglZF9iMOv1RaCTxPYWxexmt1UN2m5WKngYnhDEp2c='
+        expect(result[:request_headers][:Authorization]).to eq check
+      end
+
+      it 'signs qingstor request contains Chinese' do
+        config = Config.init 'ENV_ACCESS_KEY_ID', 'ENV_SECRET_ACCESS_KEY'
+        Logger.set_level 'debug'
+        input = {
+          config:          config,
+          properties:      {},
+          service_name:    'QingStor',
+          request_method:  'GET',
+          request_uri:     '/bucket-name/中文',
+          request_params:  {},
+          request_headers: {
+            'Date' => 'Mon, 01 Jan 0001 00:00:00 GMT',
+          },
+        }
+        input[:id] = 324_347
+
+        input = Preprocessor.preprocess input
+        input[:request_headers][:'Content-Type'] = ''
+        result = Signer.sign input
+
+        check  = 'QS ENV_ACCESS_KEY_ID:XsTXX50kzqBf92zLG1aIUIJmZ0hqIHoaHgkumwnV3fs='
         expect(result[:request_headers][:Authorization]).to eq check
       end
     end

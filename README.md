@@ -165,9 +165,16 @@ log_level: 'warn'
 ## Change Log
 All notable changes to QingStor SDK for Ruby will be documented here.
 
+### [v1.9.1] - 2017-01-16
+
+#### Fixed
+
+- Fix request signer.
+
 ### v1.9.0 - 2017-01-13
 
 #### Changed
+
 - Be compatible with Ruby v1.9.x.
 
 ## Reference Documentations
@@ -189,3 +196,4 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 The Apache License (Version 2.0, January 2004).
 
 [master]: https://github.com/yunify/qingstor-sdk-ruby/tree/master
+[v1.9.1]: https://github.com/yunify/qingstor-sdk-ruby/compare/v1.9.0...v1.9.1

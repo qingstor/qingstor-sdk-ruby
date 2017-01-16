@@ -100,7 +100,7 @@ When(/^get object with query signature$/) do
 end
 
 Then(/^get object with query signature content length is (\d+)$/) do |length|
-  result = Net::HTTP.get URI.parse @get_object_request.request_url
+  result = Net::HTTP.get @get_object_request.request_url
   raise unless result.length.to_s == length
 end
 

@@ -66,7 +66,7 @@ module QingStor
         query_string     = !params.empty? ? "?#{params.join '&'}" : ''
         self.request_url = URI "#{input[:request_endpoint]}#{input[:request_uri]}#{query_string}"
 
-        request      = new_http_request input[:request_method], request_url
+        request      = new_http_request input[:request_method], request_url.path
         request.body = input[:request_body]
         input[:request_headers].each { |k, v| request[k.to_s] = v }
 

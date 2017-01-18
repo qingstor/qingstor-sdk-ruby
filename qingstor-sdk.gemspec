@@ -38,15 +38,15 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.1.5'
+  spec.required_ruby_version = '>= 1.9.3'
 
-  spec.add_runtime_dependency 'activesupport', '~> 4.2.7'
-  spec.add_runtime_dependency 'net-http-persistent', '~> 3.0.0'
+  spec.add_runtime_dependency 'activesupport', '~> 4.1.16'
+  spec.add_runtime_dependency 'net-http-persistent', '~> 2.9.4'
   spec.add_runtime_dependency 'mimemagic', '~> 0.3.2'
 
   spec.add_development_dependency 'bundler', '> 1.10.0'
   spec.add_development_dependency 'rake', '~> 11.3.0'
   spec.add_development_dependency 'rspec', '~> 3.5.0'
   spec.add_development_dependency 'simplecov', '~> 0.12.0'
-  spec.add_development_dependency 'rubocop', '~> 0.45.0'
+  spec.add_development_dependency 'rubocop', '~> 0.41.0'
 end

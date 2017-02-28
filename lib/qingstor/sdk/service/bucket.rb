@@ -456,6 +456,57 @@ module QingStor
 
       public
 
+      # list_multipart_uploads: List multipart uploads in the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/list_multipart_uploads.html
+      def list_multipart_uploads(delimiter: '',
+                                 limit: nil,
+                                 marker: '',
+                                 prefix: '')
+        request = list_multipart_uploads_request delimiter: delimiter,
+                                                 limit:     limit,
+                                                 marker:    marker,
+                                                 prefix:    prefix
+        request.send
+      end
+
+      def list_multipart_uploads_request(delimiter: '',
+                                         limit: nil,
+                                         marker: '',
+                                         prefix: '')
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'List Multipart Uploads',
+          request_method:   'GET',
+          request_uri:      '/<bucket-name>?uploads',
+          request_params:   {
+            'delimiter' => delimiter,
+            'limit'     => limit,
+            'marker'    => marker,
+            'prefix'    => prefix,
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+          status_code:      [
+            200, # OK
+          ],
+        }
+
+        list_multipart_uploads_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def list_multipart_uploads_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
       # list_objects: Retrieve the object list in a bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/get.html
       def list_objects(delimiter: '',

@@ -50,7 +50,7 @@ end
 # ----------------------------------------------------------------------------
 
 When(/^list objects$/) do
-  @list_objects_output = bucket.list_objects
+  @list_objects_output = bucket.list_objects prefix: 'Test/'
 end
 
 Then(/^list objects status code is (\d+)$/) do |status|
@@ -114,4 +114,26 @@ end
 
 Then(/^get bucket statistics status is "([^"]*)"$/) do |status|
   raise unless @get_bucket_statistics_output[:status] == status
+end
+
+# ----------------------------------------------------------------------------
+
+Given(/^an object created by initiate multipart upload$/) do
+  @list_multipart_uploads_object_key = 'list_multipart_uploads_object_key'
+  @initiate_multipart_upload_output = bucket.initiate_multipart_upload(
+    @list_multipart_uploads_object_key,
+    content_type: 'text/plain',
+  )
+end
+
+When(/^list multipart uploads$/) do
+  @list_multipart_uploads_output = bucket.list_multipart_uploads
+end
+
+Then(/^list multipart uploads count is (\d+)$/) do |count|
+  @abort_multipart_upload_output = bucket.abort_multipart_upload(
+    @list_multipart_uploads_object_key,
+    upload_id: @initiate_multipart_upload_output[:upload_id],
+  )
+  raise unless @list_multipart_uploads_output[:uploads].length.to_s == count
 end

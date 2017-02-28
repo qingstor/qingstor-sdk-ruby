@@ -137,6 +137,11 @@
     request.send
   end
 
+  {{$uri := $operation.Request.URI}}
+  {{$uri := replace $uri "{" "<" -1}}
+  {{$uri := replace $uri "}" ">" -1}}
+  {{$uri := dashConnected $uri}}
+
   {{if eq $service.Name "Bucket" -}}
     def {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}_request({{template "OperationInitParams" passThrough $service $operation}})
   {{else -}}
@@ -152,7 +157,7 @@
         {{- end}}
         api_name:       '{{$operation.Name}}',
         request_method: '{{$operation.Request.Method}}',
-        request_uri:    '{{$operation.Request.URI}}',
+        request_uri:    '{{$uri}}',
         request_params: {
           {{range $_, $property := $operation.Request.Params.Properties -}}
             '{{$property.Name}}'=> {{$property.ID | snakeCase}},

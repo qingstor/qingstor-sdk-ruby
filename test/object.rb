@@ -24,18 +24,13 @@ require 'qingstor/sdk'
 
 bucket = nil
 
-the_object_key = nil
-the_copy_object_key = nil
-the_move_object_key = nil
-
-When(/^put object with key "([^"]*)"$/) do |object_key|
+When(/^put object with key "(.+)"$/) do |object_key|
   bucket = @qs_service.bucket @test_config[:bucket_name], @test_config[:zone]
   raise if bucket.nil?
 
-  the_object_key = object_key
-  system 'dd if=/dev/zero of=/tmp/sdk_bin bs=1m count=1'
+  system 'dd if=/dev/zero of=/tmp/sdk_bin bs=1024 count=1'
   @put_object_output = bucket.put_object(
-    the_object_key,
+    object_key,
     body: File.open('/tmp/sdk_bin'),
   )
   system 'rm -f /tmp/sdk_bin'
@@ -45,11 +40,10 @@ Then(/^put object status code is (\d+)$/) do |status_code|
   raise unless @put_object_output[:status_code].to_s == status_code
 end
 
-When(/^copy object with key "([^"]*)"$/) do |object_key|
-  the_copy_object_key = object_key
+When(/^copy object with key "(.+)"$/) do |object_key|
   @put_the_copy_object_output = bucket.put_object(
-    the_copy_object_key,
-    x_qs_copy_source: "/#{@test_config[:bucket_name]}/#{the_object_key}",
+    "#{object_key}_copy",
+    x_qs_copy_source: "/#{@test_config[:bucket_name]}/#{object_key}",
   )
 end
 
@@ -57,11 +51,10 @@ Then(/^copy object status code is (\d+)$/) do |status_code|
   raise unless @put_the_copy_object_output[:status_code].to_s == status_code
 end
 
-When(/^move object with key "([^"]*)"$/) do |object_key|
-  the_move_object_key = object_key
+When(/^move object with key "(.+)"$/) do |object_key|
   @put_the_move_object_output = bucket.put_object(
-    the_move_object_key,
-    x_qs_move_source: "/#{@test_config[:bucket_name]}/#{the_copy_object_key}",
+    "#{object_key}_move",
+    x_qs_move_source: "/#{@test_config[:bucket_name]}/#{object_key}_copy",
   )
 end
 
@@ -71,8 +64,8 @@ end
 
 # ----------------------------------------------------------------------------
 
-When(/^get object$/) do
-  @get_object_output = bucket.get_object the_object_key
+When(/^get object with key "(.+)"$/) do |object_key|
+  @get_object_output = bucket.get_object object_key
 end
 
 Then(/^get object status code is (\d+)$/) do |status_code|
@@ -80,11 +73,12 @@ Then(/^get object status code is (\d+)$/) do |status_code|
 end
 
 Then(/^get object content length is (\d+)$/) do |length|
-  raise unless @get_object_output[:body].length.to_s == length
+  raise unless (@get_object_output[:body].length*1024).to_s == length
 end
 
-When(/^get object with content type "([^"]*)"$/) do |content_type|
-  @get_object_output = bucket.get_object the_object_key,
+When(/^get object "(.+)" with content type "([^"]*)"$/) do |
+  object_key, content_type|
+  @get_object_output = bucket.get_object object_key,
                                          response_content_type: content_type
 end
 
@@ -92,8 +86,8 @@ Then(/^get object content type is "([^"]*)"$/) do |content_type|
   raise unless @get_object_output[:content_type] == content_type
 end
 
-When(/^get object with query signature$/) do
-  @get_object_request = bucket.get_object_request the_object_key
+When(/^get object "(.+)" with query signature$/) do |object_key|
+  @get_object_request = bucket.get_object_request object_key
   @get_object_request.input[:request_headers][:'Content-Type'] = ''
   @get_object_request.sign_query 10
   @get_object_request.build
@@ -101,13 +95,13 @@ end
 
 Then(/^get object with query signature content length is (\d+)$/) do |length|
   result = Net::HTTP.get URI.parse @get_object_request.request_url
-  raise unless result.length.to_s == length
+  raise unless (result.length*1024).to_s == length
 end
 
 # ----------------------------------------------------------------------------
 
-When(/^head object$/) do
-  @head_object_output = bucket.head_object the_object_key
+When(/^head object with key "(.*)"$/) do |object_key|
+  @head_object_output = bucket.head_object object_key
 end
 
 Then(/^head object status code is (\d+)$/) do |status_code|
@@ -116,9 +110,10 @@ end
 
 # ----------------------------------------------------------------------------
 
-When(/^options object with method "([^"]*)" and origin "([^"]*)"$/) do |method, origin|
+When(/^options object "(.*)" with method "([^"]*)" and origin "([^"]*)"$/) do |
+  object_key, method, origin|
   @options_object_output = bucket.options_object(
-    the_object_key,
+    object_key,
     access_control_request_method: method,
     origin:                        origin,
   )
@@ -130,16 +125,16 @@ end
 
 # ----------------------------------------------------------------------------
 
-When(/^delete object$/) do
-  @delete_object_output = bucket.delete_object the_object_key
+When(/^delete object with key "(.*)"$/) do |object_key|
+  @delete_object_output = bucket.delete_object object_key
 end
 
 Then(/^delete object status code is (\d+)$/) do |status_code|
   raise unless @delete_object_output[:status_code].to_s == status_code
 end
 
-When(/^delete the move object$/) do
-  @delete_the_move_object_output = bucket.delete_object the_move_object_key
+When(/^delete the move object with key "(.*)"$/) do |object_key|
+  @delete_the_move_object_output = bucket.delete_object "#{object_key}_move"
 end
 
 Then(/^delete the move object status code is (\d+)$/) do |status_code|

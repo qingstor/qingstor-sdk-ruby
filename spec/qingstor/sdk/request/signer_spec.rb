@@ -53,10 +53,12 @@ module QingStor
         Logger.set_level 'debug'
         input = {
           config:          config,
-          properties:      {},
+          properties:      {
+            'object-key' => '中文',
+          },
           service_name:    'QingStor',
           request_method:  'GET',
-          request_uri:     '/bucket-name/中文',
+          request_uri:     '/bucket-name/<object-key>',
           request_params:  {},
           request_headers: {
             'Date' => 'Mon, 01 Jan 0001 00:00:00 GMT',

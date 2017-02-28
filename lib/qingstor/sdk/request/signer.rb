@@ -87,19 +87,14 @@ module QingStor
       end
 
       def self.canonicalized_resource(input)
-        path = CGI.escape input[:request_uri]
-        path.gsub! '%3F', '?'
-        path.gsub! '%2F', '/'
-        path.gsub! '+', '%20'
-
         params = input[:request_params].keys.sort.map { |k|
           if sub_resource? k.to_s
             v = input[:request_params][k].to_s.strip
             !v.nil? && v != '' ? "#{k}=#{CGI.unescape v}" : k
           end
         }.compact.join '&'
-        params = path.include?('?') ? "&#{params}" : "?#{params}" if params != ''
-        "#{path}#{params}"
+        params = input[:request_uri].include?('?') ? "&#{params}" : "?#{params}" if params != ''
+        "#{input[:request_uri]}#{params}"
       end
 
       def self.sub_resource?(key)

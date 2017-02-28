@@ -51,7 +51,7 @@ module QingStor
       def self.request_uri(input)
         unless input[:properties].nil?
           input[:properties].each do |k, v|
-            input[:request_uri].gsub! "<#{k}>", v.to_s
+            input[:request_uri].gsub! "<#{k}>", (escape v.to_s)
           end
         end
         input[:request_uri]
@@ -99,14 +99,19 @@ module QingStor
           input[:request_headers][:'Content-MD5'] = Base64.encode64(Digest::MD5.digest(input[:request_body])).strip
         end
 
+        input[:request_headers].map { |k, v|
+          unless v.to_s.ascii_only?
+            input[:request_headers][k] = escape v.to_s
+          end
+        }
+
         input[:request_headers]
       end
 
       def self.request_params(input)
         unless input[:request_params].nil?
           input[:request_params].map do |k, v|
-            input[:request_params][k] = CGI.escape v.to_s
-            input[:request_params][k].gsub! '+', '%20'
+            input[:request_params][k] = escape v.to_s
           end
         end
         input[:request_params]
@@ -124,6 +129,14 @@ module QingStor
           object.delete k if v.nil? || v == ''
         end
         object
+      end
+
+      def self.escape(origin)
+        origin = CGI.escape origin
+        origin.gsub! '%2F', '/'
+        origin.gsub! '%3D', '='
+        origin.gsub! '+', '%20'
+        origin
       end
     end
   end

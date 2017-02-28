@@ -19,16 +19,14 @@ require 'qingstor/sdk'
 # ----------------------------------------------------------------------------
 
 bucket = nil
-the_object_key = nil
 the_upload_id = nil
 
-When(/^initiate multipart upload with key "([^"]*)"$/) do |object_key|
+When(/^initiate multipart upload with key "(.+)"$/) do |object_key|
   bucket = @qs_service.bucket @test_config[:bucket_name], @test_config[:zone]
   raise if bucket.nil?
 
-  the_object_key = object_key
   @initiate_multipart_upload_output = bucket.initiate_multipart_upload(
-    the_object_key,
+    object_key,
     content_type: 'text/plain',
   )
 end
@@ -40,10 +38,10 @@ end
 
 # ----------------------------------------------------------------------------
 
-When(/^upload the first part$/) do
+When(/^upload the first part with key "(.+)"$/) do |object_key|
   system 'dd if=/dev/zero of=/tmp/sdk_bin_part_0 bs=1m count=5'
   @upload_the_first_part_output = bucket.upload_multipart(
-    the_object_key,
+    object_key,
     upload_id:   the_upload_id,
     part_number: 0,
     body:        File.open('/tmp/sdk_bin_part_0'),
@@ -55,10 +53,10 @@ Then(/^upload the first part status code is (\d+)$/) do |status_code|
   raise unless @upload_the_first_part_output[:status_code].to_s == status_code
 end
 
-When(/^upload the second part$/) do
+When(/^upload the second part with key "(.+)"$/) do |object_key|
   system 'dd if=/dev/zero of=/tmp/sdk_bin_part_1 bs=1m count=4'
   @upload_the_second_part_output = bucket.upload_multipart(
-    the_object_key,
+    object_key,
     upload_id:   the_upload_id,
     part_number: 1,
     body:        File.open('/tmp/sdk_bin_part_1'),
@@ -70,10 +68,10 @@ Then(/^upload the second part status code is (\d+)$/) do |status_code|
   raise unless @upload_the_second_part_output[:status_code].to_s == status_code
 end
 
-When(/^upload the third part$/) do
+When(/^upload the third part with key "(.+)"$/) do |object_key|
   system 'dd if=/dev/zero of=/tmp/sdk_bin_part_2 bs=1m count=3'
   @upload_the_third_part_output = bucket.upload_multipart(
-    the_object_key,
+    object_key,
     upload_id:   the_upload_id,
     part_number: 2,
     body:        File.open('/tmp/sdk_bin_part_2'),
@@ -89,9 +87,9 @@ end
 
 list_multipart_output = nil
 
-When(/^list multipart$/) do
+When(/^list multipart with key "(.+)"$/) do |object_key|
   list_multipart_output = bucket.list_multipart(
-    the_object_key,
+    object_key,
     upload_id: the_upload_id,
   )
 end
@@ -106,9 +104,9 @@ end
 
 # ----------------------------------------------------------------------------
 
-When(/^complete multipart upload$/) do
+When(/^complete multipart upload with key "(.+)"$/) do |object_key|
   @complete_multipart_upload_output = bucket.complete_multipart_upload(
-    the_object_key,
+    object_key,
     upload_id:    the_upload_id,
     etag:         '"4072783b8efb99a9e5817067d68f61c6"',
     object_parts: list_multipart_output[:object_parts],
@@ -121,9 +119,9 @@ end
 
 # ----------------------------------------------------------------------------
 
-When(/^abort multipart upload$/) do
+When(/^abort multipart upload with key "(.+)"$/) do |object_key|
   @abort_multipart_upload_output = bucket.abort_multipart_upload(
-    the_object_key,
+    object_key,
     upload_id: the_upload_id,
   )
 end
@@ -134,8 +132,8 @@ end
 
 # ----------------------------------------------------------------------------
 
-When(/^delete the multipart object$/) do
-  @delete_multipart_object_output = bucket.delete_object the_object_key
+When(/^delete the multipart object with key "(.+)"$/) do |object_key|
+  @delete_multipart_object_output = bucket.delete_object object_key
 end
 
 Then(/^delete the multipart object status code is (\d+)$/) do |status_code|

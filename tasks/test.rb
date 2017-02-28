@@ -16,7 +16,6 @@
 
 require 'rspec/core/rake_task'
 
-# task :test => :install do
 task :test do
   system 'cd test; rm -f Gemfile.lock'
   system 'cd test; bundle check'

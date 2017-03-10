@@ -169,6 +169,12 @@ log_level: 'warn'
 ## Change Log
 All notable changes to QingStor SDK for Ruby will be documented here.
 
+### [v2.2.1] - 2017-03-10
+
+#### Added
+
+- Allow user to append additional info to User-Agent
+
 ### [v2.2.0] - 2017-02-28
 
 #### Added
@@ -228,7 +234,8 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 The Apache License (Version 2.0, January 2004).
 
 [compatible]: https://github.com/yunify/qingstor-sdk-ruby/tree/compatible
-[v2.2.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.1.2...v2.2.0
+[v2.2.1]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.0...v2.2.1
+[v2.2.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.1.1...v2.2.0
 [v2.1.1]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.0.1...v2.1.0
 [v2.0.1]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.0.0...v2.0.1

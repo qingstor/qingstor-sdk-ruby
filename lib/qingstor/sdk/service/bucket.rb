@@ -859,10 +859,6 @@ module QingStor
             raise ParameterRequiredError.new('id', 'statement')
           end
 
-          unless !x['resource'].nil? && !x['resource'].to_s.empty?
-            raise ParameterRequiredError.new('resource', 'statement')
-          end
-
           unless !x['user'].nil? && !x['user'].to_s.empty?
             raise ParameterRequiredError.new('user', 'statement')
           end

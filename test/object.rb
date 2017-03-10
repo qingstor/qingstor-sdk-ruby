@@ -73,11 +73,10 @@ Then(/^get object status code is (\d+)$/) do |status_code|
 end
 
 Then(/^get object content length is (\d+)$/) do |length|
-  raise unless (@get_object_output[:body].length*1024).to_s == length
+  raise unless (@get_object_output[:body].length * 1024).to_s == length
 end
 
-When(/^get object "(.+)" with content type "([^"]*)"$/) do |
-  object_key, content_type|
+When(/^get object "(.+)" with content type "([^"]*)"$/) do |object_key, content_type|
   @get_object_output = bucket.get_object object_key,
                                          response_content_type: content_type
 end
@@ -95,7 +94,7 @@ end
 
 Then(/^get object with query signature content length is (\d+)$/) do |length|
   result = Net::HTTP.get URI.parse @get_object_request.request_url
-  raise unless (result.length*1024).to_s == length
+  raise unless (result.length * 1024).to_s == length
 end
 
 # ----------------------------------------------------------------------------
@@ -110,8 +109,7 @@ end
 
 # ----------------------------------------------------------------------------
 
-When(/^options object "(.*)" with method "([^"]*)" and origin "([^"]*)"$/) do |
-  object_key, method, origin|
+When(/^options object "(.*)" with method "([^"]*)" and origin "([^"]*)"$/) do |object_key, method, origin|
   @options_object_output = bucket.options_object(
     object_key,
     access_control_request_method: method,

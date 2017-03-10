@@ -92,6 +92,9 @@ module QingStor
         end
         unless input[:request_headers][:'User-Agent']
           ua = "qingstor-sdk-ruby/#{QingStor::SDK::VERSION} (Ruby v#{RUBY_VERSION}; #{RUBY_PLATFORM})"
+          if input[:config][:additional_user_agent] && !input[:config][:additional_user_agent].empty?
+            ua = "#{ua} #{input[:config][:additional_user_agent]}"
+          end
           input[:request_headers][:'User-Agent'] = ua
         end
 
@@ -99,11 +102,9 @@ module QingStor
           input[:request_headers][:'Content-MD5'] = Base64.encode64(Digest::MD5.digest(input[:request_body])).strip
         end
 
-        input[:request_headers].map { |k, v|
-          unless v.to_s.ascii_only?
-            input[:request_headers][k] = escape v.to_s
-          end
-        }
+        input[:request_headers].map do |k, v|
+          input[:request_headers][k] = escape v.to_s unless v.to_s.ascii_only?
+        end
 
         input[:request_headers]
       end

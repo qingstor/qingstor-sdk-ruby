@@ -46,6 +46,23 @@ module QingStor
         self
       end
 
+      def check
+        [:access_key_id, :secret_access_key, :host, :port, :protocol].each do |x|
+          if !self[x] || self[x].to_s.empty?
+            raise ConfigurationError, "#{x.to_sym} not specified"
+          end
+        end
+        if self[:additional_user_agent] && !self[:additional_user_agent].empty?
+          self[:additional_user_agent].each_byte do |x|
+            # Allow space(32) to ~(126) in ASCII Table, exclude "(34).
+            if x < 32 || x > 126 || x == 32 || x == 34
+              raise ConfigurationError, 'additional User-Agent contains characters that not allowed'
+            end
+          end
+        end
+        self
+      end
+
       def load_default_config
         load_config_from_file Contract::DEFAULT_CONFIG_FILEPATH
       end

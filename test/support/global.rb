@@ -30,6 +30,7 @@ module QingStorWorld
 
   def load_config
     @config = QingStor::SDK::Config.new.load_config_from_file './config.yaml'
+    @config.check
   end
 
   def init_qingstor_service

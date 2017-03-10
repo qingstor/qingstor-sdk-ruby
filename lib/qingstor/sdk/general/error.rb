@@ -14,9 +14,19 @@
 #  | limitations under the License.
 #  +-------------------------------------------------------------------------
 
-module QingCloud
+module QingStor
   module SDK
     class SDKError < StandardError
+    end
+
+    class ConfigurationError < SDKError
+      def initialize(error_message)
+        @error_message = error_message
+      end
+
+      def message
+        "configuration is not valid, #{@error_message}"
+      end
     end
 
     class NetworkError < SDKError

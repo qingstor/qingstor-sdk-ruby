@@ -31,7 +31,7 @@ Specify `qingstor-sdk` as dependency in your application's Gemfile:
 gem 'qingstor-sdk'
 ```
 
-Ensure `qingstor-sdk` is installed as dependency with `bundle-install`:
+Ensure `qingstor-sdk` is installed as dependency with `bundle install`:
 
 ``` bash
 $ bundle install

@@ -65,6 +65,26 @@ module QingStor
         config = Config.new.load_default_config
         expect(config.connection).to_not be nil
       end
+
+      it 'can check itself' do
+        config = Config.new.load_user_config
+        begin
+          config.check
+        rescue ConfigurationError
+          expect(true).to be true
+        end
+
+        config.update(access_key_id:         'ACCESS_KEY_ID',
+                      secret_access_key:     'SECRET_ACCESS_KEY',
+                      additional_user_agent: '中文')
+        begin
+          config.check
+          expect(true).to be true
+        end
+
+        config.update(additional_user_agent: 'text/integration')
+        config.check
+      end
     end
   end
 end

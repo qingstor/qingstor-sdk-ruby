@@ -80,6 +80,8 @@ module QingStor
         begin
           config.check
           expect(true).to be true
+        rescue
+          nil
         end
 
         config.update(additional_user_agent: 'text/integration')

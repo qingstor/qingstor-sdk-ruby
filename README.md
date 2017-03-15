@@ -171,13 +171,13 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 
 ### Fixed
 
-- Resource is not mandatory in bucket policy statement
+- Resource is not mandatory in bucket policy statement.
 
 ### [v2.2.1] - 2017-03-10
 
 #### Added
 
-- Allow user to append additional info to User-Agent
+- Allow user to append additional info to User-Agent.
 
 ### [v2.2.0] - 2017-02-28
 

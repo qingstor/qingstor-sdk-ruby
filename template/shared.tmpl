@@ -229,8 +229,9 @@
       {{end}}
       {{$isNotString := ne $property.ExtraType "string"}}
       {{$isNotInteger := ne $property.ExtraType "integer"}}
+      {{$isNotLong := ne $property.ExtraType "long"}}
       {{$isNotTimestamp := ne $property.ExtraType "timestamp"}}
-      {{if and $isNotString $isNotInteger $isNotTimestamp}}
+      {{if and $isNotString $isNotInteger $isNotLong $isNotTimestamp}}
         {{$prefix}}['{{$property.ID}}'].each { |x|
           {{$nextCustomizedType := index $customizedTypes $property.ExtraType}}
           {{$x := passThrough "x" $nextCustomizedType $customizedTypes}}

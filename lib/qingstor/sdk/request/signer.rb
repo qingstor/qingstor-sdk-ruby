@@ -83,7 +83,7 @@ module QingStor
       def self.canonicalized_headers(input)
         h = {}
         input[:request_headers].each { |k, v| h[k.to_s.strip.downcase] = v.to_s.strip }
-        h.keys.sort.reject { |k| !k.start_with? 'x-qs-' }.map { |k| "#{k}:#{h[k]}\n" }.join ''
+        h.keys.sort.select { |k| k.start_with? 'x-qs-' }.map { |k| "#{k}:#{h[k]}\n" }.join ''
       end
 
       def self.canonicalized_resource(input)

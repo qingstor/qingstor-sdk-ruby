@@ -47,7 +47,7 @@ module QingStor
       end
 
       def check
-        [:access_key_id, :secret_access_key, :host, :port, :protocol].each do |x|
+        %i(access_key_id secret_access_key host port protocol).each do |x|
           if !self[x] || self[x].to_s.empty?
             raise ConfigurationError, "#{x.to_sym} not specified"
           end

@@ -1,0 +1,293 @@
+{{define "SubServiceInitParams"}}
+  {{- $customizedType := . -}}
+  {{- $firstPropertyID := $customizedType | firstPropertyIDInCustomizedType -}}
+  {{- range $_, $property := $customizedType.Properties -}}
+    {{- if ne $property.ID $firstPropertyID -}},{{- end -}}
+    {{$property.ID | snakeCase}}
+  {{- end -}}
+{{end}}
+
+{{define "CustomizedTypeRequestParams"}}
+  {{- $customizedType := index . 0 -}}
+  {{- $operationName := index . 1 -}}
+
+  {{- $firstPropertyID := $customizedType | firstPropertyIDInCustomizedType -}}
+  {{- range $_, $property := $customizedType.Properties -}}
+    {{- if or (ne $operationName "Delete Multiple Objects") (ne $property.ID "Content-MD5") -}}
+      {{- if ne $property.ID $firstPropertyID -}},
+      {{end -}}
+      {{- if eq $property.Type "string" -}}
+        {{$property.ID | snakeCase}}: ''
+      {{- else if eq $property.Type "timestamp" -}}
+        {{$property.ID | snakeCase}}: ''
+      {{- else if eq $property.Type "array" -}}
+        {{$property.ID | snakeCase}}: []
+      {{- else if eq $property.Type "object" -}}
+        {{$property.ID | snakeCase}}: []
+      {{- else if eq $property.Type "map" -}}
+        {{$property.ID | snakeCase}}: []
+      {{- else if eq $property.Type "any" -}}
+        {{$property.ID | snakeCase}}: []
+      {{- else -}}
+        {{$property.ID | snakeCase}}: nil
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{end}}
+
+{{define "OperationInitParams"}}
+  {{- $service := index . 0 -}}
+  {{- $operation := index . 1 -}}
+
+  {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
+
+  {{- $hasParams := gt (len $operation.Request.Query.Properties) 0 -}}
+  {{- $hasHeaders := and (gt (len $operation.Request.Headers.Properties) 0) (not $ignoreHeaders) -}}
+  {{- $hasElements := gt (len $operation.Request.Elements.Properties) 0 -}}
+
+  {{- if eq $service.Name "Object" -}}
+    object_key
+    {{- if or $hasParams $hasHeaders $hasElements -}},{{- end -}}
+  {{- end -}}
+
+  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Query $operation.Name -}}
+  {{- if and $hasParams $hasHeaders -}},{{end}}
+  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Headers $operation.Name -}}
+  {{- if and (or $hasParams $hasHeaders) $hasElements -}},{{end}}
+  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Elements $operation.Name -}}
+
+  {{- if eq $operation.Request.Body.Type "string" -}}
+    {{- if or $hasParams $hasHeaders $hasElements -}},{{end}}
+    body:''
+  {{- else if eq $operation.Request.Body.Type "binary" -}}
+    {{- if or $hasParams $hasHeaders $hasElements -}},{{end}}
+    body:nil
+  {{- end -}}
+{{end}}
+
+{{define "OperationCallParams"}}
+  {{- $service := index . 0 -}}
+  {{- $operation := index . 1 -}}
+
+  {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
+
+  {{- $hasParams := gt (len $operation.Request.Query.Properties) 0 -}}
+  {{- $hasHeaders := and (gt (len $operation.Request.Headers.Properties) 0) (not $ignoreHeaders) -}}
+  {{- $hasElements := gt (len $operation.Request.Elements.Properties) 0 -}}
+
+  {{- if eq $service.Name "Object" -}}
+    object_key
+    {{- if or $hasParams $hasHeaders $hasElements -}},{{- end -}}
+  {{- end -}}
+
+  {{- $firstID := $operation.Request.Query | firstPropertyIDInCustomizedType -}}
+  {{- range $_, $property := $operation.Request.Query.Properties -}}
+    {{- if ne $property.ID $firstID -}},
+    {{end -}}
+    {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
+  {{- end -}}
+
+  {{- if not $ignoreHeaders -}}
+    {{- if and $hasParams $hasHeaders -}},{{end}}
+
+    {{- $firstID := $operation.Request.Headers | firstPropertyIDInCustomizedType -}}
+    {{- range $_, $property := $operation.Request.Headers.Properties -}}
+    {{- if ne $property.ID $firstID -}},
+    {{end -}}
+    {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if and (or $hasParams $hasHeaders) $hasElements -}},{{end}}
+
+  {{- $firstID := $operation.Request.Elements | firstPropertyIDInCustomizedType -}}
+  {{- range $_, $property := $operation.Request.Elements.Properties -}}
+    {{- if ne $property.ID $firstID -}},
+    {{end -}}
+    {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
+  {{- end -}}
+
+  {{- if eq $operation.Request.Body.Type "string"}},
+    body: body
+  {{- else if eq $operation.Request.Body.Type "binary"}},
+    body: body
+  {{- end -}}
+{{end}}
+
+{{define "RenderOperation"}}
+  {{$service := index . 0}}
+  {{$operation := index . 1}}
+
+  {{if $operation.Description -}}
+    # {{$operation.ID | snakeCase}}: {{$operation.Description}}
+  {{- end}}
+  {{if $operation.DocumentationURL -}}
+    # Documentation URL: {{$operation.DocumentationURL}}
+  {{- end}}
+  {{if eq $service.Name "Bucket" -}}
+    def {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}({{template "OperationInitParams" passThrough $service $operation}})
+  {{else -}}
+    def {{$operation.ID | snakeCase}}({{template "OperationInitParams" passThrough $service $operation}})
+  {{end -}}
+    {{if eq $service.Name "Bucket" -}}
+      request = {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}_request {{template "OperationCallParams" passThrough $service $operation}}
+    {{else -}}
+      request = {{$operation.ID | snakeCase}}_request {{template "OperationCallParams" passThrough $service $operation}}
+    {{end -}}
+    request.send
+  end
+
+  {{$uri := $operation.Request.URI}}
+  {{$uri := replace $uri "{" "<" -1}}
+  {{$uri := replace $uri "}" ">" -1}}
+  {{$uri := dashConnected $uri}}
+
+  {{if eq $service.Name "Bucket" -}}
+    def {{(replace $operation.ID "Bucket" "" -1) | snakeCase}}_request({{template "OperationInitParams" passThrough $service $operation}})
+  {{else -}}
+    def {{$operation.ID | snakeCase}}_request({{template "OperationInitParams" passThrough $service $operation}})
+  {{end -}}
+      {{if eq $service.Name "Object" -}}
+          properties[:'object-key'] = object_key
+      {{end -}}
+      input   = {
+        config:         config,
+        {{- if ne $operation.ID "ListBuckets"}}
+          properties:     properties,
+        {{- end}}
+        api_name:       '{{$operation.Name}}',
+        request_method: '{{$operation.Request.Method}}',
+        request_uri:    '{{$uri}}',
+        request_params: {
+          {{range $_, $property := $operation.Request.Query.Properties -}}
+            '{{$property.Name}}'=> {{$property.ID | snakeCase}},
+          {{end -}}
+        },
+        request_headers: {
+          {{range $_, $property := $operation.Request.Headers.Properties -}}
+            {{- if or (ne $operation.Name "Delete Multiple Objects") (ne $property.ID "Content-MD5") -}}
+              '{{$property.Name}}'=> {{$property.ID | snakeCase}},
+            {{end -}}
+          {{end -}}
+        },
+        request_elements: {
+          {{range $_, $property := $operation.Request.Elements.Properties -}}
+            '{{$property.Name}}'=> {{$property.ID | snakeCase}},
+          {{end -}}
+        },
+        {{- if eq $operation.Request.Body.Type "string"}}
+          request_body: body,
+        {{else if eq $operation.Request.Body.Type "binary"}}
+          request_body: body,
+        {{else}}
+          request_body: nil,
+        {{end}}
+        {{- if $operation.Response.StatusCodes -}}
+          status_code: [
+            {{range $statusCodeNumber, $statusCode := $operation.Response.StatusCodes -}}
+              {{$statusCodeNumber}},
+              {{- if $statusCode.Description -}}
+                # {{$statusCode.Description}}
+              {{- end}}
+            {{end -}}
+          ],
+        {{else}}
+          status_code: [
+            200, # OK
+          ],
+        {{end -}}
+      }
+
+      {{$operation.ID | snakeCase}}_input_validate input
+      Request.new input
+    end
+{{end}}
+
+{{define "RenderCustomizedTypeValidation"}}
+  {{$prefix := index . 0}}
+  {{$customizedType := index . 1}}
+  {{$customizedTypes := index . 2}}
+
+  {{range $_, $property := $customizedType.Properties}}
+    {{if eq $property.Type "object"}}
+      unless {{$prefix}}['{{$property.ID}}'].nil?
+        {{$nextPrefix := printf "%s[\"%s\"]" $prefix $property.ID}}
+        {{$nextCustomizedType := index $customizedTypes $property.ExtraType}}
+        {{$x := passThrough $nextPrefix $nextCustomizedType $customizedTypes}}
+        {{template "RenderCustomizedTypeValidation" $x}}
+      end
+      {{if $property.IsRequired }}
+        if {{$prefix}}['{{$property.ID}}'].nil?
+          raise ParameterRequiredError.new("{{$property.ID}}", '{{$customizedType.ID}}')
+        end
+      {{end}}
+    {{else if eq $property.Type "array"}}
+      {{if $property.IsRequired}}
+        unless !{{$prefix}}['{{$property.ID}}'].nil? && !{{$prefix}}['{{$property.ID}}'].to_s.empty?
+          raise ParameterRequiredError.new('{{$property.ID}}', '{{$customizedType.ID}}')
+        end
+      {{end}}
+      {{$isNotString := ne $property.ExtraType "string"}}
+      {{$isNotInteger := ne $property.ExtraType "integer"}}
+      {{$isNotLong := ne $property.ExtraType "long"}}
+      {{$isNotTimestamp := ne $property.ExtraType "timestamp"}}
+      {{if and $isNotString $isNotInteger $isNotLong $isNotTimestamp}}
+        {{$prefix}}['{{$property.ID}}'].each { |x|
+          {{$nextCustomizedType := index $customizedTypes $property.ExtraType}}
+          {{$x := passThrough "x" $nextCustomizedType $customizedTypes}}
+          {{template "RenderCustomizedTypeValidation" $x}}
+        }
+      {{end}}
+    {{else}}
+      {{$isContentLength := eq $property.ID "Content-Length"}}
+      {{if not $isContentLength}}
+        {{if $property.IsRequired}}
+          unless !{{$prefix}}['{{$property.ID}}'].nil? && !{{$prefix}}['{{$property.ID}}'].to_s.empty?
+            raise ParameterRequiredError.new('{{$property.ID}}', '{{$customizedType.ID}}')
+          end
+        {{end}}
+        {{if gt ($property.Enum | len) 0}}
+          if {{$prefix}}['{{$property.ID}}'] && !{{$prefix}}['{{$property.ID}}'].to_s.empty?
+            {{$property.ID | snakeCase}}_valid_values = [{{$property.Enum | commaConnectedWithQuote}}]
+            unless {{$property.ID | snakeCase}}_valid_values.include? {{$prefix}}['{{$property.ID}}'].to_s
+              raise ParameterValueNotAllowedError.new(
+                '{{$property.ID}}',
+                {{$prefix}}['{{$property.ID}}'],
+                {{$property.ID | snakeCase}}_valid_values
+              )
+            end
+          end
+        {{end}}
+      {{end}}
+    {{end}}
+  {{end}}
+{{end}}
+
+{{define "RenderInputValidation"}}
+  {{$service := index . 0}}
+  {{$operation := index . 1}}
+  {{$customizedTypes := index . 2}}
+
+  {{$request := $operation.Request}}
+
+  private
+
+  def {{$operation.ID | snakeCase}}_input_validate(input)
+    input.deep_stringify_keys!
+
+    {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
+
+    {{$x := passThrough "input['request_params']" $request.Query $customizedTypes}}
+    {{template "RenderCustomizedTypeValidation" $x}}
+
+    {{if not $ignoreHeaders}}
+      {{$x := passThrough "input['request_headers']" $request.Headers $customizedTypes}}
+      {{template "RenderCustomizedTypeValidation" $x}}
+    {{end}}
+
+    {{$x := passThrough "input['request_elements']" $request.Elements $customizedTypes}}
+    {{template "RenderCustomizedTypeValidation" $x}}
+  end
+
+  public
+{{end}}

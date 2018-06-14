@@ -137,7 +137,7 @@
     request.send
   end
 
-  {{$uri := $operation.Request.URI}}
+  {{$uri := $operation.Request.Path}}
   {{$uri := replace $uri "{" "<" -1}}
   {{$uri := replace $uri "}" ">" -1}}
   {{$uri := dashConnected $uri}}

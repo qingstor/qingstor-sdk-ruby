@@ -182,20 +182,17 @@
         {{else}}
           request_body: nil,
         {{end}}
-        {{- if $operation.Response.StatusCodes -}}
-          status_code: [
-            {{range $statusCodeNumber, $statusCode := $operation.Response.StatusCodes -}}
-              {{$statusCodeNumber}},
-              {{- if $statusCode.Description -}}
-                # {{$statusCode.Description}}
-              {{- end}}
+        status_code: {
+          {{range $keyStatus, $valueStatus := $operation.Responses -}}
+            {{- if $valueStatus.StatusCode -}}
+              {{$valueStatus.StatusCode.Code}},
+            {{else}}
+              200, // OK
             {{end -}}
-          ],
-        {{else}}
-          status_code: [
-            200, # OK
-          ],
-        {{end -}}
+          {{else}}
+            200, //OK
+          {{end -}}
+          },
       }
 
       {{$operation.ID | snakeCase}}_input_validate input

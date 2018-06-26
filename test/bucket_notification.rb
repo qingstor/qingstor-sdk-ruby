@@ -28,6 +28,11 @@ Then(/^get bucket notification status code is (\d+)$/) do |status_code|
   raise unless @get_bucket_notification_output[:status_code].to_s == status_code
 end
 
+Then(/^get bucket notification should have cloudfunc "([^"]*)"$/) do |cloudfunc|
+  ok = false
+  @get_bucket_notification_output[:notifications].each { |notifications| ok = true if notifications[:cloudfunc] == cloudfunc }
+  raise unless ok
+end
 # ----------------------------------------------------------------------------
 
 When(/^delete bucket notification$/) do

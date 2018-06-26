@@ -20,6 +20,10 @@ require 'active_support/core_ext/hash/keys'
 
 module QingStor
   module SDK
+    
+    
+    
+
     # QingStor provides QingStor Service API (API Version 2016-01-06)
     class Service
       attr_accessor :config, :properties
@@ -28,51 +32,135 @@ module QingStor
         self.config = config
       end
 
-      # list_buckets: Retrieve the bucket list.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/service/get.html
-      def list_buckets(location: '')
-        request = list_buckets_request location: location
-        request.send
-      end
+      
+        
+  
+  
 
-      def list_buckets_request(location: '')
-        input = {
-          config:           config,
-          api_name:         'Get Service',
-          request_method:   'GET',
-          request_uri:      '/',
-          request_params:   {
+  # list_buckets: Retrieve the bucket list.
+  # Documentation URL: https://docs.qingcloud.com/qingstor/api/service/get.html
+  def list_buckets(location: '')
+  request = list_buckets_request location:location
+    request.send
+  end
+
+  
+  
+  
+  
+
+  def list_buckets_request(location: '')
+  input   = {
+        config:         config,
+        api_name:       'Get Service',
+        request_method: 'GET',
+        request_uri:    '/',
+        request_params: {
           },
-          request_headers:  {
-            'Location' => location,
+        request_headers: {
+          'Location'=> location,
+            },
+        request_elements: {
           },
-          request_elements: {
-          },
-          request_body:     nil,
-          status_code:      [
-            200, # OK
-          ],
-        }
+          request_body: nil,
+        
+        status_code: {
+          200,
+            },
+      }
 
-        list_buckets_input_validate input
-        Request.new input
-      end
+      list_buckets_input_validate input
+      Request.new input
+    end
 
-      private
+        
+  
+  
+  
 
-      def list_buckets_input_validate(input)
-        input.deep_stringify_keys!
-      end
+  
 
-      public
+  private
 
-      def bucket(bucket_name, zone)
-        properties = {
-          'bucket-name' => bucket_name,
-          'zone'        => zone,
-        }
-        Bucket.new(config, properties)
-      end
+  def list_buckets_input_validate(input)
+    input.deep_stringify_keys!
+    
+  
+  
+  
+
+  
+
+
+    
+      
+      
+  
+  
+  
+
+  
+    
+      
+      
+        
+        
+      
+    
+  
+
+    
+
+    
+    
+  
+  
+  
+
+  
+
+  end
+
+  public
+
+      
+
+      
+        
+          def bucket(bucket_name,zone)
+            properties = {
+              'bucket-name'=> bucket_name,
+              'zone'=> zone,
+              }
+            Bucket.new(config, properties)
+          end
+        
+      
+        
+          def metadata(bucket_name,zone)
+            properties = {
+              'bucket-name'=> bucket_name,
+              'zone'=> zone,
+              }
+            Metadata.new(config, properties)
+          end
+        
+      
+        
+      
     end
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+

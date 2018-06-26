@@ -41,7 +41,7 @@
 
   {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
 
-  {{- $hasParams := gt (len $operation.Request.Params.Properties) 0 -}}
+  {{- $hasParams := gt (len $operation.Request.Query.Properties) 0 -}}
   {{- $hasHeaders := and (gt (len $operation.Request.Headers.Properties) 0) (not $ignoreHeaders) -}}
   {{- $hasElements := gt (len $operation.Request.Elements.Properties) 0 -}}
 
@@ -50,7 +50,7 @@
     {{- if or $hasParams $hasHeaders $hasElements -}},{{- end -}}
   {{- end -}}
 
-  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Params $operation.Name -}}
+  {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Query $operation.Name -}}
   {{- if and $hasParams $hasHeaders -}},{{end}}
   {{- template "CustomizedTypeRequestParams" passThrough $operation.Request.Headers $operation.Name -}}
   {{- if and (or $hasParams $hasHeaders) $hasElements -}},{{end}}
@@ -71,7 +71,7 @@
 
   {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
 
-  {{- $hasParams := gt (len $operation.Request.Params.Properties) 0 -}}
+  {{- $hasParams := gt (len $operation.Request.Query.Properties) 0 -}}
   {{- $hasHeaders := and (gt (len $operation.Request.Headers.Properties) 0) (not $ignoreHeaders) -}}
   {{- $hasElements := gt (len $operation.Request.Elements.Properties) 0 -}}
 
@@ -80,8 +80,8 @@
     {{- if or $hasParams $hasHeaders $hasElements -}},{{- end -}}
   {{- end -}}
 
-  {{- $firstID := $operation.Request.Params | firstPropertyIDInCustomizedType -}}
-  {{- range $_, $property := $operation.Request.Params.Properties -}}
+  {{- $firstID := $operation.Request.Query | firstPropertyIDInCustomizedType -}}
+  {{- range $_, $property := $operation.Request.Query.Properties -}}
     {{- if ne $property.ID $firstID -}},
     {{end -}}
     {{$property.ID | snakeCase}}:{{$property.ID | snakeCase}}
@@ -137,7 +137,7 @@
     request.send
   end
 
-  {{$uri := $operation.Request.URI}}
+  {{$uri := $operation.Request.Path}}
   {{$uri := replace $uri "{" "<" -1}}
   {{$uri := replace $uri "}" ">" -1}}
   {{$uri := dashConnected $uri}}
@@ -159,7 +159,7 @@
         request_method: '{{$operation.Request.Method}}',
         request_uri:    '{{$uri}}',
         request_params: {
-          {{range $_, $property := $operation.Request.Params.Properties -}}
+          {{range $_, $property := $operation.Request.Query.Properties -}}
             '{{$property.Name}}'=> {{$property.ID | snakeCase}},
           {{end -}}
         },
@@ -182,20 +182,17 @@
         {{else}}
           request_body: nil,
         {{end}}
-        {{- if $operation.Response.StatusCodes -}}
-          status_code: [
-            {{range $statusCodeNumber, $statusCode := $operation.Response.StatusCodes -}}
-              {{$statusCodeNumber}},
-              {{- if $statusCode.Description -}}
-                # {{$statusCode.Description}}
-              {{- end}}
+        status_code: {
+          {{range $keyStatus, $valueStatus := $operation.Responses -}}
+            {{- if $valueStatus.StatusCode -}}
+              {{$valueStatus.StatusCode.Code}},
+            {{else}}
+              200, // OK
             {{end -}}
-          ],
-        {{else}}
-          status_code: [
-            200, # OK
-          ],
-        {{end -}}
+          {{else}}
+            200, //OK
+          {{end -}}
+          },
       }
 
       {{$operation.ID | snakeCase}}_input_validate input
@@ -277,7 +274,7 @@
 
     {{- $ignoreHeaders := eq $operation.Name "Delete Multiple Objects" -}}
 
-    {{$x := passThrough "input['request_params']" $request.Params $customizedTypes}}
+    {{$x := passThrough "input['request_params']" $request.Query $customizedTypes}}
     {{template "RenderCustomizedTypeValidation" $x}}
 
     {{if not $ignoreHeaders}}

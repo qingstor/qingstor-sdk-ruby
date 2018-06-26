@@ -28,6 +28,11 @@ Then(/^get bucket lifecycle status code is (\d+)$/) do |status_code|
   raise unless @get_bucket_lifecycle_output[:status_code].to_s == status_code
 end
 
+Then(/^get bucket lifecycle should have filter prefix "([^"]*)"$/) do |prefix|
+  ok = false
+  @get_bucket_lifecycle_output[:rule].each { |rule| ok = true if rule[:filter][:prefix] == prefix }
+  raise unless ok
+end
 # ----------------------------------------------------------------------------
 
 When(/^delete bucket lifecycle$/) do

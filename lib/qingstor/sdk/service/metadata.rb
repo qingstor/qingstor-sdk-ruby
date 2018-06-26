@@ -205,8 +205,16 @@ module QingStor
 
   # put_metadata: Create a new Metadata.
   # Documentation URL: https://docs.qingcloud.com/qingstor/api/common/metadata
-  def put_metadata()
-  request = put_metadata_request 
+  def put_metadata(cache_control: '',
+      content_disposition: '',
+      content_encoding: '',
+      expires: '',
+      x_qs_meta_*: '')
+  request = put_metadata_request cache_control:cache_control,
+    content_disposition:content_disposition,
+    content_encoding:content_encoding,
+    expires:expires,
+    x_qs_meta_*:x_qs_meta_*
     request.send
   end
 
@@ -215,7 +223,11 @@ module QingStor
   
   
 
-  def put_metadata_request()
+  def put_metadata_request(cache_control: '',
+      content_disposition: '',
+      content_encoding: '',
+      expires: '',
+      x_qs_meta_*: '')
   input   = {
         config:         config,
           properties:     properties,
@@ -225,7 +237,12 @@ module QingStor
         request_params: {
           },
         request_headers: {
-          },
+          'Cache-Control'=> cache_control,
+            'Content-Disposition'=> content_disposition,
+            'Content-Encoding'=> content_encoding,
+            'Expires'=> expires,
+            'x-qs-meta-*'=> x_qs_meta_*,
+            },
         request_elements: {
           },
           request_body: nil,
@@ -265,6 +282,46 @@ module QingStor
   
   
 
+  
+    
+      
+      
+        
+        
+      
+    
+  
+    
+      
+      
+        
+        
+      
+    
+  
+    
+      
+      
+        
+        
+      
+    
+  
+    
+      
+      
+        
+        
+      
+    
+  
+    
+      
+      
+        
+        
+      
+    
   
 
     

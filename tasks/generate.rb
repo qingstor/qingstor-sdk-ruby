@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #  +-------------------------------------------------------------------------
 #  | Copyright (C) 2016 Yunify, Inc.
 #  +-------------------------------------------------------------------------
@@ -23,8 +25,9 @@ end
 task :generate do
   system '
     snips \
-      --service=qingstor --service-api-version=latest \
-      --spec="./specs" --template="./template" --output="./lib/qingstor/sdk/service"
+      -f ./specs/qingstor/2016-01-06/swagger/api_v2.0.json \
+      -t="./template" \
+      -o="./lib/qingstor/sdk/service"
   '
   system 'rubocop -a -c .rubocop.yaml'
 end

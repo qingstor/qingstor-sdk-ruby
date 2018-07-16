@@ -3,7 +3,7 @@
 #   https://github.com/bbatsov/rubocop/blob/master/config/default.yml
 
 AllCops:
-  TargetRubyVersion: 2.1
+  TargetRubyVersion: 2.3
 
 Documentation:
     Enabled: false
@@ -14,7 +14,7 @@ Metrics/LineLength:
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
 
 Style/BlockDelimiters:
@@ -31,7 +31,7 @@ Style/AlignHash:
   EnforcedColonStyle: table
 
 Lint/DefEndAlignment:
-  AlignWith: def
+  EnforcedStyleAlignWith: def
   AutoCorrect: true
 
 Style/BracesAroundHashParameters:

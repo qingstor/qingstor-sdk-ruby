@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #  +-------------------------------------------------------------------------
 #  | Copyright (C) 2016 Yunify, Inc.
 #  +-------------------------------------------------------------------------
@@ -47,8 +49,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            204, # Bucket deleted
+            204
           ],
         }
 
@@ -85,8 +88,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            204, # OK
+            204
           ],
         }
 
@@ -123,8 +127,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            204, # No content
+            204
           ],
         }
 
@@ -135,6 +140,84 @@ module QingStor
       private
 
       def delete_bucket_external_mirror_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
+      # delete_bucket_lifecycle: Delete Lifecycle information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/lifecycle/delete_lifecycle.html
+      def delete_lifecycle
+        request = delete_lifecycle_request
+        request.send
+      end
+
+      def delete_lifecycle_request
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'DELETE Bucket Lifecycle',
+          request_method:   'DELETE',
+          request_uri:      '/<bucket-name>?lifecycle',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            204
+          ],
+        }
+
+        delete_bucket_lifecycle_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def delete_bucket_lifecycle_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
+      # delete_bucket_notification: Delete Notification information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/notification/delete_notification.html
+      def delete_notification
+        request = delete_notification_request
+        request.send
+      end
+
+      def delete_notification_request
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'DELETE Bucket Notification',
+          request_method:   'DELETE',
+          request_uri:      '/<bucket-name>?notification',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            204
+          ],
+        }
+
+        delete_bucket_notification_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def delete_bucket_notification_input_validate(input)
         input.deep_stringify_keys!
       end
 
@@ -161,8 +244,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            204, # No content
+            204
           ],
         }
 
@@ -204,8 +288,9 @@ module QingStor
             'quiet'   => quiet,
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -249,8 +334,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -287,8 +373,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -325,8 +412,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -337,6 +425,84 @@ module QingStor
       private
 
       def get_bucket_external_mirror_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
+      # get_bucket_lifecycle: Get Lifecycle information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/lifecycle/get_lifecycle.html
+      def get_lifecycle
+        request = get_lifecycle_request
+        request.send
+      end
+
+      def get_lifecycle_request
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'GET Bucket Lifecycle',
+          request_method:   'GET',
+          request_uri:      '/<bucket-name>?lifecycle',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ],
+        }
+
+        get_bucket_lifecycle_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def get_bucket_lifecycle_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
+      # get_bucket_notification: Get Notification information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/notification/get_notification.html
+      def get_notification
+        request = get_notification_request
+        request.send
+      end
+
+      def get_notification_request
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'GET Bucket Notification',
+          request_method:   'GET',
+          request_uri:      '/<bucket-name>?notification',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ],
+        }
+
+        get_bucket_notification_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def get_bucket_notification_input_validate(input)
         input.deep_stringify_keys!
       end
 
@@ -363,8 +529,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -401,8 +568,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -439,8 +607,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -459,20 +628,23 @@ module QingStor
       # list_multipart_uploads: List multipart uploads in the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/list_multipart_uploads.html
       def list_multipart_uploads(delimiter: '',
+                                 key_marker: '',
                                  limit: nil,
-                                 marker: '',
-                                 prefix: '')
-        request = list_multipart_uploads_request delimiter: delimiter,
-                                                 limit:     limit,
-                                                 marker:    marker,
-                                                 prefix:    prefix
+                                 prefix: '',
+                                 upload_id_marker: '')
+        request = list_multipart_uploads_request delimiter:        delimiter,
+                                                 key_marker:       key_marker,
+                                                 limit:            limit,
+                                                 prefix:           prefix,
+                                                 upload_id_marker: upload_id_marker
         request.send
       end
 
       def list_multipart_uploads_request(delimiter: '',
+                                         key_marker: '',
                                          limit: nil,
-                                         marker: '',
-                                         prefix: '')
+                                         prefix: '',
+                                         upload_id_marker: '')
         input = {
           config:           config,
           properties:       properties,
@@ -480,18 +652,20 @@ module QingStor
           request_method:   'GET',
           request_uri:      '/<bucket-name>?uploads',
           request_params:   {
-            'delimiter' => delimiter,
-            'limit'     => limit,
-            'marker'    => marker,
-            'prefix'    => prefix,
+            'delimiter'        => delimiter,
+            'key_marker'       => key_marker,
+            'limit'            => limit,
+            'prefix'           => prefix,
+            'upload_id_marker' => upload_id_marker,
           },
           request_headers:  {
           },
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -541,8 +715,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -579,8 +754,9 @@ module QingStor
           request_elements: {
           },
           request_body:     nil,
+
           status_code:      [
-            201, # Bucket created
+            201
           ],
         }
 
@@ -618,8 +794,9 @@ module QingStor
             'acl' => acl,
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -641,10 +818,10 @@ module QingStor
 
             unless !x['grantee']['type'].nil? && !x['grantee']['type'].to_s.empty?
               raise ParameterRequiredError.new('type', 'grantee')
-            end
+              end
 
             if x['grantee']['type'] && !x['grantee']['type'].to_s.empty?
-              type_valid_values = %w(user group)
+              type_valid_values = %w[user group]
               unless type_valid_values.include? x['grantee']['type'].to_s
                 raise ParameterValueNotAllowedError.new(
                   'type',
@@ -652,9 +829,9 @@ module QingStor
                   type_valid_values,
                 )
               end
-            end
+        end
 
-          end
+                          end
 
           raise ParameterRequiredError.new('grantee', 'acl') if x['grantee'].nil?
 
@@ -663,7 +840,7 @@ module QingStor
           end
 
           next unless x['permission'] && !x['permission'].to_s.empty?
-          permission_valid_values = %w(READ WRITE FULL_CONTROL)
+          permission_valid_values = %w[READ WRITE FULL_CONTROL]
           next if permission_valid_values.include? x['permission'].to_s
           raise ParameterValueNotAllowedError.new(
             'permission',
@@ -697,8 +874,9 @@ module QingStor
             'cors_rules' => cors_rules,
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -750,8 +928,9 @@ module QingStor
             'source_site' => source_site,
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -766,6 +945,176 @@ module QingStor
 
         unless !input['request_elements']['source_site'].nil? && !input['request_elements']['source_site'].to_s.empty?
           raise ParameterRequiredError.new('source_site', 'PutBucketExternalMirrorInput')
+        end
+      end
+
+      public
+
+      # put_bucket_lifecycle: Set Lifecycle information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/lifecycle/put_lifecycle.html
+      def put_lifecycle(rule: [])
+        request = put_lifecycle_request rule: rule
+        request.send
+      end
+
+      def put_lifecycle_request(rule: [])
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'PUT Bucket Lifecycle',
+          request_method:   'PUT',
+          request_uri:      '/<bucket-name>?lifecycle',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+            'rule' => rule,
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ],
+        }
+
+        put_bucket_lifecycle_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def put_bucket_lifecycle_input_validate(input)
+        input.deep_stringify_keys!
+
+        unless !input['request_elements']['rule'].nil? && !input['request_elements']['rule'].to_s.empty?
+          raise ParameterRequiredError.new('rule', 'PutBucketLifecycleInput')
+        end
+
+        input['request_elements']['rule'].each do |x|
+          unless x['abort_incomplete_multipart_upload'].nil?
+
+            unless !x['abort_incomplete_multipart_upload']['days_after_initiation'].nil? && !x['abort_incomplete_multipart_upload']['days_after_initiation'].to_s.empty?
+              raise ParameterRequiredError.new('days_after_initiation', 'abort_incomplete_multipart_upload')
+              end
+
+                              end
+
+          unless x['expiration'].nil?
+
+          end
+
+          unless x['filter'].nil?
+
+            unless !x['filter']['prefix'].nil? && !x['filter']['prefix'].to_s.empty?
+              raise ParameterRequiredError.new('prefix', 'filter')
+              end
+
+          end
+
+          raise ParameterRequiredError.new('filter', 'rule') if x['filter'].nil?
+
+          unless !x['id'].nil? && !x['id'].to_s.empty?
+            raise ParameterRequiredError.new('id', 'rule')
+          end
+
+          unless !x['status'].nil? && !x['status'].to_s.empty?
+            raise ParameterRequiredError.new('status', 'rule')
+          end
+
+          if x['status'] && !x['status'].to_s.empty?
+            status_valid_values = %w[enabled disabled]
+            unless status_valid_values.include? x['status'].to_s
+              raise ParameterValueNotAllowedError.new(
+                'status',
+                x['status'],
+                status_valid_values,
+              )
+            end
+          end
+
+          next if x['transition'].nil?
+
+          unless !x['transition']['storage_class'].nil? && !x['transition']['storage_class'].to_s.empty?
+            raise ParameterRequiredError.new('storage_class', 'transition')
+          end
+        end
+      end
+
+      public
+
+      # put_bucket_notification: Set Notification information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/notification/put_notification.html
+      def put_notification(notifications: [])
+        request = put_notification_request notifications: notifications
+        request.send
+      end
+
+      def put_notification_request(notifications: [])
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'PUT Bucket Notification',
+          request_method:   'PUT',
+          request_uri:      '/<bucket-name>?notification',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+            'notifications' => notifications,
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ],
+        }
+
+        put_bucket_notification_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def put_bucket_notification_input_validate(input)
+        input.deep_stringify_keys!
+
+        unless !input['request_elements']['notifications'].nil? && !input['request_elements']['notifications'].to_s.empty?
+          raise ParameterRequiredError.new('notifications', 'PutBucketNotificationInput')
+        end
+
+        input['request_elements']['notifications'].each do |x|
+          unless !x['cloudfunc'].nil? && !x['cloudfunc'].to_s.empty?
+            raise ParameterRequiredError.new('cloudfunc', 'notification')
+          end
+
+          if x['cloudfunc'] && !x['cloudfunc'].to_s.empty?
+            cloudfunc_valid_values = ['tupu-porn', 'notifier', 'image']
+            unless cloudfunc_valid_values.include? x['cloudfunc'].to_s
+              raise ParameterValueNotAllowedError.new(
+                'cloudfunc',
+                x['cloudfunc'],
+                cloudfunc_valid_values,
+              )
+            end
+          end
+
+          unless x['cloudfunc_args'].nil?
+
+            unless !x['cloudfunc_args']['action'].nil? && !x['cloudfunc_args']['action'].to_s.empty?
+              raise ParameterRequiredError.new('action', 'cloudfunc_args')
+              end
+
+          end
+
+          unless !x['event_types'].nil? && !x['event_types'].to_s.empty?
+            raise ParameterRequiredError.new('event_types', 'notification')
+          end
+
+          unless !x['id'].nil? && !x['id'].to_s.empty?
+            raise ParameterRequiredError.new('id', 'notification')
+          end
         end
       end
 
@@ -793,8 +1142,9 @@ module QingStor
             'statement' => statement,
           },
           request_body:     nil,
+
           status_code:      [
-            200, # OK
+            200
           ],
         }
 
@@ -820,7 +1170,7 @@ module QingStor
 
             unless x['condition']['ip_address'].nil?
 
-            end
+                                                end
 
             unless x['condition']['is_null'].nil?
 
@@ -845,7 +1195,7 @@ module QingStor
           end
 
           if x['effect'] && !x['effect'].to_s.empty?
-            effect_valid_values = %w(allow deny)
+            effect_valid_values = %w[allow deny]
             unless effect_valid_values.include? x['effect'].to_s
               raise ParameterValueNotAllowedError.new(
                 'effect',

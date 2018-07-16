@@ -27,9 +27,6 @@ module QingStor
     {{else -}}
       class {{camelCase $subService.Name}}
     {{end -}}
-      {{- if .IsVersioningEnabled -}}
-        _{{$service.APIVersion | snakeCase}}
-      {{- end}}
       attr_accessor :config, :properties
 
       {{if ne $subService.Name "Object"}}

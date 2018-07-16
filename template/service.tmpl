@@ -26,9 +26,6 @@ module QingStor
 
     # {{$service.Name | camelCase}} provides {{$service.Name}} Service API (API Version {{$service.APIVersion}})
     class Service
-      {{- if .IsVersioningEnabled -}}
-        _{{$service.APIVersion | snakeCase}}
-      {{- end}}
       attr_accessor :config, :properties
 
       def initialize(config)

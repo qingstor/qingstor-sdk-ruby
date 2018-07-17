@@ -39,7 +39,7 @@ end
 # ----------------------------------------------------------------------------
 
 When(/^upload the first part with key "(.+)"$/) do |object_key|
-  system 'dd if=/dev/zero of=/tmp/sdk_bin_part_0 bs=1m count=5'
+  system 'dd if=/dev/zero of=/tmp/sdk_bin_part_0 bs= 1048576 count=5'
   @upload_the_first_part_output = bucket.upload_multipart(
     object_key,
     upload_id:   the_upload_id,
@@ -54,7 +54,7 @@ Then(/^upload the first part status code is (\d+)$/) do |status_code|
 end
 
 When(/^upload the second part with key "(.+)"$/) do |object_key|
-  system 'dd if=/dev/zero of=/tmp/sdk_bin_part_1 bs=1m count=4'
+  system 'dd if=/dev/zero of=/tmp/sdk_bin_part_1 bs=1048576 count=4'
   @upload_the_second_part_output = bucket.upload_multipart(
     object_key,
     upload_id:   the_upload_id,
@@ -69,7 +69,7 @@ Then(/^upload the second part status code is (\d+)$/) do |status_code|
 end
 
 When(/^upload the third part with key "(.+)"$/) do |object_key|
-  system 'dd if=/dev/zero of=/tmp/sdk_bin_part_2 bs=1m count=3'
+  system 'dd if=/dev/zero of=/tmp/sdk_bin_part_2 bs=1048576 count=3'
   @upload_the_third_part_output = bucket.upload_multipart(
     object_key,
     upload_id:   the_upload_id,

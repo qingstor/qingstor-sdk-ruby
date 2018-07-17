@@ -39,7 +39,7 @@ end
 # ----------------------------------------------------------------------------
 
 When(/^upload the first part with key "(.+)"$/) do |object_key|
-  system 'dd if=/dev/zero of=/tmp/sdk_bin_part_0 bs= 1048576 count=5'
+  system 'dd if=/dev/zero of=/tmp/sdk_bin_part_0 bs=1048576 count=5'
   @upload_the_first_part_output = bucket.upload_multipart(
     object_key,
     upload_id:   the_upload_id,

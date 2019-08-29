@@ -80,7 +80,7 @@ module QingStor
         output['status_code'] = http_response.code.to_i
 
         http_response.each_header { |k, v| output[k.tr('-', '_')] = v }
-        if http_response['Content-Type'] == 'application/json'
+        if http_response['Content-Type'].include? 'application/json'
           unless http_response.body.nil?
             JSON.parse(http_response.body).each { |k, v| output[k] = v }
           end

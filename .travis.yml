@@ -3,18 +3,18 @@ sudo: required
 services:
   - docker
 
-language: go
-go:
-  - 1.9
-
 env:
   matrix:
     - RUBY_VERSION=2.3
+      env: PATH=$PATH:$PWD
     - RUBY_VERSION=2.2
+      env: PATH=$PATH:$PWD
     - RUBY_VERSION=2.1.5
+      env: PATH=$PATH:$PWD
 
 install:
-  - go get -u github.com/yunify/snips
+  - wget https://github.com/yunify/snips/releases/download/v0.3.6/snips-v0.3.6-linux_amd64.tar.gz -O /tmp/snips.tar.gz
+  - tar -zxvf /tmp/snips.tar.gz
   - bundle install
 
 before_script:

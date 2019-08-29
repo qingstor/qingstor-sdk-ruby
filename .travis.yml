@@ -7,11 +7,11 @@ language: ruby
 matrix:
   include:
   - rvm: 2.3
-    env: RUBY_VERSION=2.3
+    env: RV=2.3
   - rvm: 2.2
-    env: RUBY_VERSION=2.2
+    env: RV=2.2
   - rvm: 2.1.5
-    env: RUBY_VERSION=2.1.5
+    env: RV=2.1.5
 
 install:
   - wget https://github.com/yunify/snips/releases/download/v0.3.6/snips-v0.3.6-linux_amd64.tar.gz -O /tmp/snips.tar.gz
@@ -24,4 +24,4 @@ before_script:
   - rake generate
 
 script:
-  - rake spec-runtime-ruby-${RUBY_VERSION}
+  - rake spec-runtime-ruby-${RV}

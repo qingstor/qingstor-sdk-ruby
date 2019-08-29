@@ -3,7 +3,9 @@ sudo: required
 services:
   - docker
 
-language: ruby
+language: go
+go:
+  - 1.9
 
 env:
   matrix:

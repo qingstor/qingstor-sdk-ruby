@@ -6,11 +6,8 @@ services:
 env:
   matrix:
     - RUBY_VERSION=2.3
-      PATH=$PATH:$PWD
     - RUBY_VERSION=2.2
-      PATH=$PATH:$PWD
     - RUBY_VERSION=2.1.5
-      PATH=$PATH:$PWD
 
 install:
   - wget https://github.com/yunify/snips/releases/download/v0.3.6/snips-v0.3.6-linux_amd64.tar.gz -O /tmp/snips.tar.gz

@@ -3,18 +3,20 @@ sudo: required
 services:
   - docker
 
-language: go
-go:
-  - 1.7
-
-env:
-  matrix:
-    - RUBY_VERSION=2.3
-    - RUBY_VERSION=2.2
-    - RUBY_VERSION=2.1.5
+language: ruby
+matrix:
+  include:
+  - rvm: 2.3
+    env: RV=2.3
+  - rvm: 2.2
+    env: RV=2.2
+  - rvm: 2.1.5
+    env: RV=2.1.5
 
 install:
-  - go get -u github.com/yunify/snips
+  - wget https://github.com/yunify/snips/releases/download/v0.3.6/snips-v0.3.6-linux_amd64.tar.gz -O /tmp/snips.tar.gz
+  - tar -zxvf /tmp/snips.tar.gz
+  - export PATH=$PATH:$PWD
   - bundle install
 
 before_script:
@@ -22,4 +24,4 @@ before_script:
   - rake generate
 
 script:
-  - rake spec-runtime-ruby-${RUBY_VERSION}
+  - rake spec-runtime-ruby-${RV}

@@ -27,7 +27,7 @@ module QingStor
           properties:       {
             'bucket-name' => 'test',
             'object-key'  => 'path/to/key.txt',
-            'zone'        => 'beta',
+            'zone'        => 'beta'
           },
           api_name:         'GET Object',
           service_name:     'QingStor',
@@ -36,13 +36,13 @@ module QingStor
           request_headers:  {
             'If-Match'          => '',
             'If-Modified-Since' => 'Thu, 01 Sep 2016 07:30:00 GMT',
-            'Range'             => '100-',
+            'Range'             => '100-'
           },
           request_elements: {},
           status_code:      [
-            201,
+            201
           ],
-          request_body:     'This is body.',
+          request_body:     'This is body.'
         }
 
         result = Preprocessor.preprocess input

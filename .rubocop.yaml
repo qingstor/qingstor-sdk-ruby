@@ -36,3 +36,6 @@ Lint/DefEndAlignment:
 
 Style/BracesAroundHashParameters:
   EnforcedStyle: no_braces
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never

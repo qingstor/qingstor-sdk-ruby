@@ -29,7 +29,7 @@ module QingStor
       def self.init(access_key_id, secret_access_key)
         initial_config = {
           access_key_id:     access_key_id,
-          secret_access_key: secret_access_key,
+          secret_access_key: secret_access_key
         }
         Config.new(initial_config)
       end
@@ -47,7 +47,7 @@ module QingStor
       end
 
       def check
-        %i(access_key_id secret_access_key host port protocol).each do |x|
+        %i[access_key_id secret_access_key host port protocol].each do |x|
           if !self[x] || self[x].to_s.empty?
             raise ConfigurationError, "#{x.to_sym} not specified"
           end

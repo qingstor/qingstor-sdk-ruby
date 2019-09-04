@@ -23,7 +23,7 @@ module QingStor
       @@level = :warn
 
       def self.set_level(level)
-        index = %w(debug info warn error fatal).find_index level.to_s
+        index = %w[debug info warn error fatal].find_index level.to_s
         @@logger.level = index.nil? ? 0 : index
         @@level = level.to_sym
       end

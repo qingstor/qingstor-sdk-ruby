@@ -30,13 +30,13 @@ module QingStor
           request_uri:     '/?acl',
           request_params:  {
             'upload_id'   => 'fde133b5f6d932cd9c79bac3c7318da1',
-            'part_number' => '0',
+            'part_number' => '0'
           },
           request_headers: {
             'Date'        => 'Mon, 01 Jan 0001 00:00:00 GMT',
             'X-QS-Test-1' => 'Test 1',
-            'X-QS-Test-2' => 'Test 2',
-          },
+            'X-QS-Test-2' => 'Test 2'
+          }
         }
         input[:id] = 324_347
 
@@ -54,15 +54,15 @@ module QingStor
         input = {
           config:          config,
           properties:      {
-            'object-key' => '中文',
+            'object-key' => '中文'
           },
           service_name:    'QingStor',
           request_method:  'GET',
           request_uri:     '/bucket-name/<object-key>',
           request_params:  {},
           request_headers: {
-            'Date' => 'Mon, 01 Jan 0001 00:00:00 GMT',
-          },
+            'Date' => 'Mon, 01 Jan 0001 00:00:00 GMT'
+          }
         }
         input[:id] = 324_347
 
@@ -86,13 +86,13 @@ module QingStor
           request_uri:     '/?acl',
           request_params:  {
             'upload_id'   => 'fde133b5f6d932cd9c79bac3c7318da1',
-            'part_number' => '0',
+            'part_number' => '0'
           },
           request_headers: {
             'Date'        => 'Mon, 01 Jan 0001 00:00:00 GMT',
             'X-QS-Test-1' => 'Test 1',
-            'X-QS-Test-2' => 'Test 2',
-          },
+            'X-QS-Test-2' => 'Test 2'
+          }
         }
         input[:id] = 324_347
 

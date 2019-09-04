@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 #  +-------------------------------------------------------------------------
 #  | Copyright (C) 2016 Yunify, Inc.
 #  +-------------------------------------------------------------------------
@@ -39,7 +37,7 @@ module QingStor
           request_method:   'DELETE',
           request_uri:      '/<bucket-name>/<object-key>',
           request_params:   {
-            'upload_id' => upload_id,
+            'upload_id' => upload_id
           },
           request_headers:  {
           },
@@ -49,7 +47,7 @@ module QingStor
 
           status_code:      [
             204
-          ],
+          ]
         }
 
         abort_multipart_upload_input_validate input
@@ -93,22 +91,22 @@ module QingStor
           request_method:   'POST',
           request_uri:      '/<bucket-name>/<object-key>',
           request_params:   {
-            'upload_id' => upload_id,
+            'upload_id' => upload_id
           },
           request_headers:  {
             'ETag'                               => etag,
             'X-QS-Encryption-Customer-Algorithm' => x_qs_encryption_customer_algorithm,
             'X-QS-Encryption-Customer-Key'       => x_qs_encryption_customer_key,
-            'X-QS-Encryption-Customer-Key-MD5'   => x_qs_encryption_customer_key_md5,
+            'X-QS-Encryption-Customer-Key-MD5'   => x_qs_encryption_customer_key_md5
           },
           request_elements: {
-            'object_parts' => object_parts,
+            'object_parts' => object_parts
           },
           request_body:     nil,
 
           status_code:      [
             201
-          ],
+          ]
         }
 
         complete_multipart_upload_input_validate input
@@ -162,7 +160,7 @@ module QingStor
 
           status_code:      [
             204
-          ],
+          ]
         }
 
         delete_object_input_validate input
@@ -234,7 +232,7 @@ module QingStor
             'response-content-encoding'    => response_content_encoding,
             'response-content-language'    => response_content_language,
             'response-content-type'        => response_content_type,
-            'response-expires'             => response_expires,
+            'response-expires'             => response_expires
           },
           request_headers:  {
             'If-Match'                           => if_match,
@@ -244,7 +242,7 @@ module QingStor
             'Range'                              => range,
             'X-QS-Encryption-Customer-Algorithm' => x_qs_encryption_customer_algorithm,
             'X-QS-Encryption-Customer-Key'       => x_qs_encryption_customer_key,
-            'X-QS-Encryption-Customer-Key-MD5'   => x_qs_encryption_customer_key_md5,
+            'X-QS-Encryption-Customer-Key-MD5'   => x_qs_encryption_customer_key_md5
           },
           request_elements: {
           },
@@ -255,7 +253,7 @@ module QingStor
             206,
             304,
             412
-          ],
+          ]
         }
 
         get_object_input_validate input
@@ -312,7 +310,7 @@ module QingStor
             'If-Unmodified-Since'                => if_unmodified_since,
             'X-QS-Encryption-Customer-Algorithm' => x_qs_encryption_customer_algorithm,
             'X-QS-Encryption-Customer-Key'       => x_qs_encryption_customer_key,
-            'X-QS-Encryption-Customer-Key-MD5'   => x_qs_encryption_customer_key_md5,
+            'X-QS-Encryption-Customer-Key-MD5'   => x_qs_encryption_customer_key_md5
           },
           request_elements: {
           },
@@ -320,7 +318,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         head_object_input_validate input
@@ -375,10 +373,10 @@ module QingStor
             'response-content-encoding'    => response_content_encoding,
             'response-content-language'    => response_content_language,
             'response-content-type'        => response_content_type,
-            'response-expires'             => response_expires,
+            'response-expires'             => response_expires
           },
           request_headers:  {
-            'If-Modified-Since' => if_modified_since,
+            'If-Modified-Since' => if_modified_since
           },
           request_elements: {
           },
@@ -387,7 +385,7 @@ module QingStor
           status_code:      [
             200,
             304
-          ],
+          ]
         }
 
         image_process_input_validate input
@@ -440,7 +438,7 @@ module QingStor
             'X-QS-Encryption-Customer-Algorithm' => x_qs_encryption_customer_algorithm,
             'X-QS-Encryption-Customer-Key'       => x_qs_encryption_customer_key,
             'X-QS-Encryption-Customer-Key-MD5'   => x_qs_encryption_customer_key_md5,
-            'X-QS-Storage-Class'                 => x_qs_storage_class,
+            'X-QS-Storage-Class'                 => x_qs_storage_class
           },
           request_elements: {
           },
@@ -448,7 +446,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         initiate_multipart_upload_input_validate input
@@ -498,7 +496,7 @@ module QingStor
           request_params:   {
             'limit'              => limit,
             'part_number_marker' => part_number_marker,
-            'upload_id'          => upload_id,
+            'upload_id'          => upload_id
           },
           request_headers:  {
           },
@@ -508,7 +506,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         list_multipart_input_validate input
@@ -553,7 +551,7 @@ module QingStor
           request_headers:  {
             'Access-Control-Request-Headers' => access_control_request_headers,
             'Access-Control-Request-Method'  => access_control_request_method,
-            'Origin'                         => origin,
+            'Origin'                         => origin
           },
           request_elements: {
           },
@@ -563,7 +561,7 @@ module QingStor
             200,
             304,
             412
-          ],
+          ]
         }
 
         options_object_input_validate input
@@ -679,7 +677,7 @@ module QingStor
             'X-QS-Fetch-If-Unmodified-Since'                 => x_qs_fetch_if_unmodified_since,
             'X-QS-Fetch-Source'                              => x_qs_fetch_source,
             'X-QS-Move-Source'                               => x_qs_move_source,
-            'X-QS-Storage-Class'                             => x_qs_storage_class,
+            'X-QS-Storage-Class'                             => x_qs_storage_class
           },
           request_elements: {
           },
@@ -687,7 +685,7 @@ module QingStor
 
           status_code:      [
             201
-          ],
+          ]
         }
 
         put_object_input_validate input
@@ -775,7 +773,7 @@ module QingStor
           request_uri:      '/<bucket-name>/<object-key>',
           request_params:   {
             'part_number' => part_number,
-            'upload_id'   => upload_id,
+            'upload_id'   => upload_id
           },
           request_headers:  {
             'Content-Length'                                 => content_length,
@@ -791,7 +789,7 @@ module QingStor
             'X-QS-Copy-Source-If-Unmodified-Since'           => x_qs_copy_source_if_unmodified_since,
             'X-QS-Encryption-Customer-Algorithm'             => x_qs_encryption_customer_algorithm,
             'X-QS-Encryption-Customer-Key'                   => x_qs_encryption_customer_key,
-            'X-QS-Encryption-Customer-Key-MD5'               => x_qs_encryption_customer_key_md5,
+            'X-QS-Encryption-Customer-Key-MD5'               => x_qs_encryption_customer_key_md5
           },
           request_elements: {
           },
@@ -799,7 +797,7 @@ module QingStor
 
           status_code:      [
             201
-          ],
+          ]
         }
 
         upload_multipart_input_validate input

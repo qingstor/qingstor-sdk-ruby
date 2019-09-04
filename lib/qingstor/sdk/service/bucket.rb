@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 #  +-------------------------------------------------------------------------
 #  | Copyright (C) 2016 Yunify, Inc.
 #  +-------------------------------------------------------------------------
@@ -52,7 +50,7 @@ module QingStor
 
           status_code:      [
             204
-          ],
+          ]
         }
 
         delete_bucket_input_validate input
@@ -91,7 +89,7 @@ module QingStor
 
           status_code:      [
             204
-          ],
+          ]
         }
 
         delete_bucket_cors_input_validate input
@@ -130,7 +128,7 @@ module QingStor
 
           status_code:      [
             204
-          ],
+          ]
         }
 
         delete_bucket_external_mirror_input_validate input
@@ -169,7 +167,7 @@ module QingStor
 
           status_code:      [
             204
-          ],
+          ]
         }
 
         delete_bucket_lifecycle_input_validate input
@@ -208,7 +206,7 @@ module QingStor
 
           status_code:      [
             204
-          ],
+          ]
         }
 
         delete_bucket_notification_input_validate input
@@ -247,7 +245,7 @@ module QingStor
 
           status_code:      [
             204
-          ],
+          ]
         }
 
         delete_bucket_policy_input_validate input
@@ -285,13 +283,13 @@ module QingStor
           },
           request_elements: {
             'objects' => objects,
-            'quiet'   => quiet,
+            'quiet'   => quiet
           },
           request_body:     nil,
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         delete_multiple_objects_input_validate input
@@ -337,7 +335,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         get_bucket_acl_input_validate input
@@ -376,7 +374,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         get_bucket_cors_input_validate input
@@ -415,7 +413,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         get_bucket_external_mirror_input_validate input
@@ -454,7 +452,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         get_bucket_lifecycle_input_validate input
@@ -493,7 +491,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         get_bucket_notification_input_validate input
@@ -532,7 +530,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         get_bucket_policy_input_validate input
@@ -571,7 +569,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         get_bucket_statistics_input_validate input
@@ -610,7 +608,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         head_bucket_input_validate input
@@ -656,7 +654,7 @@ module QingStor
             'key_marker'       => key_marker,
             'limit'            => limit,
             'prefix'           => prefix,
-            'upload_id_marker' => upload_id_marker,
+            'upload_id_marker' => upload_id_marker
           },
           request_headers:  {
           },
@@ -666,7 +664,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         list_multipart_uploads_input_validate input
@@ -708,7 +706,7 @@ module QingStor
             'delimiter' => delimiter,
             'limit'     => limit,
             'marker'    => marker,
-            'prefix'    => prefix,
+            'prefix'    => prefix
           },
           request_headers:  {
           },
@@ -718,7 +716,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         list_objects_input_validate input
@@ -757,7 +755,7 @@ module QingStor
 
           status_code:      [
             201
-          ],
+          ]
         }
 
         put_bucket_input_validate input
@@ -791,13 +789,13 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'acl' => acl,
+            'acl' => acl
           },
           request_body:     nil,
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         put_bucket_acl_input_validate input
@@ -871,13 +869,13 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'cors_rules' => cors_rules,
+            'cors_rules' => cors_rules
           },
           request_body:     nil,
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         put_bucket_cors_input_validate input
@@ -925,13 +923,13 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'source_site' => source_site,
+            'source_site' => source_site
           },
           request_body:     nil,
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         put_bucket_external_mirror_input_validate input
@@ -969,13 +967,13 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'rule' => rule,
+            'rule' => rule
           },
           request_body:     nil,
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         put_bucket_lifecycle_input_validate input
@@ -1062,13 +1060,13 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'notifications' => notifications,
+            'notifications' => notifications
           },
           request_body:     nil,
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         put_bucket_notification_input_validate input
@@ -1139,13 +1137,13 @@ module QingStor
           request_headers:  {
           },
           request_elements: {
-            'statement' => statement,
+            'statement' => statement
           },
           request_body:     nil,
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         put_bucket_policy_input_validate input

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 #  +-------------------------------------------------------------------------
 #  | Copyright (C) 2016 Yunify, Inc.
 #  +-------------------------------------------------------------------------
@@ -46,7 +44,7 @@ module QingStor
           request_params:   {
           },
           request_headers:  {
-            'Location' => location,
+            'Location' => location
           },
           request_elements: {
           },
@@ -54,7 +52,7 @@ module QingStor
 
           status_code:      [
             200
-          ],
+          ]
         }
 
         list_buckets_input_validate input
@@ -72,7 +70,7 @@ module QingStor
       def bucket(bucket_name, zone)
         properties = {
           'bucket-name' => bucket_name,
-          'zone'        => zone,
+          'zone'        => zone
         }
         Bucket.new(config, properties)
       end

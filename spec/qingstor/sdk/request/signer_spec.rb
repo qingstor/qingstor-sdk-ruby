@@ -44,7 +44,7 @@ module QingStor
         input[:request_headers][:'Content-Type'] = ''
         result = Signer.sign input
 
-        check  = 'QS ENV_ACCESS_KEY_ID:bvglZF9iMOv1RaCTxPYWxexmt1UN2m5WKngYnhDEp2c='
+        check = 'QS ENV_ACCESS_KEY_ID:bvglZF9iMOv1RaCTxPYWxexmt1UN2m5WKngYnhDEp2c='
         expect(result[:request_headers][:Authorization]).to eq check
       end
 
@@ -70,7 +70,7 @@ module QingStor
         input[:request_headers][:'Content-Type'] = ''
         result = Signer.sign input
 
-        check  = 'QS ENV_ACCESS_KEY_ID:XsTXX50kzqBf92zLG1aIUIJmZ0hqIHoaHgkumwnV3fs='
+        check = 'QS ENV_ACCESS_KEY_ID:XsTXX50kzqBf92zLG1aIUIJmZ0hqIHoaHgkumwnV3fs='
         expect(result[:request_headers][:Authorization]).to eq check
       end
     end
@@ -100,7 +100,7 @@ module QingStor
         input[:request_headers][:'Content-Type'] = ''
         result = Signer.sign_query input, -62_135_596_800
 
-        check  = 'gTdB%2FcmD6rjv8CbFRDfFbHc64q442rYNAp99Hm7fBl4%3D'
+        check = 'gTdB%2FcmD6rjv8CbFRDfFbHc64q442rYNAp99Hm7fBl4%3D'
         expect(result[:request_params][:signature]).to eq check
       end
     end

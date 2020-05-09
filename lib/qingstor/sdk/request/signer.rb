@@ -99,7 +99,8 @@ module QingStor
 
       def self.sub_resource?(key)
         %w[
-          acl cors delete mirror part_number policy stats upload_id uploads
+          acl append cname cors delete image lifecycle logging mirror
+          notification part_number policy position stats upload_id uploads
           response-expires response-cache-control response-content-type
           response-content-language response-content-encoding response-content-disposition
         ].include? key

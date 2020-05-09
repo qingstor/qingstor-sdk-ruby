@@ -65,6 +65,50 @@ module QingStor
 
       public
 
+      # delete_bucket_cname: Delete bucket CNAME setting of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cname/delete_cname.html
+      def delete_cname(domain: '')
+        request = delete_cname_request domain: domain
+        request.send
+      end
+
+      def delete_cname_request(domain: '')
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'DELETE Bucket CNAME',
+          request_method:   'DELETE',
+          request_uri:      '/<bucket-name>?cname',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+            'domain' => domain
+          },
+          request_body:     nil,
+
+          status_code:      [
+            204
+          ]
+        }
+
+        delete_bucket_cname_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def delete_bucket_cname_input_validate(input)
+        input.deep_stringify_keys!
+
+        unless !input['request_elements']['domain'].nil? && !input['request_elements']['domain'].to_s.empty?
+          raise ParameterRequiredError.new('domain', 'DeleteBucketCNAMEInput')
+        end
+      end
+
+      public
+
       # delete_bucket_cors: Delete CORS information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cors/delete_cors.html
       def delete_cors
@@ -177,6 +221,45 @@ module QingStor
       private
 
       def delete_bucket_lifecycle_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
+      # delete_bucket_logging: Delete bucket logging setting of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/logging/delete_logging.html
+      def delete_logging
+        request = delete_logging_request
+        request.send
+      end
+
+      def delete_logging_request
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'DELETE Bucket Logging',
+          request_method:   'DELETE',
+          request_uri:      '/<bucket-name>?logging',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            204
+          ]
+        }
+
+        delete_bucket_logging_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def delete_bucket_logging_input_validate(input)
         input.deep_stringify_keys!
       end
 
@@ -350,6 +433,57 @@ module QingStor
 
       public
 
+      # get_bucket_cname: Get bucket CNAME setting of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cname/get_cname.html
+      def get_cname(type: '')
+        request = get_cname_request type: type
+        request.send
+      end
+
+      def get_cname_request(type: '')
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'GET Bucket CNAME',
+          request_method:   'GET',
+          request_uri:      '/<bucket-name>?cname',
+          request_params:   {
+            'type' => type
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ]
+        }
+
+        get_bucket_cname_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def get_bucket_cname_input_validate(input)
+        input.deep_stringify_keys!
+
+        if input['request_params']['type'] && !input['request_params']['type'].to_s.empty?
+          type_valid_values = %w[website normal]
+          unless type_valid_values.include? input['request_params']['type'].to_s
+            raise ParameterValueNotAllowedError.new(
+              'type',
+              input['request_params']['type'],
+              type_valid_values,
+            )
+          end
+        end
+      end
+
+      public
+
       # get_bucket_cors: Get CORS information of the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cors/get_cors.html
       def get_cors
@@ -462,6 +596,45 @@ module QingStor
       private
 
       def get_bucket_lifecycle_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
+      # get_bucket_logging: Get bucket logging setting of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/logging/get_logging.html
+      def get_logging
+        request = get_logging_request
+        request.send
+      end
+
+      def get_logging_request
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'GET Bucket Logging',
+          request_method:   'GET',
+          request_uri:      '/<bucket-name>?logging',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ]
+        }
+
+        get_bucket_logging_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def get_bucket_logging_input_validate(input)
         input.deep_stringify_keys!
       end
 
@@ -816,7 +989,7 @@ module QingStor
 
             unless !x['grantee']['type'].nil? && !x['grantee']['type'].to_s.empty?
               raise ParameterRequiredError.new('type', 'grantee')
-              end
+            end
 
             if x['grantee']['type'] && !x['grantee']['type'].to_s.empty?
               type_valid_values = %w[user group]
@@ -827,24 +1000,87 @@ module QingStor
                   type_valid_values,
                 )
               end
-        end
+            end
 
-                          end
+          end
 
-          raise ParameterRequiredError.new('grantee', 'acl') if x['grantee'].nil?
+          if x['grantee'].nil?
+            raise ParameterRequiredError.new('grantee', 'acl')
+          end
 
           unless !x['permission'].nil? && !x['permission'].to_s.empty?
             raise ParameterRequiredError.new('permission', 'acl')
           end
 
           next unless x['permission'] && !x['permission'].to_s.empty?
+
           permission_valid_values = %w[READ WRITE FULL_CONTROL]
           next if permission_valid_values.include? x['permission'].to_s
+
           raise ParameterValueNotAllowedError.new(
             'permission',
             x['permission'],
             permission_valid_values,
           )
+        end
+      end
+
+      public
+
+      # put_bucket_cname: Set bucket CNAME of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cname/put_cname.html
+      def put_cname(domain: '',
+                    type: '')
+        request = put_cname_request domain: domain,
+                                    type:   type
+        request.send
+      end
+
+      def put_cname_request(domain: '',
+                            type: '')
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'PUT Bucket CNAME',
+          request_method:   'PUT',
+          request_uri:      '/<bucket-name>?cname',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+            'domain' => domain,
+            'type'   => type
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ]
+        }
+
+        put_bucket_cname_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def put_bucket_cname_input_validate(input)
+        input.deep_stringify_keys!
+
+        unless !input['request_elements']['domain'].nil? && !input['request_elements']['domain'].to_s.empty?
+          raise ParameterRequiredError.new('domain', 'PutBucketCNAMEInput')
+        end
+
+        if input['request_elements']['type'] && !input['request_elements']['type'].to_s.empty?
+          type_valid_values = %w[normal website]
+          unless type_valid_values.include? input['request_elements']['type'].to_s
+            raise ParameterValueNotAllowedError.new(
+              'type',
+              input['request_elements']['type'],
+              type_valid_values,
+            )
+          end
         end
       end
 
@@ -994,9 +1230,9 @@ module QingStor
 
             unless !x['abort_incomplete_multipart_upload']['days_after_initiation'].nil? && !x['abort_incomplete_multipart_upload']['days_after_initiation'].to_s.empty?
               raise ParameterRequiredError.new('days_after_initiation', 'abort_incomplete_multipart_upload')
-              end
+            end
 
-                              end
+          end
 
           unless x['expiration'].nil?
 
@@ -1010,7 +1246,9 @@ module QingStor
 
           end
 
-          raise ParameterRequiredError.new('filter', 'rule') if x['filter'].nil?
+          if x['filter'].nil?
+            raise ParameterRequiredError.new('filter', 'rule')
+          end
 
           unless !x['id'].nil? && !x['id'].to_s.empty?
             raise ParameterRequiredError.new('id', 'rule')
@@ -1036,6 +1274,58 @@ module QingStor
           unless !x['transition']['storage_class'].nil? && !x['transition']['storage_class'].to_s.empty?
             raise ParameterRequiredError.new('storage_class', 'transition')
           end
+        end
+      end
+
+      public
+
+      # put_bucket_logging: Set bucket logging of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/logging/put_logging.html
+      def put_logging(target_bucket: '',
+                      target_prefix: '')
+        request = put_logging_request target_bucket: target_bucket,
+                                      target_prefix: target_prefix
+        request.send
+      end
+
+      def put_logging_request(target_bucket: '',
+                              target_prefix: '')
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'PUT Bucket Logging',
+          request_method:   'PUT',
+          request_uri:      '/<bucket-name>?logging',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+            'target_bucket' => target_bucket,
+            'target_prefix' => target_prefix
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ]
+        }
+
+        put_bucket_logging_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def put_bucket_logging_input_validate(input)
+        input.deep_stringify_keys!
+
+        unless !input['request_elements']['target_bucket'].nil? && !input['request_elements']['target_bucket'].to_s.empty?
+          raise ParameterRequiredError.new('target_bucket', 'PutBucketLoggingInput')
+        end
+
+        unless !input['request_elements']['target_prefix'].nil? && !input['request_elements']['target_prefix'].to_s.empty?
+          raise ParameterRequiredError.new('target_prefix', 'PutBucketLoggingInput')
         end
       end
 
@@ -1088,7 +1378,7 @@ module QingStor
           end
 
           if x['cloudfunc'] && !x['cloudfunc'].to_s.empty?
-            cloudfunc_valid_values = ['tupu-porn', 'notifier', 'image']
+            cloudfunc_valid_values = %w[tupu-porn notifier image]
             unless cloudfunc_valid_values.include? x['cloudfunc'].to_s
               raise ParameterValueNotAllowedError.new(
                 'cloudfunc',
@@ -1168,7 +1458,7 @@ module QingStor
 
             unless x['condition']['ip_address'].nil?
 
-                                                end
+            end
 
             unless x['condition']['is_null'].nil?
 

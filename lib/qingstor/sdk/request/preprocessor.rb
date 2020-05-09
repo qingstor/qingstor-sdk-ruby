@@ -123,7 +123,7 @@ module QingStor
       def self.compact(object)
         object.each do |k, v|
           object[k] = compact v if v.is_a? Hash
-          object.delete k if v.nil? || v == ''
+          object.delete k if v.nil? || v == '' || v == []
         end
         object
       end

@@ -25,7 +25,7 @@
       {{- else if eq $property.Type "object" -}}
         {{$property.ID | snakeCase}}: []
       {{- else if eq $property.Type "map" -}}
-        {{$property.ID | snakeCase}}: {}
+        {{$property.ID | snakeCase}}: []
       {{- else if eq $property.Type "any" -}}
         {{$property.ID | snakeCase}}: []
       {{- else -}}

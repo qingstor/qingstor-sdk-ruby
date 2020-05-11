@@ -179,6 +179,7 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 - Modify content-type check for application/json. (#21)
 - Fix sub-resources not be recognized when generate signature. (#25)
 - Fix meta data not work as intended. (#26)
+- Reverse fix of empty map in template, should not compact empty hash when sign. (#28)
 
 ### [v2.2.3] - 2017-03-28
 

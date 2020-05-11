@@ -167,6 +167,19 @@ log_level: 'warn'
 ## Change Log
 All notable changes to QingStor SDK for Ruby will be documented here.
 
+### [v2.3.0] - 2020-05-11
+
+### Added
+
+- Add support for lifecycle and notification.
+- Add support for bucket logging, bucket cname and append object. (#24)
+
+### Fixed
+
+- Modify content-type check for application/json. (#21)
+- Fix sub-resources not be recognized when generate signature. (#25)
+- Fix meta data not work as intended. (#26)
+
 ### [v2.2.3] - 2017-03-28
 
 ### Fixed
@@ -244,6 +257,7 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 The Apache License (Version 2.0, January 2004).
 
 [compatible]: https://github.com/yunify/qingstor-sdk-ruby/tree/compatible
+[v2.3.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.3...v2.3.0
 [v2.2.3]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.2...v2.2.3
 [v2.2.2]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.1...v2.2.2
 [v2.2.1]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.0...v2.2.1

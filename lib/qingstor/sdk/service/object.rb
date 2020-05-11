@@ -66,6 +66,78 @@ module QingStor
 
       public
 
+      # append_object: Append the Object.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/append.html
+      def append_object(object_key, position: nil, content_length: nil,
+                        content_md5: '',
+                        content_type: '',
+                        x_qs_storage_class: '',
+                        body: nil)
+        request = append_object_request object_key, position: position, content_length: content_length,
+          content_md5: content_md5,
+          content_type: content_type,
+          x_qs_storage_class: x_qs_storage_class,
+          body: body
+        request.send
+      end
+
+      def append_object_request(object_key, position: nil, content_length: nil,
+                                content_md5: '',
+                                content_type: '',
+                                x_qs_storage_class: '',
+                                body: nil)
+        properties[:'object-key'] = object_key
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'Append Object',
+          request_method:   'POST',
+          request_uri:      '/<bucket-name>/<object-key>?append',
+          request_params:   {
+            'position' => position
+          },
+          request_headers:  {
+            'Content-Length'     => content_length,
+            'Content-MD5'        => content_md5,
+            'Content-Type'       => content_type,
+            'X-QS-Storage-Class' => x_qs_storage_class
+          },
+          request_elements: {
+          },
+          request_body:     body,
+
+          status_code:      [
+            200
+          ]
+        }
+
+        append_object_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def append_object_input_validate(input)
+        input.deep_stringify_keys!
+
+        unless !input['request_params']['position'].nil? && !input['request_params']['position'].to_s.empty?
+          raise ParameterRequiredError.new('position', 'AppendObjectInput')
+        end
+
+        if input['request_headers']['X-QS-Storage-Class'] && !input['request_headers']['X-QS-Storage-Class'].to_s.empty?
+          x_qs_storage_class_valid_values = %w[STANDARD STANDARD_IA]
+          unless x_qs_storage_class_valid_values.include? input['request_headers']['X-QS-Storage-Class'].to_s
+            raise ParameterValueNotAllowedError.new(
+              'X-QS-Storage-Class',
+              input['request_headers']['X-QS-Storage-Class'],
+              x_qs_storage_class_valid_values,
+            )
+          end
+        end
+      end
+
+      public
+
       # complete_multipart_upload: Complete multipart upload.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/complete_multipart_upload.html
       def complete_multipart_upload(object_key, upload_id: '', etag: '',
@@ -410,11 +482,13 @@ module QingStor
                                     x_qs_encryption_customer_algorithm: '',
                                     x_qs_encryption_customer_key: '',
                                     x_qs_encryption_customer_key_md5: '',
+                                    x_qs_meta_data: [],
                                     x_qs_storage_class: '')
         request = initiate_multipart_upload_request object_key, content_type:                       content_type,
                                                                 x_qs_encryption_customer_algorithm: x_qs_encryption_customer_algorithm,
                                                                 x_qs_encryption_customer_key:       x_qs_encryption_customer_key,
                                                                 x_qs_encryption_customer_key_md5:   x_qs_encryption_customer_key_md5,
+                                                                x_qs_meta_data:                     x_qs_meta_data,
                                                                 x_qs_storage_class:                 x_qs_storage_class
         request.send
       end
@@ -423,6 +497,7 @@ module QingStor
                                             x_qs_encryption_customer_algorithm: '',
                                             x_qs_encryption_customer_key: '',
                                             x_qs_encryption_customer_key_md5: '',
+                                            x_qs_meta_data: [],
                                             x_qs_storage_class: '')
         properties[:'object-key'] = object_key
         input = {
@@ -438,6 +513,7 @@ module QingStor
             'X-QS-Encryption-Customer-Algorithm' => x_qs_encryption_customer_algorithm,
             'X-QS-Encryption-Customer-Key'       => x_qs_encryption_customer_key,
             'X-QS-Encryption-Customer-Key-MD5'   => x_qs_encryption_customer_key_md5,
+            'X-QS-MetaData'                      => x_qs_meta_data,
             'X-QS-Storage-Class'                 => x_qs_storage_class
           },
           request_elements: {
@@ -586,7 +662,9 @@ module QingStor
 
       # put_object: Upload the object.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/put.html
-      def put_object(object_key, content_length: nil,
+      def put_object(object_key, cache_control: '',
+                     content_encoding: '',
+                     content_length: nil,
                      content_md5: '',
                      content_type: '',
                      expect: '',
@@ -603,10 +681,13 @@ module QingStor
                      x_qs_encryption_customer_key_md5: '',
                      x_qs_fetch_if_unmodified_since: '',
                      x_qs_fetch_source: '',
+                     x_qs_meta_data: [],
                      x_qs_move_source: '',
                      x_qs_storage_class: '',
                      body: nil)
-        request = put_object_request object_key, content_length:                                 content_length,
+        request = put_object_request object_key, cache_control:                                  cache_control,
+                                                 content_encoding:                               content_encoding,
+                                                 content_length:                                 content_length,
                                                  content_md5:                                    content_md5,
                                                  content_type:                                   content_type,
                                                  expect:                                         expect,
@@ -623,13 +704,16 @@ module QingStor
                                                  x_qs_encryption_customer_key_md5:               x_qs_encryption_customer_key_md5,
                                                  x_qs_fetch_if_unmodified_since:                 x_qs_fetch_if_unmodified_since,
                                                  x_qs_fetch_source:                              x_qs_fetch_source,
+                                                 x_qs_meta_data:                                 x_qs_meta_data,
                                                  x_qs_move_source:                               x_qs_move_source,
                                                  x_qs_storage_class:                             x_qs_storage_class,
                                                  body:                                           body
         request.send
       end
 
-      def put_object_request(object_key, content_length: nil,
+      def put_object_request(object_key, cache_control: '',
+                             content_encoding: '',
+                             content_length: nil,
                              content_md5: '',
                              content_type: '',
                              expect: '',
@@ -646,6 +730,7 @@ module QingStor
                              x_qs_encryption_customer_key_md5: '',
                              x_qs_fetch_if_unmodified_since: '',
                              x_qs_fetch_source: '',
+                             x_qs_meta_data: [],
                              x_qs_move_source: '',
                              x_qs_storage_class: '',
                              body: nil)
@@ -659,6 +744,8 @@ module QingStor
           request_params:   {
           },
           request_headers:  {
+            'Cache-Control'                                  => cache_control,
+            'Content-Encoding'                               => content_encoding,
             'Content-Length'                                 => content_length,
             'Content-MD5'                                    => content_md5,
             'Content-Type'                                   => content_type,
@@ -676,6 +763,7 @@ module QingStor
             'X-QS-Encryption-Customer-Key-MD5'               => x_qs_encryption_customer_key_md5,
             'X-QS-Fetch-If-Unmodified-Since'                 => x_qs_fetch_if_unmodified_since,
             'X-QS-Fetch-Source'                              => x_qs_fetch_source,
+            'X-QS-MetaData'                                  => x_qs_meta_data,
             'X-QS-Move-Source'                               => x_qs_move_source,
             'X-QS-Storage-Class'                             => x_qs_storage_class
           },

@@ -4,5 +4,10 @@
       "style": "snake_case",
       "extension": ".rb"
     }
+  },
+  "word_maps": {
+    "capitalized_to_capitalized": {
+      "CNAME": "Cname"
+    }
   }
 }

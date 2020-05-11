@@ -49,8 +49,10 @@ module QingStor
       end
 
       def self.request_uri(input)
-        input[:properties]&.each do |k, v|
-          input[:request_uri].gsub! "<#{k}>", (escape v.to_s)
+        unless input[:properties].nil?
+          input[:properties].each do |k, v|
+            input[:request_uri].gsub! "<#{k}>", (escape v.to_s)
+          end
         end
         input[:request_uri]
       end
@@ -108,8 +110,10 @@ module QingStor
       end
 
       def self.request_params(input)
-        input[:request_params]&.map do |k, v|
-          input[:request_params][k] = escape v.to_s
+        unless input[:request_params].nil?
+          input[:request_params].map do |k, v|
+            input[:request_params][k] = escape v.to_s
+          end
         end
         input[:request_params]
       end
@@ -123,7 +127,7 @@ module QingStor
       def self.compact(object)
         object.each do |k, v|
           object[k] = compact v if v.is_a? Hash
-          object.delete k if v.nil? || v == ''
+          object.delete k if v.nil? || v == '' || v == []
         end
         object
       end

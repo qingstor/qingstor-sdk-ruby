@@ -1,12 +1,14 @@
 # This is the configuration used to check the rubocop source code.
 # Read all default settings here:
 #   https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+# Read more details here:
+#   https://docs.rubocop.org/en/stable/
 
 AllCops:
   TargetRubyVersion: 2.3
 
 Documentation:
-    Enabled: false
+  Enabled: false
 
 Metrics/LineLength:
   Max: 100
@@ -15,22 +17,19 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
 Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: comma
+  EnforcedStyleForMultiline: no_comma
 
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 
-Style/SpaceInsideHashLiteralBraces:
+Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
-Style/BracesAroundHashParameters:
-  EnforcedStyle: braces
-
-Style/AlignHash:
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
 
-Lint/DefEndAlignment:
+Layout/DefEndAlignment:
   EnforcedStyleAlignWith: def
   AutoCorrect: true
 
@@ -39,3 +38,36 @@ Style/BracesAroundHashParameters:
 
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/TrailingWhitespace:
+  AllowInHeredoc: true
+
+# Disable OrAssignment allow to use unless/if-else,
+# not forced transfer into ||= and ? : (ternary operator)
+Style/OrAssignment:
+  Enabled: false
+
+# Disable SafeNavigation allow to use if/unless clause,
+# not forced transfer into &. etc.
+Style/SafeNavigation:
+  Enabled: false
+
+# Disable ExpandPathArguments allow to use
+# expand_path('../lib', __FILE__)
+# and would not forced transfer into
+# expand_path(__dir__) which may not compatible in some ruby version
+Style/ExpandPathArguments:
+  Enabled: false
+
+# Disable RescueStandardError allow not leave blank
+# instead of forced rescue StandardError
+Style/RescueStandardError:
+  Enabled: false
+
+# Disable reformat the if/unless clause into one line
+# if enabled set true, rubocop will try to transfer if/unless clause into on-line format
+Style/IfUnlessModifier:
+  Enabled: false

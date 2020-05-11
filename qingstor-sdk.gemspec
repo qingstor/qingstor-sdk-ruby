@@ -42,13 +42,13 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.1.5'
 
   spec.add_runtime_dependency 'activesupport', '> 4.2.7'
-  spec.add_runtime_dependency 'net-http-persistent', '~> 3.0.0'
   spec.add_runtime_dependency 'mimemagic', '~> 0.3.2'
+  spec.add_runtime_dependency 'net-http-persistent', '~> 3.0.0'
 
   spec.add_development_dependency 'bundler', '> 1.10.0'
+  spec.add_development_dependency 'cucumber', '~> 2.4.0'
   spec.add_development_dependency 'rake', '~> 11.3.0'
   spec.add_development_dependency 'rspec', '~> 3.5.0'
+  spec.add_development_dependency 'rubocop', '~> 0.77.0'
   spec.add_development_dependency 'simplecov', '~> 0.16.1'
-  spec.add_development_dependency 'rubocop', '~> 0.49.0'
-  spec.add_development_dependency 'cucumber', '~> 2.4.0'
 end

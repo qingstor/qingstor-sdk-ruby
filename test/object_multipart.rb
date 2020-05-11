@@ -33,6 +33,7 @@ end
 
 Then(/^initiate multipart upload status code is (\d+)$/) do |status_code|
   raise unless @initiate_multipart_upload_output[:status_code].to_s == status_code
+
   the_upload_id = @initiate_multipart_upload_output[:upload_id]
 end
 

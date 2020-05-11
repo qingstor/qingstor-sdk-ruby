@@ -27,5 +27,9 @@ task :generate do
       -t="./template" \
       -o="./lib/qingstor/sdk/service"
   '
+  Rake::Task['rubocop'].execute
+end
+
+task :rubocop do
   system 'rubocop -a -c .rubocop.yaml'
 end

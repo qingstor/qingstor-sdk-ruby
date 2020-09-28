@@ -682,6 +682,7 @@ module QingStor
                      x_qs_fetch_if_unmodified_since: '',
                      x_qs_fetch_source: '',
                      x_qs_meta_data: [],
+                     x_qs_metadata_directive: '',
                      x_qs_move_source: '',
                      x_qs_storage_class: '',
                      body: nil)
@@ -705,6 +706,7 @@ module QingStor
                                                  x_qs_fetch_if_unmodified_since:                 x_qs_fetch_if_unmodified_since,
                                                  x_qs_fetch_source:                              x_qs_fetch_source,
                                                  x_qs_meta_data:                                 x_qs_meta_data,
+                                                 x_qs_metadata_directive:                        x_qs_metadata_directive,
                                                  x_qs_move_source:                               x_qs_move_source,
                                                  x_qs_storage_class:                             x_qs_storage_class,
                                                  body:                                           body
@@ -731,6 +733,7 @@ module QingStor
                              x_qs_fetch_if_unmodified_since: '',
                              x_qs_fetch_source: '',
                              x_qs_meta_data: [],
+                             x_qs_metadata_directive: '',
                              x_qs_move_source: '',
                              x_qs_storage_class: '',
                              body: nil)
@@ -764,6 +767,7 @@ module QingStor
             'X-QS-Fetch-If-Unmodified-Since'                 => x_qs_fetch_if_unmodified_since,
             'X-QS-Fetch-Source'                              => x_qs_fetch_source,
             'X-QS-MetaData'                                  => x_qs_meta_data,
+            'X-QS-Metadata-Directive'                        => x_qs_metadata_directive,
             'X-QS-Move-Source'                               => x_qs_move_source,
             'X-QS-Storage-Class'                             => x_qs_storage_class
           },
@@ -784,6 +788,17 @@ module QingStor
 
       def put_object_input_validate(input)
         input.deep_stringify_keys!
+
+        if input['request_headers']['X-QS-Metadata-Directive'] && !input['request_headers']['X-QS-Metadata-Directive'].to_s.empty?
+          x_qs_metadata_directive_valid_values = %w[COPY REPLACE]
+          unless x_qs_metadata_directive_valid_values.include? input['request_headers']['X-QS-Metadata-Directive'].to_s
+            raise ParameterValueNotAllowedError.new(
+              'X-QS-Metadata-Directive',
+              input['request_headers']['X-QS-Metadata-Directive'],
+              x_qs_metadata_directive_valid_values,
+            )
+          end
+        end
 
         if input['request_headers']['X-QS-Storage-Class'] && !input['request_headers']['X-QS-Storage-Class'].to_s.empty?
           x_qs_storage_class_valid_values = %w[STANDARD STANDARD_IA]

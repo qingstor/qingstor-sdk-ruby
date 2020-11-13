@@ -1,9 +1,10 @@
 # QingStor::SDK
 
-[![Build Status](https://travis-ci.org/yunify/qingstor-sdk-ruby.svg?branch=master)](https://travis-ci.org/yunify/qingstor-sdk-ruby)
+[![Build Status](https://github.com/qingstor/qingstor-sdk-ruby/workflows/Unit%20Test/badge.svg?branch=master)](https://github.com/qingstor/qingstor-sdk-ruby/actions?query=workflow%3A%22Unit+Test%22)
 [![Gem Version](https://badge.fury.io/rb/qingstor-sdk.svg)](http://badge.fury.io/rb/qingstor-sdk)
 [![API Reference](http://img.shields.io/badge/api-reference-green.svg)](https://docs.qingcloud.com/qingstor/)
 [![License](http://img.shields.io/badge/license-apache%20v2-blue.svg)](https://github.com/yunify/qingstor-sdk-ruby/blob/master/LICENSE)
+[![Join the chat](https://img.shields.io/badge/chat-online-blue?style=flat&logo=zulip)](https://qingstor.zulipchat.com/join/odapi42t7xhqc7v4gb2wfgjx/)
 
 The official QingStor SDK for Ruby programming language.
 

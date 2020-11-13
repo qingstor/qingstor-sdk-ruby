@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.1.5'
+  spec.required_ruby_version = '>= 2.4.4'
 
   spec.add_runtime_dependency 'activesupport', '> 4.2.7'
   spec.add_runtime_dependency 'mimemagic', '~> 0.3.2'
@@ -47,7 +47,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '> 1.10.0'
   spec.add_development_dependency 'cucumber', '~> 5.2.0'
-  spec.add_development_dependency 'rake', '~> 11.3.0'
+  spec.add_development_dependency 'rake', '~> 13.0.1'
   spec.add_development_dependency 'rspec', '~> 3.5.0'
   spec.add_development_dependency 'rubocop', '~> 0.77.0'
   spec.add_development_dependency 'simplecov', '~> 0.16.1'

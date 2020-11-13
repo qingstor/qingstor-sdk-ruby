@@ -10,19 +10,20 @@ jobs:
     strategy:
       matrix:
         ruby: [ "2.5", "2.6", "2.7" ]
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
-      - name: Set up ruby >2.5
-        uses: actions/setup-ruby@v1.1.2
-        with:
-          ruby-version: ${{ matrix.ruby }}
-
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Set up ruby >2.5
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Bundle
         run: bundle install
 
       - name: Test
-        run: rake spec
+        run: bundle exec rake spec

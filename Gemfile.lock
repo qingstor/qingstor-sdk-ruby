@@ -5,7 +5,6 @@ PATH
       activesupport (> 4.2.7)
       mimemagic (~> 0.3.2)
       net-http-persistent (~> 3.1.0)
-      rake (~> 13.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -116,6 +115,7 @@ DEPENDENCIES
   bundler (> 1.10.0)
   cucumber (~> 5.2.0)
   qingstor-sdk!
+  rake (~> 13.0.1)
   rspec (~> 3.5.0)
   rubocop (~> 0.77.0)
   simplecov (~> 0.16.1)

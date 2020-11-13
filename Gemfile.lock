@@ -4,7 +4,7 @@ PATH
     qingstor-sdk (2.3.0)
       activesupport (> 4.2.7)
       mimemagic (~> 0.3.2)
-      net-http-persistent (~> 3.1.0)
+      net-http-persistent (>= 3.1, < 4.1)
 
 GEM
   remote: https://rubygems.org/
@@ -60,7 +60,7 @@ GEM
     mimemagic (0.3.5)
     minitest (5.14.2)
     multi_test (0.1.2)
-    net-http-persistent (3.1.0)
+    net-http-persistent (4.0.0)
       connection_pool (~> 2.2)
     parallel (1.20.0)
     parser (2.7.2.0)

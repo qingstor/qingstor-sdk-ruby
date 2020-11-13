@@ -1,0 +1,28 @@
+name: "Unit Test"
+
+on: [push,pull_request]
+
+jobs:
+  unit_test:
+    name: Unit Test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        ruby: [ "2.5", "2.6", "2.7" ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Set up ruby >2.5
+        uses: actions/setup-ruby@v1.1.2
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Bundle
+        run: bundle install
+
+      - name: Test
+        run: rake spec

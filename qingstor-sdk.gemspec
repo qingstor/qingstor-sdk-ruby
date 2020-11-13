@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.1.5'
+  spec.required_ruby_version = '>= 2.4.4'
 
   spec.add_runtime_dependency 'activesupport', '> 4.2.7'
   spec.add_runtime_dependency 'mimemagic', '~> 0.3.2'

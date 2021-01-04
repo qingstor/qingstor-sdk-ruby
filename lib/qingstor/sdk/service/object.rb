@@ -482,7 +482,7 @@ module QingStor
                                     x_qs_encryption_customer_algorithm: '',
                                     x_qs_encryption_customer_key: '',
                                     x_qs_encryption_customer_key_md5: '',
-                                    x_qs_meta_data: [],
+                                    x_qs_meta_data: {},
                                     x_qs_storage_class: '')
         request = initiate_multipart_upload_request object_key, content_type:                       content_type,
                                                                 x_qs_encryption_customer_algorithm: x_qs_encryption_customer_algorithm,
@@ -497,7 +497,7 @@ module QingStor
                                             x_qs_encryption_customer_algorithm: '',
                                             x_qs_encryption_customer_key: '',
                                             x_qs_encryption_customer_key_md5: '',
-                                            x_qs_meta_data: [],
+                                            x_qs_meta_data: {},
                                             x_qs_storage_class: '')
         properties[:'object-key'] = object_key
         input = {
@@ -681,7 +681,7 @@ module QingStor
                      x_qs_encryption_customer_key_md5: '',
                      x_qs_fetch_if_unmodified_since: '',
                      x_qs_fetch_source: '',
-                     x_qs_meta_data: [],
+                     x_qs_meta_data: {},
                      x_qs_metadata_directive: '',
                      x_qs_move_source: '',
                      x_qs_storage_class: '',
@@ -732,7 +732,7 @@ module QingStor
                              x_qs_encryption_customer_key_md5: '',
                              x_qs_fetch_if_unmodified_since: '',
                              x_qs_fetch_source: '',
-                             x_qs_meta_data: [],
+                             x_qs_meta_data: {},
                              x_qs_metadata_directive: '',
                              x_qs_move_source: '',
                              x_qs_storage_class: '',

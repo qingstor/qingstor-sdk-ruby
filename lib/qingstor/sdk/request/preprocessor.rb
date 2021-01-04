@@ -102,9 +102,20 @@ module QingStor
           input[:request_headers][:'Content-MD5'] = Base64.encode64(Digest::MD5.digest(input[:request_body])).strip
         end
 
-        if input[:request_headers][:'X-QS-MetaData'].is_a?(Hash) && !input[:request_headers][:'X-QS-MetaData'].empty?
-          input[:request_headers][:'X-QS-MetaData'].each do |k, v|
-            input[:request_headers][:"#{k}"] = v
+        unless input[:request_headers][:'X-QS-MetaData'].nil?
+          if input[:request_headers][:'X-QS-MetaData'].is_a?(Hash) && !input[:request_headers][:'X-QS-MetaData'].empty?
+            prefix = 'x-qs-meta-'
+            input[:request_headers][:'X-QS-MetaData'].each do |k, v|
+              k = k.to_s
+              # check whether meta header has prefix
+              if k.downcase.start_with? prefix
+                suffix_len = prefix.size - k.size
+                k = prefix + k[suffix_len, -suffix_len]
+              else
+                k = prefix + k
+              end
+              input[:request_headers][:"#{k}"] = v
+            end
           end
           input[:request_headers].delete :'X-QS-MetaData'
         end

@@ -423,7 +423,7 @@ module QingStor
       def delete_multiple_objects_input_validate(input)
         input.deep_stringify_keys!
 
-        unless !input['request_elements']['objects'].nil? && !input['request_elements']['objects'].to_s.empty?
+        unless !input['request_elements']['objects'].nil? && !input['request_elements']['objects'].empty?
           raise ParameterRequiredError.new('objects', 'DeleteMultipleObjectsInput')
         end
 
@@ -1058,7 +1058,7 @@ module QingStor
       def put_bucket_acl_input_validate(input)
         input.deep_stringify_keys!
 
-        unless !input['request_elements']['acl'].nil? && !input['request_elements']['acl'].to_s.empty?
+        unless !input['request_elements']['acl'].nil? && !input['request_elements']['acl'].empty?
           raise ParameterRequiredError.new('acl', 'PutBucketACLInput')
         end
 
@@ -1201,12 +1201,12 @@ module QingStor
       def put_bucket_cors_input_validate(input)
         input.deep_stringify_keys!
 
-        unless !input['request_elements']['cors_rules'].nil? && !input['request_elements']['cors_rules'].to_s.empty?
+        unless !input['request_elements']['cors_rules'].nil? && !input['request_elements']['cors_rules'].empty?
           raise ParameterRequiredError.new('cors_rules', 'PutBucketCORSInput')
         end
 
         input['request_elements']['cors_rules'].each do |x|
-          unless !x['allowed_methods'].nil? && !x['allowed_methods'].to_s.empty?
+          unless !x['allowed_methods'].nil? && !x['allowed_methods'].empty?
             raise ParameterRequiredError.new('allowed_methods', 'cors_rule')
           end
 
@@ -1299,7 +1299,7 @@ module QingStor
       def put_bucket_lifecycle_input_validate(input)
         input.deep_stringify_keys!
 
-        unless !input['request_elements']['rule'].nil? && !input['request_elements']['rule'].to_s.empty?
+        unless !input['request_elements']['rule'].nil? && !input['request_elements']['rule'].empty?
           raise ParameterRequiredError.new('rule', 'PutBucketLifecycleInput')
         end
 
@@ -1446,7 +1446,7 @@ module QingStor
       def put_bucket_notification_input_validate(input)
         input.deep_stringify_keys!
 
-        unless !input['request_elements']['notifications'].nil? && !input['request_elements']['notifications'].to_s.empty?
+        unless !input['request_elements']['notifications'].nil? && !input['request_elements']['notifications'].empty?
           raise ParameterRequiredError.new('notifications', 'PutBucketNotificationInput')
         end
 
@@ -1474,7 +1474,7 @@ module QingStor
 
           end
 
-          unless !x['event_types'].nil? && !x['event_types'].to_s.empty?
+          unless !x['event_types'].nil? && !x['event_types'].empty?
             raise ParameterRequiredError.new('event_types', 'notification')
           end
 
@@ -1523,12 +1523,12 @@ module QingStor
       def put_bucket_policy_input_validate(input)
         input.deep_stringify_keys!
 
-        unless !input['request_elements']['statement'].nil? && !input['request_elements']['statement'].to_s.empty?
+        unless !input['request_elements']['statement'].nil? && !input['request_elements']['statement'].empty?
           raise ParameterRequiredError.new('statement', 'PutBucketPolicyInput')
         end
 
         input['request_elements']['statement'].each do |x|
-          unless !x['action'].nil? && !x['action'].to_s.empty?
+          unless !x['action'].nil? && !x['action'].empty?
             raise ParameterRequiredError.new('action', 'statement')
           end
 
@@ -1575,7 +1575,7 @@ module QingStor
             raise ParameterRequiredError.new('id', 'statement')
           end
 
-          unless !x['user'].nil? && !x['user'].to_s.empty?
+          unless !x['user'].nil? && !x['user'].empty?
             raise ParameterRequiredError.new('user', 'statement')
           end
         end

@@ -220,7 +220,7 @@
       {{end}}
     {{else if eq $property.Type "array"}}
       {{if $property.IsRequired}}
-        unless !{{$prefix}}['{{$property.ID}}'].nil? && !{{$prefix}}['{{$property.ID}}'].to_s.empty?
+        unless !{{$prefix}}['{{$property.ID}}'].nil? && !{{$prefix}}['{{$property.ID}}'].empty?
           raise ParameterRequiredError.new('{{$property.ID}}', '{{$customizedType.ID}}')
         end
       {{end}}

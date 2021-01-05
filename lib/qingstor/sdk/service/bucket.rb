@@ -343,6 +343,45 @@ module QingStor
 
       public
 
+      # delete_bucket_replication: Delete Replication information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/replication/delete_replication.html
+      def delete_replication
+        request = delete_replication_request
+        request.send
+      end
+
+      def delete_replication_request
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'DELETE Bucket Replication',
+          request_method:   'DELETE',
+          request_uri:      '/<bucket-name>?replication',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            204
+          ]
+        }
+
+        delete_bucket_replication_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def delete_bucket_replication_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
       # delete_multiple_objects: Delete multiple objects from the bucket.
       # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/delete_multiple.html
       def delete_multiple_objects(objects: [],
@@ -713,6 +752,45 @@ module QingStor
       private
 
       def get_bucket_policy_input_validate(input)
+        input.deep_stringify_keys!
+      end
+
+      public
+
+      # get_bucket_replication: Get Replication information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/replication/get_replication.html
+      def get_replication
+        request = get_replication_request
+        request.send
+      end
+
+      def get_replication_request
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'GET Bucket Replication',
+          request_method:   'GET',
+          request_uri:      '/<bucket-name>?replication',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ]
+        }
+
+        get_bucket_replication_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def get_bucket_replication_input_validate(input)
         input.deep_stringify_keys!
       end
 
@@ -1500,6 +1578,109 @@ module QingStor
           unless !x['user'].nil? && !x['user'].to_s.empty?
             raise ParameterRequiredError.new('user', 'statement')
           end
+        end
+      end
+
+      public
+
+      # put_bucket_replication: Set Replication information of the bucket.
+      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/replication/put_replication.html
+      def put_replication(rules: [])
+        request = put_replication_request rules: rules
+        request.send
+      end
+
+      def put_replication_request(rules: [])
+        input = {
+          config:           config,
+          properties:       properties,
+          api_name:         'PUT Bucket Replication',
+          request_method:   'PUT',
+          request_uri:      '/<bucket-name>?replication',
+          request_params:   {
+          },
+          request_headers:  {
+          },
+          request_elements: {
+            'rules' => rules
+          },
+          request_body:     nil,
+
+          status_code:      [
+            200
+          ]
+        }
+
+        put_bucket_replication_input_validate input
+        Request.new input
+      end
+
+      private
+
+      def put_bucket_replication_input_validate(input)
+        input.deep_stringify_keys!
+
+        unless !input['request_elements']['rules'].nil? && !input['request_elements']['rules'].empty?
+          raise ParameterRequiredError.new('rules', 'PutBucketReplicationInput')
+        end
+
+        input['request_elements']['rules'].each do |x|
+          if x['delete_marker'] && !x['delete_marker'].to_s.empty?
+            delete_marker_valid_values = %w[enabled disabled]
+            unless delete_marker_valid_values.include? x['delete_marker'].to_s
+              raise ParameterValueNotAllowedError.new(
+                'delete_marker',
+                x['delete_marker'],
+                delete_marker_valid_values,
+              )
+            end
+          end
+
+          unless x['destination'].nil?
+
+            unless !x['destination']['bucket'].nil? && !x['destination']['bucket'].to_s.empty?
+              raise ParameterRequiredError.new('bucket', 'destination')
+              end
+
+          end
+
+          if x['destination'].nil?
+            raise ParameterRequiredError.new('destination', 'rules')
+          end
+
+          unless x['filters'].nil?
+
+          end
+
+          if x['filters'].nil?
+            raise ParameterRequiredError.new('filters', 'rules')
+          end
+
+          unless !x['id'].nil? && !x['id'].to_s.empty?
+            raise ParameterRequiredError.new('id', 'rules')
+          end
+
+          if x['status'] && !x['status'].to_s.empty?
+            status_valid_values = %w[enabled disabled]
+            unless status_valid_values.include? x['status'].to_s
+              raise ParameterValueNotAllowedError.new(
+                'status',
+                x['status'],
+                status_valid_values,
+              )
+            end
+          end
+
+          next unless x['sync_marker'] && !x['sync_marker'].to_s.empty?
+
+          sync_marker_valid_values = %w[enabled disabled]
+          next if sync_marker_valid_values.include? x['sync_marker'].to_s
+
+          raise ParameterValueNotAllowedError.new(
+            'sync_marker',
+            x['sync_marker'],
+            sync_marker_valid_values,
+          )
         end
       end
 

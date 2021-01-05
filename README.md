@@ -168,6 +168,21 @@ log_level: 'warn'
 ## Change Log
 All notable changes to QingStor SDK for Ruby will be documented here.
 
+### [v2.4.0] - 2021-01-05
+
+### Added
+
+- Support to set x-qs-metadata-directive header (#29)
+- Add support for bucket replication (#45)
+
+### Changed
+
+- ci: Transfer ci into github action (#30)
+
+### Fixed
+
+- Fix metadata added into signature when empty (#44)
+
 ### [v2.3.0] - 2020-05-11
 
 ### Added
@@ -259,6 +274,7 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 The Apache License (Version 2.0, January 2004).
 
 [compatible]: https://github.com/yunify/qingstor-sdk-ruby/tree/compatible
+[v2.4.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.3.0...v2.4.0
 [v2.3.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.3...v2.3.0
 [v2.2.3]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.2...v2.2.3
 [v2.2.2]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.1...v2.2.2

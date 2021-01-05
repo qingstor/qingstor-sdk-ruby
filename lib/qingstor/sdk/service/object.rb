@@ -194,7 +194,7 @@ module QingStor
           raise ParameterRequiredError.new('upload_id', 'CompleteMultipartUploadInput')
         end
 
-        unless !input['request_elements']['object_parts'].nil? && !input['request_elements']['object_parts'].to_s.empty?
+        unless !input['request_elements']['object_parts'].nil? && !input['request_elements']['object_parts'].empty?
           raise ParameterRequiredError.new('object_parts', 'CompleteMultipartUploadInput')
         end
 

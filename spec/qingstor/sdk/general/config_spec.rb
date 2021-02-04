@@ -48,10 +48,12 @@ module QingStor
         expect(config[:log_level]).to eq 'warn'
       end
 
-      it 'can load user config file' do
-        config = Config.new.load_user_config
-        expect(config[:host]).to_not be nil
-        expect(config[:log_level]).to_not be nil
+      it 'can not load user config file if no file path assigned' do
+        begin
+          Config.new.load_user_config
+        rescue Errno::ENOENT
+          expect(true).to be true
+        end
       end
 
       it 'can load config from file' do
@@ -66,8 +68,16 @@ module QingStor
         expect(config.connection).to_not be nil
       end
 
+      it 'use env first' do
+        ENV[Contract::ENV_ACCESS_KEY_ID] = "ak-env"
+        ENV[Contract::ENV_SECRET_ACCESS_KEY] = "sk-env"
+        config = Config.new
+        expect(config[:access_key_id]).to eq "ak-env"
+        expect(config[:secret_access_key]).to eq "sk-env"
+      end
+
       it 'can check itself' do
-        config = Config.new.load_user_config
+        config = Config.new
         begin
           config.check
         rescue ConfigurationError

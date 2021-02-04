@@ -32,7 +32,6 @@ When(/^put object with key "(.+)"$/) do |object_key|
   @put_object_output = bucket.put_object(
     object_key,
     body: File.open('/tmp/sdk_bin'),
-    x_qs_meta_data: {"k": "v"}
   )
   system 'rm -f /tmp/sdk_bin'
 end
@@ -67,8 +66,6 @@ end
 
 When(/^get object with key "(.+)"$/) do |object_key|
   @get_object_output = bucket.get_object object_key
-  puts "goooooooooooooooooot"
-  raise unless @get_object_output[:x_qs_meta_k].to_s == "v"
 end
 
 Then(/^get object status code is (\d+)$/) do |status_code|

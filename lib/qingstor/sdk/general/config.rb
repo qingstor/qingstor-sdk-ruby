@@ -36,7 +36,13 @@ module QingStor
 
       def initialize(initial_config = {})
         self.connection = Net::HTTP::Persistent.new
+        # load default config as basic
         load_default_config
+        # load from config, env path superior to ~/.qingstor/config.yaml
+        load_user_config_with_check
+        # load envs, cover corresponding config if env exists
+        load_env_config
+        # cover by user's param
         update initial_config
       end
 
@@ -68,8 +74,14 @@ module QingStor
       end
 
       def load_user_config
-        install_default_user_config unless File.exist? Contract::USER_CONFIG_FILEPATH
         load_config_from_file Contract::USER_CONFIG_FILEPATH
+      end
+
+      def load_env_config
+        another_config = {}
+        another_config[:access_key_id] = ENV[Contract::ENV_ACCESS_KEY_ID] if ENV[Contract::ENV_ACCESS_KEY_ID] != nil
+        another_config[:secret_access_key] = ENV[Contract::ENV_SECRET_ACCESS_KEY] if ENV[Contract::ENV_SECRET_ACCESS_KEY] != nil
+        update another_config
       end
 
       def load_config_from_file(path)
@@ -83,6 +95,15 @@ module QingStor
         Logger.warn "Installing default config file to #{Contract::USER_CONFIG_FILEPATH}"
         FileUtils.mkdir_p Contract::USER_SUPPORT_DIRECTORY
         FileUtils.copy Contract::DEFAULT_CONFIG_FILEPATH, Contract::USER_CONFIG_FILEPATH
+      end
+
+      def load_user_config_with_check
+        # if env path configured, update from env; otherwise, if ~/.qingstor/config.yaml exists, update from this
+        if !ENV[Contract::ENV_CONFIG_PATH].nil? and File.exist? ENV[Contract::ENV_CONFIG_PATH]
+          load_config_from_file ENV[Contract::ENV_CONFIG_PATH]
+        elsif File.exist? Contract::USER_CONFIG_FILEPATH
+          load_user_config
+        end
       end
     end
   end

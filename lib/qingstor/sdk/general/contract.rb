@@ -26,6 +26,10 @@ module QingStor
       DEFAULT_SUPPORT_DIRECTORY = File.expand_path(File.dirname(__FILE__) + '/./default')
       DEFAULT_CONFIG_FILENAME   = 'config.yaml'.freeze
       DEFAULT_CONFIG_FILEPATH   = "#{DEFAULT_SUPPORT_DIRECTORY}/#{DEFAULT_CONFIG_FILENAME}".freeze
+
+      ENV_ACCESS_KEY_ID     = "QINGSTOR_ACCESS_KEY_ID".freeze
+      ENV_SECRET_ACCESS_KEY = "QINGSTOR_SECRET_ACCESS_KEY".freeze
+      ENV_CONFIG_PATH       = "QINGSTOR_CONFIG_PATH".freeze
     end
   end
 end

@@ -34,7 +34,7 @@ module QingStor
         Config.new(initial_config)
       end
 
-      def initialize(initial_config: {})
+      def initialize(initial_config = {})
         self.connection = Net::HTTP::Persistent.new
         # load default config as basic
         load_default_config
@@ -46,7 +46,7 @@ module QingStor
         update initial_config
       end
 
-      def update(another_config: {})
+      def update(another_config = {})
         deep_merge! another_config.deep_symbolize_keys!
         Logger.set_level self[:log_level]
         self

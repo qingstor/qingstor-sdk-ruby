@@ -16,7 +16,7 @@
 
 require 'yaml'
 
-require 'qingstor/sdk'
+require '../../lib/qingstor/sdk'
 
 module QingStorWorld
   def load_test_config

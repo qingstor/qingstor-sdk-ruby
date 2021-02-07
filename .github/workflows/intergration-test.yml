@@ -29,6 +29,7 @@ jobs:
       - name: Test
         env:
           WORKFLOW_INTEGRATION_TEST: true
+          CUCUMBER_PUBLISH_ENABLED: true
           QINGSTOR_ACCESS_KEY_ID: ${{ secrets.QINGSTOR_ACCESS_KEY_ID }}
           QINGSTOR_SECRET_ACCESS_KEY: ${{ secrets.QINGSTOR_SECRET_ACCESS_KEY }}
           QINGSTOR_ENDPOINT: ${{ secrets.QINGSTOR_ENDPOINT }}

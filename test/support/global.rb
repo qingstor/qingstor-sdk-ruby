@@ -16,7 +16,7 @@
 
 require 'yaml'
 
-Dir[File.dirname(__FILE__) + '../../lib/qingstor/sdk/**/*.rb'].each { |file| require file }
+require 'qingstor/sdk'
 
 module QingStorWorld
   def load_test_config

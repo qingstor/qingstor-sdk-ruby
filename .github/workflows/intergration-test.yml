@@ -10,11 +10,13 @@ jobs:
     strategy:
       matrix:
         ruby: [ "2.6", "2.7" ]
-        os: [ubuntu-latest]
+        os: [Linux]
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repository and submodules
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Set up ruby
         uses: ruby/setup-ruby@v1

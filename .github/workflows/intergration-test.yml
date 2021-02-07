@@ -5,11 +5,12 @@ on: [push,pull_request]
 jobs:
   integration_test:
     name: "Integration Test"
-    runs-on: [Linux]
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         ruby: [ "2.6", "2.7" ]
+        os: [ubuntu-latest]
 
     steps:
       - name: Checkout repository

@@ -23,9 +23,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
 
-      - name: Bundle
-        run: bundle install
-
       - name: Test
         env:
           WORKFLOW_INTEGRATION_TEST: true

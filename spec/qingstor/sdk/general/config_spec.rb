@@ -92,9 +92,8 @@ module QingStor
                       additional_user_agent: '中文')
         begin
           config.check
-          expect(true).to be true
         rescue
-          nil
+          expect(true).to be true
         end
 
         config.update(additional_user_agent: 'text/integration')

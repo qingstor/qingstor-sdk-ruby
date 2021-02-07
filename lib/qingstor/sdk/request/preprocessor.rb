@@ -60,6 +60,16 @@ module QingStor
       end
 
       def self.request_uri(input)
+        config = input[:config]
+        # if enable vhost, and uri property contains bucket-name
+        if config[:enable_virtual_host_style] && input[:properties].present? && input[:properties][:"bucket-name"]
+          uri = parse_endpoint input[:request_endpoint]
+          # modify host, add bucket before
+          uri.host = "#{input[:properties][:"bucket-name"]}.#{uri.host}"
+          input[:request_endpoint] = uri.to_s
+          # handle request_uri, remove prefix (bucket-name)
+          input[:request_uri].delete_prefix! URI_BUCKET_PREFIX if input[:request_uri].start_with? URI_BUCKET_PREFIX
+        end
         unless input[:properties].nil?
           input[:properties].each do |k, v|
             input[:request_uri].gsub! "<#{k}>", (escape v.to_s)

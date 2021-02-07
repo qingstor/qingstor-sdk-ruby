@@ -48,6 +48,7 @@ module QingStor
 
       def update(another_config = {})
         deep_merge! another_config.deep_symbolize_keys!
+        parse_boolean(:enable_virtual_host_style)
         Logger.set_level self[:log_level]
         self
       end
@@ -108,6 +109,10 @@ module QingStor
           another_config[:secret_access_key] =
             ENV[Contract::ENV_SECRET_ACCESS_KEY]
         end
+        unless ENV[Contract::ENV_ENABLE_VIRTUAL_HOST_STYLE].nil?
+          another_config[:enable_virtual_host_style] =
+            ENV[Contract::ENV_ENABLE_VIRTUAL_HOST_STYLE]
+        end
         update another_config
       end
 
@@ -132,6 +137,10 @@ module QingStor
         elsif File.exist? Contract::USER_CONFIG_FILEPATH
           load_config_from_file Contract::USER_CONFIG_FILEPATH
         end
+      end
+
+      def parse_boolean(key)
+        self[key.to_sym] = self[key.to_sym].to_s.downcase == 'true'
       end
     end
   end

@@ -69,14 +69,23 @@ module QingStor
       end
 
       it 'use env first' do
+        config = Config.new
+        expect(config[:access_key_id]).to eq nil
+        expect(config[:secret_access_key]).to eq nil
+        expect(config[:enable_virtual_host_style]).to eq false
+
         ENV[Contract::ENV_ACCESS_KEY_ID] = 'ak-env'
         ENV[Contract::ENV_SECRET_ACCESS_KEY] = 'sk-env'
-        config = Config.new
-        expect(config[:access_key_id]).to eq 'ak-env'
-        expect(config[:secret_access_key]).to eq 'sk-env'
+        ENV[Contract::ENV_ENABLE_VIRTUAL_HOST_STYLE] = 'true'
+
+        config_new = Config.new
+        expect(config_new[:access_key_id]).to eq 'ak-env'
+        expect(config_new[:secret_access_key]).to eq 'sk-env'
+        expect(config_new[:enable_virtual_host_style]).to eq true
         # clean env after use
         ENV.delete(Contract::ENV_ACCESS_KEY_ID)
         ENV.delete(Contract::ENV_SECRET_ACCESS_KEY)
+        ENV.delete(Contract::ENV_ENABLE_VIRTUAL_HOST_STYLE)
       end
 
       it 'can check itself' do

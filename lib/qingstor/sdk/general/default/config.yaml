@@ -16,3 +16,6 @@ additional_user_agent: ""
 
 # Valid log levels are "debug", "info", "warn", "error", and "fatal".
 log_level: warn
+
+# SDK will use virtual host style for all API calls if enabled
+enable_virtual_host_style: false

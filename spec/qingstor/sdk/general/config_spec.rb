@@ -74,6 +74,9 @@ module QingStor
         config = Config.new
         expect(config[:access_key_id]).to eq "ak-env"
         expect(config[:secret_access_key]).to eq "sk-env"
+        # clean env after use
+        ENV.delete(Contract::ENV_ACCESS_KEY_ID)
+        ENV.delete(Contract::ENV_SECRET_ACCESS_KEY)
       end
 
       it 'can check itself' do

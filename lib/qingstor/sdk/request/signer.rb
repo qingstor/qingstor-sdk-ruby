@@ -18,23 +18,31 @@ require 'base64'
 require 'cgi'
 require 'openssl'
 
+require 'active_support/core_ext/object/blank'
+
 module QingStor
   module SDK
     class Signer
       def self.sign(input)
-        authorization = "QS #{input[:config][:access_key_id]}:#{signature input}"
-        input[:request_headers][:Authorization] = authorization
+        unless is_anonymous? input
+          authorization = "QS #{input[:config][:access_key_id]}:#{signature input}"
+          input[:request_headers][:Authorization] = authorization
 
-        Logger.debug "QingStor request authorization: [#{input[:id]}] #{authorization}"
+          Logger.debug "QingStor request authorization: [#{input[:id]}] #{authorization}"
+        end
+
         input
       end
 
       def self.sign_query(input, expires)
-        input[:request_params][:signature] = query_signature input, expires
-        input[:request_params][:access_key_id] = input[:config][:access_key_id]
-        input[:request_params][:expires] = expires
+        unless is_anonymous? input
+          input[:request_params][:signature] = query_signature input, expires
+          input[:request_params][:access_key_id] = input[:config][:access_key_id]
+          input[:request_params][:expires] = expires
 
-        Logger.debug "QingStor query signature: [#{input[:id]}] #{input[:request_params][:signature]}"
+          Logger.debug "QingStor query signature: [#{input[:id]}] #{input[:request_params][:signature]}"
+        end
+
         input
       end
 
@@ -43,12 +51,12 @@ module QingStor
         Logger.debug "QingStor request string to sign: [#{input[:id]}] #{string_to_sign}"
 
         Base64.encode64(
-          OpenSSL::HMAC.digest(
-            OpenSSL::Digest.new('sha256'),
-            input[:config][:secret_access_key].to_s,
-            string_to_sign,
-          ),
-        ).strip
+            OpenSSL::HMAC.digest(
+                OpenSSL::Digest.new('sha256'),
+                input[:config][:secret_access_key].to_s,
+                string_to_sign,
+                ),
+            ).strip
       end
 
       def self.query_signature(input, expires)
@@ -56,12 +64,12 @@ module QingStor
         Logger.debug "QingStor query request string to sign: [#{input[:id]}] #{string_to_sign}"
 
         CGI.escape Base64.encode64(
-          OpenSSL::HMAC.digest(
-            OpenSSL::Digest.new('sha256'),
-            input[:config][:secret_access_key].to_s,
-            string_to_sign,
-          ),
-        ).strip
+            OpenSSL::HMAC.digest(
+                OpenSSL::Digest.new('sha256'),
+                input[:config][:secret_access_key].to_s,
+                string_to_sign,
+                ),
+            ).strip
       end
 
       def self.string_to_sign(input)
@@ -104,6 +112,14 @@ module QingStor
           response-expires response-cache-control response-content-type
           response-content-language response-content-encoding response-content-disposition
         ].include? key
+      end
+
+      def self.is_anonymous?(input)
+        if input[:config].nil?
+          return true
+        end
+
+        input[:config][:access_key_id].blank? and input[:config][:secret_access_key].blank?
       end
     end
   end

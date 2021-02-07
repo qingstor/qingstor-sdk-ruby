@@ -73,6 +73,31 @@ module QingStor
         check = 'QS ENV_ACCESS_KEY_ID:XsTXX50kzqBf92zLG1aIUIJmZ0hqIHoaHgkumwnV3fs='
         expect(result[:request_headers][:Authorization]).to eq check
       end
+
+      it 'anonymous qingstor request' do
+        config = Config.new
+        Logger.set_level 'debug'
+        input = {
+          config:          config,
+          properties:      {
+              'object-key' => 'test-obj'
+          },
+          service_name:    'QingStor',
+          request_method:  'GET',
+          request_uri:     '/bucket-name/<object-key>',
+          request_params:  {},
+          request_headers: {
+              'Date' => 'Mon, 01 Jan 0001 00:00:00 GMT'
+          }
+        }
+        input[:id] = 324_347
+
+        input = Preprocessor.preprocess input
+        input[:request_headers][:'Content-Type'] = ''
+        result = Signer.sign input
+
+        expect(result[:request_headers][:Authorization]).to eq nil
+      end
     end
 
     RSpec.describe Signer do

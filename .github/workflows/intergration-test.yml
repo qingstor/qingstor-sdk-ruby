@@ -29,7 +29,10 @@ jobs:
       - name: Test
         env:
           WORKFLOW_INTEGRATION_TEST: true
+          # Cucumber related config
           CUCUMBER_PUBLISH_ENABLED: true
+          CUCUMBER_PUBLISH_TOKEN: ${{ secrets.CUCUMBER_PUBLISH_TOKEN }}
+          # QingStor Object Storage related config
           QINGSTOR_ACCESS_KEY_ID: ${{ secrets.QINGSTOR_ACCESS_KEY_ID }}
           QINGSTOR_SECRET_ACCESS_KEY: ${{ secrets.QINGSTOR_SECRET_ACCESS_KEY }}
           QINGSTOR_ENDPOINT: ${{ secrets.QINGSTOR_ENDPOINT }}

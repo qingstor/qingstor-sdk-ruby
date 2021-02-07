@@ -15,10 +15,13 @@
 #  +-------------------------------------------------------------------------
 
 require 'fileutils'
+require 'ipaddr'
+require 'uri'
 require 'yaml'
 
 require 'active_support/core_ext/hash/keys'
 require 'active_support/core_ext/hash/deep_merge'
+require 'active_support/core_ext/object/blank'
 require 'net/http/persistent'
 
 module QingStor
@@ -80,6 +83,19 @@ module QingStor
           end
         end
 
+        # add ip check for vhost enabled
+        if self[:enable_virtual_host_style]
+          if self[:endpoint].present?
+            uri = Preprocessor.parse_endpoint self[:endpoint]
+            ip = uri.host
+          else
+            ip = self[:host]
+          end
+          if is_valid_ip? ip
+            raise ConfigurationError, 'ip host not allowed if vhost enabled'
+          end
+        end
+
         if self[:additional_user_agent].present?
           self[:additional_user_agent].each_byte do |x|
             # Allow space(32) to ~(126) in ASCII Table, exclude "(34).
@@ -96,7 +112,11 @@ module QingStor
       end
 
       def load_user_config
-        load_config_from_file Contract::USER_CONFIG_FILEPATH
+        if !ENV[Contract::ENV_CONFIG_PATH].nil?
+          load_config_from_file ENV[Contract::ENV_CONFIG_PATH]
+        else
+          load_config_from_file Contract::USER_CONFIG_FILEPATH
+        end
       end
 
       def load_env_config
@@ -141,6 +161,15 @@ module QingStor
 
       def parse_boolean(key)
         self[key.to_sym] = self[key.to_sym].to_s.downcase == 'true'
+      end
+
+      def is_valid_ip?(ip)
+        begin
+          IPAddr.new ip
+          return true
+        rescue
+          return false
+        end
       end
     end
   end

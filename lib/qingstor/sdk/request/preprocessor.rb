@@ -176,19 +176,31 @@ module QingStor
         origin
       end
 
-      private
-
-      URI_BUCKET_PREFIX = '/<bucket-name>'.freeze
-
+      # try to parse endpoint:
+      # if endpoint invalid, means ip host without scheme, like: 192.168.0.1:3000
+      # if endpoint parsed, and no scheme find, means host without scheme, like: qingstor.dev
+      # both above will add default schema at the start, and parse again
       def self.parse_endpoint(endpoint)
-        uri = URI.parse endpoint
-        unless uri.scheme.nil?
-          return uri
+        if endpoint.blank?
+          raise "endpoint should not be empty when parse"
+        end
+
+        begin
+          uri = URI.parse endpoint
+          unless uri.scheme.nil?
+            return uri
+          end
+        rescue URI::InvalidURIError
+          # Ignored and continue, add scheme prefix then
         end
 
         endpoint = "http://#{endpoint}" # add default scheme for endpoint
-        URI.parse endpoint
+        return URI.parse endpoint
       end
+
+      private
+
+      URI_BUCKET_PREFIX = "/<bucket-name>".freeze
     end
   end
 end

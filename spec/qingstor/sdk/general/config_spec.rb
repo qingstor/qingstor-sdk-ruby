@@ -69,11 +69,11 @@ module QingStor
       end
 
       it 'use env first' do
-        ENV[Contract::ENV_ACCESS_KEY_ID] = "ak-env"
-        ENV[Contract::ENV_SECRET_ACCESS_KEY] = "sk-env"
+        ENV[Contract::ENV_ACCESS_KEY_ID] = 'ak-env'
+        ENV[Contract::ENV_SECRET_ACCESS_KEY] = 'sk-env'
         config = Config.new
-        expect(config[:access_key_id]).to eq "ak-env"
-        expect(config[:secret_access_key]).to eq "sk-env"
+        expect(config[:access_key_id]).to eq 'ak-env'
+        expect(config[:secret_access_key]).to eq 'sk-env'
         # clean env after use
         ENV.delete(Contract::ENV_ACCESS_KEY_ID)
         ENV.delete(Contract::ENV_SECRET_ACCESS_KEY)
@@ -92,9 +92,8 @@ module QingStor
                       additional_user_agent: '中文')
         begin
           config.check
-          expect(true).to be true
         rescue
-          nil
+          expect(true).to be true
         end
 
         config.update(additional_user_agent: 'text/integration')

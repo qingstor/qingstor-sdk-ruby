@@ -54,7 +54,7 @@ module QingStor
       def sign
         check
         if Signer.is_anonymous? input
-          Logger.warn "anonymous api call, skip sign"
+          Logger.warn 'anonymous api call, skip sign'
           return
         end
         self.input = Signer.sign input
@@ -63,7 +63,7 @@ module QingStor
       def sign_query(timeout_seconds)
         check
         if Signer.is_anonymous? input
-          Logger.warn "anonymous api call, skip sign query"
+          Logger.warn 'anonymous api call, skip sign query'
           return
         end
         self.input = Signer.sign_query input, Time.now.to_i + timeout_seconds

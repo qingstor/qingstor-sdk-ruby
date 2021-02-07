@@ -22,6 +22,7 @@ module QingStor
       attr_accessor :config, :properties
 
       def initialize(config, properties)
+        config.check
         self.config     = config
         self.properties = properties.deep_symbolize_keys
       end

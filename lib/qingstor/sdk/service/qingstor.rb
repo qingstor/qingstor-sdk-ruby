@@ -25,6 +25,7 @@ module QingStor
       attr_accessor :config, :properties
 
       def initialize(config)
+        config.check
         self.config = config
       end
 

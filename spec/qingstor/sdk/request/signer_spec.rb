@@ -80,14 +80,14 @@ module QingStor
         input = {
           config:          config,
           properties:      {
-              'object-key' => 'test-obj'
+            'object-key' => 'test-obj'
           },
           service_name:    'QingStor',
           request_method:  'GET',
           request_uri:     '/bucket-name/<object-key>',
           request_params:  {},
           request_headers: {
-              'Date' => 'Mon, 01 Jan 0001 00:00:00 GMT'
+            'Date' => 'Mon, 01 Jan 0001 00:00:00 GMT'
           }
         }
         input[:id] = 324_347

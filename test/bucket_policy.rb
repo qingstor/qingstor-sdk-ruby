@@ -34,7 +34,7 @@ When(/^put bucket policy:$/) do |policy_string|
 end
 
 Then(/^put bucket policy status code is (\d+)$/) do |status_code|
-  raise unless @put_bucket_policy_output[:status_code].to_s == status_code
+  raise unless @put_bucket_policy_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ When(/^get bucket policy$/) do
 end
 
 Then(/^get bucket policy status code is (\d+)$/) do |status_code|
-  raise unless @get_bucket_policy_output[:status_code].to_s == status_code
+  raise unless @get_bucket_policy_output[:status_code].to_s == status_code.to_s
 end
 
 Then(/^get bucket policy should have Referer "([^"]*)"$/) do |compare|
@@ -64,5 +64,5 @@ When(/^delete bucket policy$/) do
 end
 
 Then(/^delete bucket policy status code is (\d+)$/) do |status_code|
-  raise unless @delete_bucket_policy_output[:status_code].to_s == status_code
+  raise unless @delete_bucket_policy_output[:status_code].to_s == status_code.to_s
 end

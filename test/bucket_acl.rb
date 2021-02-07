@@ -31,7 +31,7 @@ When(/^put bucket ACL:$/) do |acl_string|
 end
 
 Then(/^put bucket ACL status code is (\d+)$/) do |status_code|
-  raise unless @put_bucket_acl_output[:status_code].to_s == status_code
+  raise unless @put_bucket_acl_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ When(/^get bucket ACL$/) do
 end
 
 Then(/^get bucket ACL status code is (\d+)$/) do |status_code|
-  raise unless @get_bucket_acl_output[:status_code].to_s == status_code
+  raise unless @get_bucket_acl_output[:status_code].to_s == status_code.to_s
 end
 
 Then(/^get bucket ACL should have grantee name "([^"]*)"$/) do |name|

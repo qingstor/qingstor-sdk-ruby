@@ -37,7 +37,7 @@ When(/^put object with key "(.+)"$/) do |object_key|
 end
 
 Then(/^put object status code is (\d+)$/) do |status_code|
-  raise unless @put_object_output[:status_code].to_s == status_code
+  raise unless @put_object_output[:status_code].to_s == status_code.to_s
 end
 
 When(/^copy object with key "(.+)"$/) do |object_key|
@@ -48,7 +48,7 @@ When(/^copy object with key "(.+)"$/) do |object_key|
 end
 
 Then(/^copy object status code is (\d+)$/) do |status_code|
-  raise unless @put_the_copy_object_output[:status_code].to_s == status_code
+  raise unless @put_the_copy_object_output[:status_code].to_s == status_code.to_s
 end
 
 When(/^move object with key "(.+)"$/) do |object_key|
@@ -59,7 +59,7 @@ When(/^move object with key "(.+)"$/) do |object_key|
 end
 
 Then(/^move object status code is (\d+)$/) do |status_code|
-  raise unless @put_the_move_object_output[:status_code].to_s == status_code
+  raise unless @put_the_move_object_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -69,11 +69,11 @@ When(/^get object with key "(.+)"$/) do |object_key|
 end
 
 Then(/^get object status code is (\d+)$/) do |status_code|
-  raise unless @get_object_output[:status_code].to_s == status_code
+  raise unless @get_object_output[:status_code].to_s == status_code.to_s
 end
 
 Then(/^get object content length is (\d+)$/) do |length|
-  raise unless (@get_object_output[:body].length * 1024).to_s == length
+  raise unless (@get_object_output[:body].length * 1024).to_s == length.to_s
 end
 
 When(/^get object "(.+)" with content type "([^"]*)"$/) do |object_key, content_type|
@@ -94,7 +94,7 @@ end
 
 Then(/^get object with query signature content length is (\d+)$/) do |length|
   result = Net::HTTP.get URI.parse @get_object_request.request_url
-  raise unless (result.length * 1024).to_s == length
+  raise unless (result.length * 1024).to_s == length.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ When(/^head object with key "(.*)"$/) do |object_key|
 end
 
 Then(/^head object status code is (\d+)$/) do |status_code|
-  raise unless @head_object_output[:status_code].to_s == status_code
+  raise unless @head_object_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ When(/^options object "(.*)" with method "([^"]*)" and origin "([^"]*)"$/) do |o
 end
 
 Then(/^options object status code is (\d+)$/) do |status_code|
-  raise unless @options_object_output[:status_code].to_s == status_code
+  raise unless @options_object_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ When(/^delete object with key "(.*)"$/) do |object_key|
 end
 
 Then(/^delete object status code is (\d+)$/) do |status_code|
-  raise unless @delete_object_output[:status_code].to_s == status_code
+  raise unless @delete_object_output[:status_code].to_s == status_code.to_s
 end
 
 When(/^delete the move object with key "(.*)"$/) do |object_key|
@@ -136,5 +136,5 @@ When(/^delete the move object with key "(.*)"$/) do |object_key|
 end
 
 Then(/^delete the move object status code is (\d+)$/) do |status_code|
-  raise unless @delete_the_move_object_output[:status_code].to_s == status_code
+  raise unless @delete_the_move_object_output[:status_code].to_s == status_code.to_s
 end

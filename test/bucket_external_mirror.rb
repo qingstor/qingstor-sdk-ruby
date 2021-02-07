@@ -33,7 +33,7 @@ When(/^put bucket external mirror:$/) do |external_mirror_string|
 end
 
 Then(/^put bucket external mirror status code is (\d+)$/) do |status_code|
-  raise unless @put_bucket_external_mirror_output[:status_code].to_s == status_code
+  raise unless @put_bucket_external_mirror_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ When(/^get bucket external mirror$/) do
 end
 
 Then(/^get bucket external mirror status code is (\d+)$/) do |status_code|
-  raise unless @get_bucket_external_mirror_output[:status_code].to_s == status_code
+  raise unless @get_bucket_external_mirror_output[:status_code].to_s == status_code.to_s
 end
 
 Then(/^get bucket external mirror should have source_site "([^"]*)"$/) do |source_site|
@@ -57,5 +57,5 @@ When(/^delete bucket external mirror$/) do
 end
 
 Then(/^delete bucket external mirror status code is (\d+)$/) do |status_code|
-  raise unless @delete_bucket_external_mirror_output[:status_code].to_s == status_code
+  raise unless @delete_bucket_external_mirror_output[:status_code].to_s == status_code.to_s
 end

@@ -32,7 +32,7 @@ When(/^initiate multipart upload with key "(.+)"$/) do |object_key|
 end
 
 Then(/^initiate multipart upload status code is (\d+)$/) do |status_code|
-  raise unless @initiate_multipart_upload_output[:status_code].to_s == status_code
+  raise unless @initiate_multipart_upload_output[:status_code].to_s == status_code.to_s
 
   the_upload_id = @initiate_multipart_upload_output[:upload_id]
 end
@@ -51,7 +51,7 @@ When(/^upload the first part with key "(.+)"$/) do |object_key|
 end
 
 Then(/^upload the first part status code is (\d+)$/) do |status_code|
-  raise unless @upload_the_first_part_output[:status_code].to_s == status_code
+  raise unless @upload_the_first_part_output[:status_code].to_s == status_code.to_s
 end
 
 When(/^upload the second part with key "(.+)"$/) do |object_key|
@@ -66,7 +66,7 @@ When(/^upload the second part with key "(.+)"$/) do |object_key|
 end
 
 Then(/^upload the second part status code is (\d+)$/) do |status_code|
-  raise unless @upload_the_second_part_output[:status_code].to_s == status_code
+  raise unless @upload_the_second_part_output[:status_code].to_s == status_code.to_s
 end
 
 When(/^upload the third part with key "(.+)"$/) do |object_key|
@@ -81,7 +81,7 @@ When(/^upload the third part with key "(.+)"$/) do |object_key|
 end
 
 Then(/^upload the third part status code is (\d+)$/) do |status_code|
-  raise unless @upload_the_third_part_output[:status_code].to_s == status_code
+  raise unless @upload_the_third_part_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -96,11 +96,11 @@ When(/^list multipart with key "(.+)"$/) do |object_key|
 end
 
 Then(/^list multipart status code is (\d+)$/) do |status_code|
-  raise unless list_multipart_output[:status_code].to_s == status_code
+  raise unless list_multipart_output[:status_code].to_s == status_code.to_s
 end
 
 Then(/^list multipart object parts count is (\d+)$/) do |count|
-  raise unless list_multipart_output[:object_parts].length.to_s == count
+  raise unless list_multipart_output[:object_parts].length.to_s == count.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ When(/^complete multipart upload with key "(.+)"$/) do |object_key|
 end
 
 Then(/^complete multipart upload status code is (\d+)$/) do |status_code|
-  raise unless @complete_multipart_upload_output[:status_code].to_s == status_code
+  raise unless @complete_multipart_upload_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ When(/^abort multipart upload with key "(.+)"$/) do |object_key|
 end
 
 Then(/^abort multipart upload status code is (\d+)$/) do |status_code|
-  raise unless @abort_multipart_upload_output[:status_code].to_s == status_code
+  raise unless @abort_multipart_upload_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -138,5 +138,5 @@ When(/^delete the multipart object with key "(.+)"$/) do |object_key|
 end
 
 Then(/^delete the multipart object status code is (\d+)$/) do |status_code|
-  raise unless @delete_multipart_object_output[:status_code].to_s == status_code
+  raise unless @delete_multipart_object_output[:status_code].to_s == status_code.to_s
 end

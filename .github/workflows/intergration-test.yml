@@ -1,0 +1,34 @@
+name: "Integration Test"
+
+on: [push,pull_request]
+
+jobs:
+  integration_test:
+    name: "Integration Test"
+    runs-on: [Linux]
+
+    strategy:
+      matrix:
+        ruby: [ "2.6", "2.7" ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Bundle
+        run: bundle install
+
+      - name: Test
+        env:
+          WORKFLOW_INTEGRATION_TEST: true
+          QINGSTOR_ACCESS_KEY_ID: ${{ secrets.QINGSTOR_ACCESS_KEY_ID }}
+          QINGSTOR_SECRET_ACCESS_KEY: ${{ secrets.QINGSTOR_SECRET_ACCESS_KEY }}
+          QINGSTOR_ENDPOINT: ${{ secrets.QINGSTOR_ENDPOINT }}
+          QINGSTOR_BUCKET_NAME: ${{ secrets.QINGSTOR_BUCKET_NAME }}
+          QINGSTOR_ZONE: ${{ secrets.QINGSTOR_ZONE }}
+        run: rake test

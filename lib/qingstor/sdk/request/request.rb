@@ -19,6 +19,7 @@ require 'json'
 require 'net/http'
 
 require 'active_support/core_ext/hash/keys'
+require 'active_support/core_ext/object/blank'
 
 module QingStor
   module SDK
@@ -52,11 +53,19 @@ module QingStor
 
       def sign
         check
+        if Signer.is_anonymous? input
+          Logger.warn "anonymous api call, skip sign"
+          return
+        end
         self.input = Signer.sign input
       end
 
       def sign_query(timeout_seconds)
         check
+        if Signer.is_anonymous? input
+          Logger.warn "anonymous api call, skip sign query"
+          return
+        end
         self.input = Signer.sign_query input, Time.now.to_i + timeout_seconds
       end
 
@@ -97,10 +106,11 @@ module QingStor
       private
 
       def check
-        unless !input[:config][:access_key_id].nil? && !input[:config][:access_key_id].empty?
+        # ak and sk should be both set or not set
+        if input[:config][:access_key_id].blank? && input[:config][:secret_access_key].present?
           raise SDKError, 'access key not provided'
         end
-        unless !input[:config][:secret_access_key].nil? && !input[:config][:secret_access_key].empty?
+        if input[:config][:secret_access_key].blank? && input[:config][:access_key_id].present?
           raise SDKError, 'secret access key not provided'
         end
       end

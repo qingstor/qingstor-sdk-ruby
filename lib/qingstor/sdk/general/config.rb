@@ -39,7 +39,7 @@ module QingStor
         # load default config as basic
         load_default_config
         # load from config, env path superior to ~/.qingstor/config.yaml
-        load_user_config_with_check
+        load_user_config_path_exist
         # load envs, cover corresponding config if env exists
         load_env_config
         # cover by user's param
@@ -53,12 +53,23 @@ module QingStor
       end
 
       def check
-        %i[access_key_id secret_access_key host port protocol].each do |x|
-          if !self[x] || self[x].to_s.empty?
+        if self[:access_key_id].blank? && self[:secret_access_key].present? ||
+           self[:access_key_id].present? && self[:secret_access_key].blank?
+          raise ConfigurationError, 'ak and sk should be both both empty or not empty'
+        end
+
+        if self[:access_key_id].blank? && self[:secret_access_key].blank?
+          Logger.warn 'Both ak and sk not configured, will call api as anonymous user'
+        end
+
+        # host/port/protocol must set
+        %i[host port protocol].each do |x|
+          if self[x].blank?
             raise ConfigurationError, "#{x.to_sym} not specified"
           end
         end
-        if self[:additional_user_agent] && !self[:additional_user_agent].empty?
+
+        if self[:additional_user_agent].present?
           self[:additional_user_agent].each_byte do |x|
             # Allow space(32) to ~(126) in ASCII Table, exclude "(34).
             if x < 32 || x > 126 || x == 32 || x == 34
@@ -79,8 +90,14 @@ module QingStor
 
       def load_env_config
         another_config = {}
-        another_config[:access_key_id] = ENV[Contract::ENV_ACCESS_KEY_ID] if ENV[Contract::ENV_ACCESS_KEY_ID] != nil
-        another_config[:secret_access_key] = ENV[Contract::ENV_SECRET_ACCESS_KEY] if ENV[Contract::ENV_SECRET_ACCESS_KEY] != nil
+        unless ENV[Contract::ENV_ACCESS_KEY_ID].nil?
+          another_config[:access_key_id] =
+            ENV[Contract::ENV_ACCESS_KEY_ID]
+        end
+        unless ENV[Contract::ENV_SECRET_ACCESS_KEY].nil?
+          another_config[:secret_access_key] =
+            ENV[Contract::ENV_SECRET_ACCESS_KEY]
+        end
         update another_config
       end
 
@@ -97,12 +114,13 @@ module QingStor
         FileUtils.copy Contract::DEFAULT_CONFIG_FILEPATH, Contract::USER_CONFIG_FILEPATH
       end
 
-      def load_user_config_with_check
+      # load user config if path exist, and skip check
+      def load_user_config_path_exist
         # if env path configured, update from env; otherwise, if ~/.qingstor/config.yaml exists, update from this
-        if !ENV[Contract::ENV_CONFIG_PATH].nil? and File.exist? ENV[Contract::ENV_CONFIG_PATH]
+        if !ENV[Contract::ENV_CONFIG_PATH].nil? && File.exist?(ENV[Contract::ENV_CONFIG_PATH])
           load_config_from_file ENV[Contract::ENV_CONFIG_PATH]
         elsif File.exist? Contract::USER_CONFIG_FILEPATH
-          load_user_config
+          load_config_from_file Contract::USER_CONFIG_FILEPATH
         end
       end
     end

@@ -60,6 +60,16 @@ module QingStor
       end
 
       def self.request_uri(input)
+        config = input[:config]
+        # if enable vhost, and uri property contains bucket-name
+        if config[:enable_virtual_host_style] && input[:properties].present? && input[:properties][:"bucket-name"]
+          uri = parse_endpoint input[:request_endpoint]
+          # modify host, add bucket before
+          uri.host = "#{input[:properties][:"bucket-name"]}.#{uri.host}"
+          input[:request_endpoint] = uri.to_s
+          # handle request_uri, remove prefix (bucket-name)
+          input[:request_uri].delete_prefix! URI_BUCKET_PREFIX if input[:request_uri].start_with? URI_BUCKET_PREFIX
+        end
         unless input[:properties].nil?
           input[:properties].each do |k, v|
             input[:request_uri].gsub! "<#{k}>", (escape v.to_s)
@@ -166,19 +176,31 @@ module QingStor
         origin
       end
 
-      private
-
-      URI_BUCKET_PREFIX = '/<bucket-name>'.freeze
-
+      # try to parse endpoint:
+      # if endpoint invalid, means ip host without scheme, like: 192.168.0.1:3000
+      # if endpoint parsed, and no scheme find, means host without scheme, like: qingstor.dev
+      # both above will add default schema at the start, and parse again
       def self.parse_endpoint(endpoint)
-        uri = URI.parse endpoint
-        unless uri.scheme.nil?
-          return uri
+        if endpoint.blank?
+          raise "endpoint should not be empty when parse"
+        end
+
+        begin
+          uri = URI.parse endpoint
+          unless uri.scheme.nil?
+            return uri
+          end
+        rescue URI::InvalidURIError
+          # Ignored and continue, add scheme prefix then
         end
 
         endpoint = "http://#{endpoint}" # add default scheme for endpoint
-        URI.parse endpoint
+        return URI.parse endpoint
       end
+
+      private
+
+      URI_BUCKET_PREFIX = "/<bucket-name>".freeze
     end
   end
 end

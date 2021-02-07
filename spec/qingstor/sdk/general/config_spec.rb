@@ -69,14 +69,59 @@ module QingStor
       end
 
       it 'use env first' do
+        config = Config.new
+        expect(config[:access_key_id]).to eq nil
+        expect(config[:secret_access_key]).to eq nil
+        expect(config[:enable_virtual_host_style]).to eq false
+
         ENV[Contract::ENV_ACCESS_KEY_ID] = 'ak-env'
         ENV[Contract::ENV_SECRET_ACCESS_KEY] = 'sk-env'
-        config = Config.new
-        expect(config[:access_key_id]).to eq 'ak-env'
-        expect(config[:secret_access_key]).to eq 'sk-env'
+        ENV[Contract::ENV_ENABLE_VIRTUAL_HOST_STYLE] = 'true'
+
+        config_new = Config.new
+        expect(config_new[:access_key_id]).to eq 'ak-env'
+        expect(config_new[:secret_access_key]).to eq 'sk-env'
+        expect(config_new[:enable_virtual_host_style]).to eq true
         # clean env after use
         ENV.delete(Contract::ENV_ACCESS_KEY_ID)
         ENV.delete(Contract::ENV_SECRET_ACCESS_KEY)
+        ENV.delete(Contract::ENV_ENABLE_VIRTUAL_HOST_STYLE)
+      end
+
+      it 'cannot enable vhost with ip host' do
+        config = Config.new
+        begin
+          config.update(enable_virtual_host_style: true,
+                        host: "192.168.0.1")
+        rescue ConfigurationError
+          expect(true).to be true
+        end
+      end
+
+      it 'cannot enable vhost with ip host in endpoint' do
+        config = Config.new
+        begin
+          config.update(enable_virtual_host_style: true,
+                        endpoint: "192.168.0.1:3000")
+        rescue ConfigurationError
+          expect(true).to be true
+        end
+      end
+
+      it 'can enable vhost with host' do
+        config = Config.new
+        config.update(enable_virtual_host_style: true,
+                      host: "qingstor.dev")
+        expect(config[:enable_virtual_host_style]).to eq true
+        expect(config[:host]).to eq "qingstor.dev"
+      end
+
+      it 'can enable vhost with host in endpoint' do
+        config = Config.new
+        config.update(enable_virtual_host_style: true,
+                      endpoint: "http://qingstor.dev")
+        expect(config[:enable_virtual_host_style]).to eq true
+        expect(config[:endpoint]).to eq "http://qingstor.dev"
       end
 
       it 'can check itself' do

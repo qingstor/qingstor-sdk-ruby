@@ -17,8 +17,10 @@
 require 'cgi'
 require 'base64'
 require 'digest'
+require 'uri'
 
 require 'active_support/core_ext/hash/keys'
+require 'active_support/core_ext/object/blank'
 require 'mimemagic'
 
 module QingStor
@@ -41,6 +43,15 @@ module QingStor
       def self.request_endpoint(input)
         config = input[:config]
         zone = input[:properties] ? input[:properties][:zone] : nil
+        # handle endpoint directly if it exists
+        if config[:endpoint].present?
+          uri = parse_endpoint(config[:endpoint].to_s)
+          if zone
+            uri.host = "#{zone}.#{uri.host}"
+          end
+          return uri.to_s
+        end
+
         if zone
           "#{config[:protocol]}://#{zone}.#{config[:host]}:#{config[:port]}"
         else
@@ -153,6 +164,20 @@ module QingStor
         origin.gsub! '%3D', '='
         origin.gsub! '+', '%20'
         origin
+      end
+
+      private
+
+      URI_BUCKET_PREFIX = '/<bucket-name>'.freeze
+
+      def self.parse_endpoint(endpoint)
+        uri = URI.parse endpoint
+        unless uri.scheme.nil?
+          return uri
+        end
+
+        endpoint = "http://#{endpoint}" # add default scheme for endpoint
+        URI.parse endpoint
       end
     end
   end

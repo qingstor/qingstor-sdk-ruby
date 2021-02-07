@@ -6,6 +6,9 @@
 host: qingstor.com
 port: 443
 protocol: https
+# or set endpoint directly
+# endpoint: https://qingstor.com:443
+
 connection_retries: 3
 
 # Additional User-Agent

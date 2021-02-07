@@ -62,10 +62,20 @@ module QingStor
           Logger.warn 'Both ak and sk not configured, will call api as anonymous user'
         end
 
-        # host/port/protocol must set
-        %i[host port protocol].each do |x|
-          if self[x].blank?
-            raise ConfigurationError, "#{x.to_sym} not specified"
+        # check endpoint and host/port/protocol
+        if self[:endpoint].blank?
+          # host/port/protocol must set if endpoint not set
+          %i[host port protocol].each do |x|
+            if self[x].blank?
+              raise ConfigurationError, "#{x.to_sym} not specified"
+            end
+          end
+        else
+          # if endpoint set, host/port/protocol ignore, and warn
+          %i[host port protocol].each do |x|
+            if self[x].present?
+              Logger.warn "Endpoint configured, #{x.to_sym} will be ignored"
+            end
           end
         end
 

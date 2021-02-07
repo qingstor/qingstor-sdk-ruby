@@ -133,6 +133,10 @@ module QingStor
           another_config[:enable_virtual_host_style] =
             ENV[Contract::ENV_ENABLE_VIRTUAL_HOST_STYLE]
         end
+        unless ENV[Contract::ENV_ENDPOINT].nil?
+          another_config[:endpoint] =
+              ENV[Contract::ENV_ENDPOINT]
+        end
         update another_config
       end
 

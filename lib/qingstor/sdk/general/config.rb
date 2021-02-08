@@ -29,6 +29,15 @@ module QingStor
     class Config < Hash
       attr_accessor :connection
 
+      DEFAULT_AS_HASH = {
+        host:                      'qingstor.com'.freeze,
+        port:                      443,
+        protocol:                  'https'.freeze,
+        connection_retries:        3,
+        log_level:                 'warn'.freeze,
+        enable_virtual_host_style: false
+      }
+
       def self.init(access_key_id, secret_access_key)
         initial_config = {
           access_key_id:     access_key_id,
@@ -77,7 +86,7 @@ module QingStor
         else
           # if endpoint set, host/port/protocol ignore, and warn
           %i[host port protocol].each do |x|
-            if self[x].present?
+            if self[x].present? && !Config.is_default?(x, self[x])
               Logger.warn "Endpoint configured, #{x.to_sym} will be ignored"
             end
           end
@@ -108,7 +117,7 @@ module QingStor
       end
 
       def load_default_config
-        load_config_from_file Contract::DEFAULT_CONFIG_FILEPATH
+        update DEFAULT_AS_HASH
       end
 
       def load_user_config
@@ -135,7 +144,7 @@ module QingStor
         end
         unless ENV[Contract::ENV_ENDPOINT].nil?
           another_config[:endpoint] =
-              ENV[Contract::ENV_ENDPOINT]
+            ENV[Contract::ENV_ENDPOINT]
         end
         update another_config
       end
@@ -146,12 +155,6 @@ module QingStor
       end
 
       private
-
-      def install_default_user_config
-        Logger.warn "Installing default config file to #{Contract::USER_CONFIG_FILEPATH}"
-        FileUtils.mkdir_p Contract::USER_SUPPORT_DIRECTORY
-        FileUtils.copy Contract::DEFAULT_CONFIG_FILEPATH, Contract::USER_CONFIG_FILEPATH
-      end
 
       # load user config if path exist, and skip check
       def load_user_config_path_exist
@@ -168,12 +171,15 @@ module QingStor
       end
 
       def is_valid_ip?(ip)
-        begin
-          IPAddr.new ip
-          return true
-        rescue
-          return false
-        end
+        IPAddr.new ip
+        true
+      rescue
+        false
+      end
+
+      # @return boolean
+      def self.is_default?(key, value)
+        DEFAULT_AS_HASH[key.to_sym].present? && DEFAULT_AS_HASH[key.to_sym] == value
       end
     end
   end

@@ -23,9 +23,6 @@ module QingStor
 
       # GEM_DIRECTORY             = Gem::Specification.find_by_name('qingcloud-sdk').gem_dir
       # DEFAULT_SUPPORT_DIRECTORY = GEM_DIRECTORY + '/lib/qingcloud/sdk/commons/default'
-      DEFAULT_SUPPORT_DIRECTORY = File.expand_path(File.dirname(__FILE__) + '/./default')
-      DEFAULT_CONFIG_FILENAME   = 'config.yaml'.freeze
-      DEFAULT_CONFIG_FILEPATH   = "#{DEFAULT_SUPPORT_DIRECTORY}/#{DEFAULT_CONFIG_FILENAME}".freeze
 
       ENV_ACCESS_KEY_ID             = 'QINGSTOR_ACCESS_KEY_ID'.freeze
       ENV_SECRET_ACCESS_KEY         = 'QINGSTOR_SECRET_ACCESS_KEY'.freeze

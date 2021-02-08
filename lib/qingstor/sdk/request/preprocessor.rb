@@ -182,7 +182,7 @@ module QingStor
       # both above will add default schema at the start, and parse again
       def self.parse_endpoint(endpoint)
         if endpoint.blank?
-          raise "endpoint should not be empty when parse"
+          raise 'endpoint should not be empty when parse'
         end
 
         begin
@@ -195,12 +195,12 @@ module QingStor
         end
 
         endpoint = "http://#{endpoint}" # add default scheme for endpoint
-        return URI.parse endpoint
+        URI.parse endpoint
       end
 
       private
 
-      URI_BUCKET_PREFIX = "/<bucket-name>".freeze
+      URI_BUCKET_PREFIX = '/<bucket-name>'.freeze
     end
   end
 end

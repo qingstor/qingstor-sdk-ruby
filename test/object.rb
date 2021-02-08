@@ -161,3 +161,11 @@ end
 Then(/^delete the move object status code is (\d+)$/) do |status_code|
   raise unless @delete_the_move_object_output[:status_code].to_s == status_code.to_s
 end
+
+When(/^delete object with metadata and "(.*)"$/) do |object_key|
+  @delete_obj_with_meta_output = bucket.delete_object "#{object_key}_meta"
+end
+
+Then(/^delete object with metadata status code is (\d+)$/) do |status_code|
+  raise unless @delete_obj_with_meta_output[:status_code].to_s == status_code.to_s
+end

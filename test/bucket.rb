@@ -54,7 +54,6 @@ When(/^list objects$/) do
 end
 
 Then(/^list objects status code is (\d+)$/) do |status|
-  log "list objects case with code #{@list_objects_output[:status_code].to_s}"
   raise unless @list_objects_output[:status_code].to_s == status.to_s
 end
 

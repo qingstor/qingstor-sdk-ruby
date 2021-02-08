@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
-gem 'qingstor-sdk'
+gem 'qingstor-sdk', :path => '../'
 
 gem 'cucumber', '~> 2.4.0'

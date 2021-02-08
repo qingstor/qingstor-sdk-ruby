@@ -25,7 +25,6 @@ jobs:
 
       - name: Test
         env:
-          WORKFLOW_INTEGRATION_TEST: true
           # Cucumber related config
           CUCUMBER_PUBLISH_ENABLED: true
           CUCUMBER_PUBLISH_TOKEN: ${{ secrets.CUCUMBER_PUBLISH_TOKEN }}

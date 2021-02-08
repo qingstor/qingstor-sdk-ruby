@@ -36,7 +36,7 @@ module QingStor
         connection_retries:        3,
         log_level:                 'warn'.freeze,
         enable_virtual_host_style: false
-      }.freeze
+      }
 
       def self.init(access_key_id, secret_access_key)
         initial_config = {

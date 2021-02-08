@@ -1,0 +1,40 @@
+name: "Integration Test"
+
+on: [push,pull_request]
+
+jobs:
+  integration_test:
+    name: "Integration Test"
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        ruby: [ "2.6", "2.7" ]
+        os: [Linux]
+
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Set up ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Bundle
+        run: bundle install
+
+      - name: Test
+        env:
+          # Cucumber related config
+          CUCUMBER_PUBLISH_ENABLED: true
+          CUCUMBER_PUBLISH_TOKEN: ${{ secrets.CUCUMBER_PUBLISH_TOKEN }}
+          # QingStor Object Storage related config
+          QINGSTOR_ACCESS_KEY_ID: ${{ secrets.QINGSTOR_ACCESS_KEY_ID }}
+          QINGSTOR_SECRET_ACCESS_KEY: ${{ secrets.QINGSTOR_SECRET_ACCESS_KEY }}
+          QINGSTOR_ENDPOINT: ${{ secrets.QINGSTOR_ENDPOINT }}
+          QINGSTOR_BUCKET_NAME: ${{ secrets.QINGSTOR_BUCKET_NAME }}
+          QINGSTOR_ZONE: ${{ secrets.QINGSTOR_ZONE }}
+        run: rake test

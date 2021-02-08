@@ -14,7 +14,7 @@
 #  | limitations under the License.
 #  +-------------------------------------------------------------------------
 
-require 'qingstor/sdk'
+require './qingstor-sdk'
 
 # ----------------------------------------------------------------------------
 
@@ -33,5 +33,5 @@ When(/^list buckets$/) do
 end
 
 Then(/^list buckets status code is (\d+)$/) do |status_code|
-  raise unless @list_buckets_output[:status_code].to_s == status_code
+  raise unless @list_buckets_output[:status_code].to_s == status_code.to_s
 end

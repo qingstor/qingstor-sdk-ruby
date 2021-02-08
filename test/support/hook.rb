@@ -18,7 +18,8 @@ is_started = false
 prepare_bucket = nil
 
 Before do
-  load_test_config; load_config; init_qingstor_service
+  load_test_config_from_env; load_config_from_env; init_qingstor_service
+
   unless prepare_bucket
     prepare_bucket = @qs_service.bucket(
       @test_config[:bucket_name],

@@ -16,7 +16,7 @@
 
 require 'json'
 
-require 'qingstor/sdk'
+require './qingstor-sdk'
 
 # ----------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ When(/^put same bucket again$/) do
 end
 
 Then(/^put same bucket again status code is (\d+)$/) do |status_code|
-  raise unless @put_same_bucket_output[:status_code].to_s == status_code
+  raise unless @put_same_bucket_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -54,11 +54,11 @@ When(/^list objects$/) do
 end
 
 Then(/^list objects status code is (\d+)$/) do |status|
-  raise unless @list_objects_output[:status_code].to_s == status
+  raise unless @list_objects_output[:status_code].to_s == status.to_s
 end
 
 Then(/^list objects keys count is (\d+)$/) do |status|
-  raise unless @list_objects_output[:keys].length.to_s == status
+  raise unless @list_objects_output[:keys].length.to_s == status.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ When(/^head bucket$/) do
 end
 
 Then(/^head bucket status code is (\d+)$/) do |status_code|
-  raise unless @head_bucket_output[:status_code].to_s == status_code
+  raise unless @head_bucket_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ When(/^delete multiple objects:$/) do |delete_objects_string|
 end
 
 Then(/^delete multiple objects code is (\d+)$/) do |status_code|
-  raise unless @delete_multiple_objects_output[:status_code].to_s == status_code
+  raise unless @delete_multiple_objects_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -109,11 +109,11 @@ When(/^get bucket statistics$/) do
 end
 
 Then(/^get bucket statistics status code is (\d+)$/) do |status_code|
-  raise unless @get_bucket_statistics_output[:status_code].to_s == status_code
+  raise unless @get_bucket_statistics_output[:status_code].to_s == status_code.to_s
 end
 
 Then(/^get bucket statistics status is "([^"]*)"$/) do |status|
-  raise unless @get_bucket_statistics_output[:status] == status
+  raise unless @get_bucket_statistics_output[:status] == status.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -135,5 +135,5 @@ Then(/^list multipart uploads count is (\d+)$/) do |count|
     @list_multipart_uploads_object_key,
     upload_id: @initiate_multipart_upload_output[:upload_id],
   )
-  raise unless @list_multipart_uploads_output[:uploads].length.to_s == count
+  raise unless @list_multipart_uploads_output[:uploads].length.to_s == count.to_s
 end

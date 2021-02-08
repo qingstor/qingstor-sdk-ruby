@@ -16,7 +16,7 @@
 
 require 'yaml'
 
-require 'qingstor/sdk'
+require File.expand_path('../../qingstor-sdk', __FILE__)
 
 module QingStorWorld
   def load_test_config
@@ -28,8 +28,19 @@ module QingStorWorld
     @test_config[:max_retries] = @test_config['max_retries']
   end
 
+  def load_test_config_from_env
+    @test_config = {}
+    @test_config[:bucket_name] = ENV['QINGSTOR_BUCKET_NAME']
+    @test_config[:zone] = ENV['QINGSTOR_ZONE']
+  end
+
   def load_config
     @config = QingStor::SDK::Config.new.load_config_from_file './config.yaml'
+    @config.check
+  end
+
+  def load_config_from_env
+    @config = QingStor::SDK::Config.new.load_env_config
     @config.check
   end
 

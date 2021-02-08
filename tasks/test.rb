@@ -17,8 +17,6 @@
 require 'rspec/core/rake_task'
 
 task :test do
-  system 'cd test; rm -f Gemfile.lock'
-  system 'cd test; bundle check'
-  system 'cd test; bundle install'
-  system 'cd test; cucumber --backtrace --require="./" ./features'
+  system 'cd test; cucumber --backtrace --require="./" --fail-fast ./features'
+  exit $?.exitstatus
 end

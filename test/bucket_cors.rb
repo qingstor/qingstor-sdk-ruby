@@ -16,7 +16,7 @@
 
 require 'json'
 
-require 'qingstor/sdk'
+require './qingstor-sdk'
 
 # ----------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ When(/^put bucket CORS:$/) do |cors_string|
 end
 
 Then(/^put bucket CORS status code is (\d+)$/) do |status_code|
-  raise unless @put_bucket_cors_output[:status_code].to_s == status_code
+  raise unless @put_bucket_cors_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ When(/^get bucket CORS$/) do
 end
 
 Then(/^get bucket CORS status code is (\d+)$/) do |status_code|
-  raise unless @get_bucket_cors_output[:status_code].to_s == status_code
+  raise unless @get_bucket_cors_output[:status_code].to_s == status_code.to_s
 end
 
 Then(/^get bucket CORS should have allowed origin "([^"]*)"$/) do |name|
@@ -57,5 +57,5 @@ When(/^delete bucket CORS$/) do
 end
 
 Then(/^delete bucket CORS status code is (\d+)$/) do |status_code|
-  raise unless @delete_bucket_cors_output[:status_code].to_s == status_code
+  raise unless @delete_bucket_cors_output[:status_code].to_s == status_code.to_s
 end

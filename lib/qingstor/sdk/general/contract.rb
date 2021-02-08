@@ -31,6 +31,7 @@ module QingStor
       ENV_SECRET_ACCESS_KEY         = 'QINGSTOR_SECRET_ACCESS_KEY'.freeze
       ENV_CONFIG_PATH               = 'QINGSTOR_CONFIG_PATH'.freeze
       ENV_ENABLE_VIRTUAL_HOST_STYLE = 'QINGSTOR_ENABLE_VIRTUAL_HOST_STYLE'.freeze
+      ENV_ENDPOINT                  = 'QINGSTOR_ENDPOINT'.freeze
     end
   end
 end

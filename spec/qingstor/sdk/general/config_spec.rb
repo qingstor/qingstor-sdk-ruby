@@ -92,7 +92,7 @@ module QingStor
         config = Config.new
         begin
           config.update(enable_virtual_host_style: true,
-                        host: "192.168.0.1")
+                        host:                      '192.168.0.1')
         rescue ConfigurationError
           expect(true).to be true
         end
@@ -102,7 +102,7 @@ module QingStor
         config = Config.new
         begin
           config.update(enable_virtual_host_style: true,
-                        endpoint: "192.168.0.1:3000")
+                        endpoint:                  '192.168.0.1:3000')
         rescue ConfigurationError
           expect(true).to be true
         end
@@ -111,17 +111,17 @@ module QingStor
       it 'can enable vhost with host' do
         config = Config.new
         config.update(enable_virtual_host_style: true,
-                      host: "qingstor.dev")
+                      host:                      'qingstor.dev')
         expect(config[:enable_virtual_host_style]).to eq true
-        expect(config[:host]).to eq "qingstor.dev"
+        expect(config[:host]).to eq 'qingstor.dev'
       end
 
       it 'can enable vhost with host in endpoint' do
         config = Config.new
         config.update(enable_virtual_host_style: true,
-                      endpoint: "http://qingstor.dev")
+                      endpoint:                  'http://qingstor.dev')
         expect(config[:enable_virtual_host_style]).to eq true
-        expect(config[:endpoint]).to eq "http://qingstor.dev"
+        expect(config[:endpoint]).to eq 'http://qingstor.dev'
       end
 
       it 'can check itself' do

@@ -30,13 +30,13 @@ module QingStor
       attr_accessor :connection
 
       DEFAULT_AS_HASH = {
-        :host => 'qingstor.com'.freeze,
-        :port => 443.freeze,
-        :protocol => 'https'.freeze,
-        :connection_retries => 3.freeze,
-        :log_level => 'warn'.freeze,
-        :enable_virtual_host_style => false.freeze
-      }
+        host:                      'qingstor.com'.freeze,
+        port:                      443,
+        protocol:                  'https'.freeze,
+        connection_retries:        3,
+        log_level:                 'warn'.freeze,
+        enable_virtual_host_style: false
+      }.freeze
 
       def self.init(access_key_id, secret_access_key)
         initial_config = {
@@ -144,7 +144,7 @@ module QingStor
         end
         unless ENV[Contract::ENV_ENDPOINT].nil?
           another_config[:endpoint] =
-              ENV[Contract::ENV_ENDPOINT]
+            ENV[Contract::ENV_ENDPOINT]
         end
         update another_config
       end
@@ -171,17 +171,15 @@ module QingStor
       end
 
       def is_valid_ip?(ip)
-        begin
-          IPAddr.new ip
-          return true
-        rescue
-          return false
-        end
+        IPAddr.new ip
+        true
+      rescue
+        false
       end
 
-      #@return boolean
+      # @return boolean
       def self.is_default?(key, value)
-        return DEFAULT_AS_HASH[key.to_sym].present? && DEFAULT_AS_HASH[key.to_sym] == value
+        DEFAULT_AS_HASH[key.to_sym].present? && DEFAULT_AS_HASH[key.to_sym] == value
       end
     end
   end

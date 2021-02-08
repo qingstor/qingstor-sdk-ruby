@@ -16,7 +16,7 @@
 
 require 'json'
 
-require 'qingstor/sdk'
+require './qingstor-sdk'
 
 # ----------------------------------------------------------------------------
 

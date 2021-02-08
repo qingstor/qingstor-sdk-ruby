@@ -18,7 +18,7 @@ require 'json'
 require 'digest'
 require 'net/http'
 
-require 'qingstor/sdk'
+require './qingstor-sdk'
 
 # ----------------------------------------------------------------------------
 

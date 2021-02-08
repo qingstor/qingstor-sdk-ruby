@@ -22,14 +22,6 @@ module QingStor
       it 'should know user config file path' do
         expect(Contract::USER_CONFIG_FILEPATH).to eq "#{Dir.home}/.qingstor/config.yaml"
       end
-
-      it 'should know default config file path' do
-        expect(Contract::DEFAULT_CONFIG_FILEPATH.end_with?('default/config.yaml')).to be true
-      end
-
-      it 'should make sure default config file exists' do
-        expect(File.exist?(Contract::DEFAULT_CONFIG_FILEPATH)).to be true
-      end
     end
   end
 end

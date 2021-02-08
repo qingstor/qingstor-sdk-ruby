@@ -57,7 +57,7 @@ module QingStor
       end
 
       it 'can load config from file' do
-        config = Config.new.load_config_from_file Contract::DEFAULT_CONFIG_FILEPATH
+        config = Config.new.load_config_from_file File.expand_path('../default/config.yaml', __FILE__)
         expect(config[:access_key_id]).to be nil
         expect(config[:host]).to eq 'qingstor.com'
         expect(config[:log_level]).to eq 'warn'

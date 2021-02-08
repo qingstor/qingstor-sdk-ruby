@@ -49,3 +49,16 @@ Then(/^get bucket ACL should have grantee name "([^"]*)"$/) do |name|
   @get_bucket_acl_output[:acl].each { |acl| ok = true if acl[:grantee][:name] == name }
   raise unless ok
 end
+
+# ----------------------------------------------------------------------------
+
+When(/^put empty bucket ACL$/) do
+  bucket = @qs_service.bucket @test_config[:bucket_name], @test_config[:zone]
+  raise if bucket.nil?
+
+  @clear_bucket_acl_output = bucket.put_acl acl: []
+end
+
+Then(/^put empty bucket ACL status code is (\d+)$/) do |status_code|
+  raise unless @clear_bucket_acl_output[:status_code].to_s == status_code.to_s
+end

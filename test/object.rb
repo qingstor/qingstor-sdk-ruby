@@ -40,6 +40,20 @@ Then(/^put object status code is (\d+)$/) do |status_code|
   raise unless @put_object_output[:status_code].to_s == status_code.to_s
 end
 
+When(/^put object "(.+)" with metadata "(.+)":"(.+)", "(.+)":"(.+)"$/) do |object_key, k1, v1, k2, v2|
+  system 'dd if=/dev/zero of=/tmp/sdk_bin bs=1024 count=1'
+  @put_object_metadata_output = bucket.put_object(
+    "#{object_key}_meta",
+    x_qs_meta_data: {"#{k1}": v1, "#{k2}": v2},
+    body:           File.open('/tmp/sdk_bin'),
+  )
+  system 'rm -f /tmp/sdk_bin'
+end
+
+Then(/^put object with metadata status code is (\d+)$/) do |status_code|
+  raise unless @put_object_metadata_output[:status_code].to_s == status_code.to_s
+end
+
 When(/^copy object with key "(.+)"$/) do |object_key|
   @put_the_copy_object_output = bucket.put_object(
     "#{object_key}_copy",
@@ -74,6 +88,15 @@ end
 
 Then(/^get object content length is (\d+)$/) do |length|
   raise unless (@get_object_output[:body].length * 1024).to_s == length.to_s
+end
+
+When(/^get object "(.+)" and check metadata$/) do |object_key|
+  @get_object_meta_output = bucket.get_object "#{object_key}_meta"
+end
+
+Then(/^get object metadata is "(.+)":"(.+)", "(.+)":"(.+)"$/) do |k1, v1, k2, v2|
+  raise unless @get_object_meta_output[:"x_qs_meta_#{k1}"].to_s == v1
+  raise unless @get_object_meta_output[:"x_qs_meta_#{k2}"].to_s == v2
 end
 
 When(/^get object "(.+)" with content type "([^"]*)"$/) do |object_key, content_type|
@@ -137,4 +160,12 @@ end
 
 Then(/^delete the move object status code is (\d+)$/) do |status_code|
   raise unless @delete_the_move_object_output[:status_code].to_s == status_code.to_s
+end
+
+When(/^delete object with metadata and "(.*)"$/) do |object_key|
+  @delete_obj_with_meta_output = bucket.delete_object "#{object_key}_meta"
+end
+
+Then(/^delete object with metadata status code is (\d+)$/) do |status_code|
+  raise unless @delete_obj_with_meta_output[:status_code].to_s == status_code.to_s
 end

@@ -22,43 +22,40 @@ require './qingstor-sdk'
 
 bucket = nil
 
-When(/^put bucket ACL:$/) do |acl_string|
+When(/^put bucket lifecycle:$/) do |lifecycle_string|
   bucket = @qs_service.bucket @test_config[:bucket_name], @test_config[:zone]
   raise if bucket.nil?
 
-  acl = JSON.parse acl_string
-  @put_bucket_acl_output = bucket.put_acl acl: acl['acl']
+  lifecycle = JSON.parse lifecycle_string
+  @put_bucket_lifecycle_output = bucket.put_lifecycle rule: lifecycle['rule']
 end
 
-Then(/^put bucket ACL status code is (\d+)$/) do |status_code|
-  raise unless @put_bucket_acl_output[:status_code].to_s == status_code.to_s
+Then(/^put bucket lifecycle status code is (\d+)$/) do |status_code|
+  raise unless @put_bucket_lifecycle_output[:status_code].to_s == status_code.to_s
 end
 
 # ----------------------------------------------------------------------------
 
-When(/^get bucket ACL$/) do
-  @get_bucket_acl_output = bucket.get_acl
+When(/^get bucket lifecycle$/) do
+  @get_bucket_lifecycle_output = bucket.get_lifecycle
 end
 
-Then(/^get bucket ACL status code is (\d+)$/) do |status_code|
-  raise unless @get_bucket_acl_output[:status_code].to_s == status_code.to_s
+Then(/^get bucket lifecycle status code is (\d+)$/) do |status_code|
+  raise unless @get_bucket_lifecycle_output[:status_code].to_s == status_code.to_s
 end
 
-Then(/^get bucket ACL should have grantee name "([^"]*)"$/) do |name|
+Then(/^get bucket lifecycle should have filter prefix "(.*)"$/) do |name|
   ok = false
-  @get_bucket_acl_output[:acl].each { |acl| ok = true if acl[:grantee][:name] == name }
+  @get_bucket_lifecycle_output[:rule].each { |rule| ok = true if rule[:filter][:prefix] == name }
   raise unless ok
 end
 
 # ----------------------------------------------------------------------------
 
-When(/^put empty bucket ACL$/) do
-  bucket = @qs_service.bucket @test_config[:bucket_name], @test_config[:zone]
-  raise if bucket.nil?
-
-  @clear_bucket_acl_output = bucket.put_acl acl: []
+When(/^delete bucket lifecycle$/) do
+  @delete_bucket_lifecycle_output = bucket.delete_lifecycle
 end
 
-Then(/^put empty bucket ACL status code is (\d+)$/) do |status_code|
-  raise unless @clear_bucket_acl_output[:status_code].to_s == status_code.to_s
+Then(/^delete bucket lifecycle status code is (\d+)$/) do |status_code|
+  raise unless @delete_bucket_lifecycle_output[:status_code].to_s == status_code.to_s
 end

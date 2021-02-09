@@ -1059,10 +1059,6 @@ module QingStor
       def put_bucket_acl_input_validate(input)
         input.deep_stringify_keys!
 
-        unless !input['request_elements']['acl'].nil? && !input['request_elements']['acl'].empty?
-          raise ParameterRequiredError.new('acl', 'PutBucketACLInput')
-        end
-
         input['request_elements']['acl'].each do |x|
           unless x['grantee'].nil?
 

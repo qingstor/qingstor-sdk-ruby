@@ -14,7 +14,9 @@ This Gem uses Ruby's _keyword arguments_ feature, thus Ruby v2.1.5 or higher is
 required.  See [this article](https://robots.thoughtbot.com/ruby-2-keyword-arguments)
 for more details about _keyword arguments_.
 
-_Notice:_ If you are using Ruby v1.9.x, please checkout the [compatible] branch.
+_Notice:_ As of sdk v2.4, we no longer support Ruby 2.4 and earlier versions since Ruby 2.4 has been marked as EOL. 
+If you are still using Ruby 2.4 and earlier, you may not be able to use some new features of our sdk, 
+so please upgrade your version of Ruby as soon as possible.
 
 ### Install from RubyGems
 
@@ -122,6 +124,11 @@ server (in case of QingStor is deployed in private environment, thus has
 different endpoint with public QingStor) either in the config file, or in
 the program dynamically.
 
+**Notice:** config will not be checked available when `new`, `load` and `update`, 
+which will be done right before initializing `service` or `bucket`. 
+If you need to check config, you should call `config.check` whenever you want.
+If `check` failed, a `ConfigurationError` will be raised.
+
 ___Code Example:___
 
 ``` ruby
@@ -131,6 +138,7 @@ require 'qingstor/sdk'
 config = QingStor::SDK::Config.new.load_default_config
 
 # Create with default value
+# priority from high to low: param > env > user config > default config
 config = QingStor::SDK::Config.new({
   host:      'qingstor.dev',
   log_level: 'debug',
@@ -143,6 +151,13 @@ config = QingStor::SDK::Config.init ENV['ENV_ACCESS_KEY_ID'],
 # Load configuration from config file
 config = QingStor::SDK::Config.new
 config = config.load_config_from_file '~/qingstor/config.yaml'
+
+# Load configuration from env variable:
+# QINGSTOR_ACCESS_KEY_ID for access_key_id
+# QINGSTOR_SECRET_ACCESS_KEY for secret_access_key
+# QINGSTOR_ENABLE_VIRTUAL_HOST_STYLE for enable_virtual_host_style
+# QINGSTOR_ENDPOINT for endpoint
+config = QingStor::SDK::Config.new.load_env_config
 
 # Change API server
 config.update({host: 'test.qingstor.com'})
@@ -159,14 +174,37 @@ secret_access_key: 'SECRET_ACCESS_KEY'
 host: 'qingstor.com'
 port: 443
 protocol: 'https'
+# or set endpoint directly
+# endpoint: https://qingstor.com:443
+
 connection_retries: 3
 
+# Additional User-Agent
+additional_user_agent: ""
+
 # Valid log levels are "debug", "info", "warn", "error", and "fatal".
-log_level: 'warn'
+log_level: warn
+
+# SDK will use virtual host style for all API calls if enabled
+enable_virtual_host_style: false
 ```
 
 ## Change Log
 All notable changes to QingStor SDK for Ruby will be documented here.
+
+### [v2.5.0] - 2021-02-09
+
+### Added
+
+- config: Add env variable support (#52)
+- signer: Add support for anonymous API call (#53)
+- config: Add support for endpoint (#55)
+- config: Add support for enable_vhost_style (#56)
+
+### Changed
+
+- Request: Modify Metadata in header to apply rfc 02 (#49)
+- config: Refactor config check (#54)
 
 ### [v2.4.0] - 2021-01-05
 
@@ -274,6 +312,7 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 The Apache License (Version 2.0, January 2004).
 
 [compatible]: https://github.com/yunify/qingstor-sdk-ruby/tree/compatible
+[v2.5.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.4.0...v2.5.0
 [v2.4.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.3.0...v2.4.0
 [v2.3.0]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.3...v2.3.0
 [v2.2.3]: https://github.com/yunify/qingstor-sdk-ruby/compare/v2.2.2...v2.2.3

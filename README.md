@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/qingstor/qingstor-sdk-ruby/workflows/Unit%20Test/badge.svg?branch=master)](https://github.com/qingstor/qingstor-sdk-ruby/actions?query=workflow%3A%22Unit+Test%22)
 [![Gem Version](https://badge.fury.io/rb/qingstor-sdk.svg)](http://badge.fury.io/rb/qingstor-sdk)
-[![API Reference](http://img.shields.io/badge/api-reference-green.svg)](https://docs.qingcloud.com/qingstor/)
+[![API Reference](http://img.shields.io/badge/api-reference-green.svg)](https://docsv4.qingcloud.com/user_guide/storage/object_storage/)
 [![License](http://img.shields.io/badge/license-apache%20v2-blue.svg)](https://github.com/yunify/qingstor-sdk-ruby/blob/master/LICENSE)
 [![Join the chat](https://img.shields.io/badge/chat-online-blue?style=flat&logo=zulip)](https://qingstor.zulipchat.com/join/odapi42t7xhqc7v4gb2wfgjx/)
 
@@ -295,9 +295,9 @@ All notable changes to QingStor SDK for Ruby will be documented here.
 
 ## Reference Documentations
 
-- [QingStor Documentation](https://docs.qingcloud.com/qingstor/index.html)
-- [QingStor Guide](https://docs.qingcloud.com/qingstor/guide/index.html)
-- [QingStor APIs](https://docs.qingcloud.com/qingstor/api/index.html)
+- [QingStor Documentation](https://docsv4.qingcloud.com/user_guide/storage/object_storage/intro/product/)
+- [QingStor Guide](https://docsv4.qingcloud.com/user_guide/storage/object_storage/)
+- [QingStor APIs](https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/)
 
 ## Contributing
 

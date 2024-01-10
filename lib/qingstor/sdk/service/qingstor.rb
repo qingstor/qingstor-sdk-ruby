@@ -30,7 +30,7 @@ module QingStor
       end
 
       # list_buckets: Retrieve the bucket list.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/service/get.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/service/get/
       def list_buckets(limit: nil,
                        offset: nil, location: '')
         request = list_buckets_request limit: limit,

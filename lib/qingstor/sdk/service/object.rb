@@ -22,7 +22,7 @@ module QingStor
       attr_accessor :config, :properties
 
       # abort_multipart_upload: Abort multipart upload.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/abort_multipart_upload.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/multipart/abort/
       def abort_multipart_upload(object_key, upload_id: '')
         request = abort_multipart_upload_request object_key, upload_id: upload_id
         request.send
@@ -67,7 +67,7 @@ module QingStor
       public
 
       # append_object: Append the Object.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/append.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/append/
       def append_object(object_key, position: nil, content_length: nil,
                         content_md5: '',
                         content_type: '',
@@ -139,7 +139,7 @@ module QingStor
       public
 
       # complete_multipart_upload: Complete multipart upload.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/complete_multipart_upload.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/multipart/complete/
       def complete_multipart_upload(object_key, upload_id: '', etag: '',
                                     x_qs_encryption_customer_algorithm: '',
                                     x_qs_encryption_customer_key: '',
@@ -208,7 +208,7 @@ module QingStor
       public
 
       # delete_object: Delete the object.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/delete.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/basic_opt/delete/
       def delete_object(object_key)
         request = delete_object_request object_key
         request.send
@@ -248,7 +248,7 @@ module QingStor
       public
 
       # get_object: Retrieve the object.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/get.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/basic_opt/get/
       def get_object(object_key, response_cache_control: '',
                      response_content_disposition: '',
                      response_content_encoding: '',
@@ -341,7 +341,7 @@ module QingStor
       public
 
       # head_object: Check whether the object exists and available.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/head.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/basic_opt/head/
       def head_object(object_key, if_match: '',
                       if_modified_since: '',
                       if_none_match: '',
@@ -406,7 +406,7 @@ module QingStor
       public
 
       # image_process: Image process with the action on the object
-      # Documentation URL: https://docs.qingcloud.com/qingstor/data_process/image_process/index.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/image_process/
       def image_process(object_key, action: '',
                         response_cache_control: '',
                         response_content_disposition: '',
@@ -477,7 +477,7 @@ module QingStor
       public
 
       # initiate_multipart_upload: Initial multipart upload on the object.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/initiate_multipart_upload.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/multipart/initiate/
       def initiate_multipart_upload(object_key, content_type: '',
                                     x_qs_encryption_customer_algorithm: '',
                                     x_qs_encryption_customer_key: '',
@@ -549,7 +549,7 @@ module QingStor
       public
 
       # list_multipart: List object parts.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/list_multipart.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/multipart/list/
       def list_multipart(object_key, limit: nil,
                          part_number_marker: nil,
                          upload_id: '')
@@ -602,7 +602,7 @@ module QingStor
       public
 
       # options_object: Check whether the object accepts a origin with method and header.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/options.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/basic_opt/options_object/
       def options_object(object_key, access_control_request_headers: '',
                          access_control_request_method: '',
                          origin: '')
@@ -661,7 +661,7 @@ module QingStor
       public
 
       # put_object: Upload the object.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/put.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/basic_opt/put/
       def put_object(object_key, cache_control: '',
                      content_encoding: '',
                      content_length: nil,
@@ -815,7 +815,7 @@ module QingStor
       public
 
       # upload_multipart: Upload object multipart.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/object/multipart/upload_multipart.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/multipart/upload/
       def upload_multipart(object_key, part_number: nil,
                            upload_id: '', content_length: nil,
                            content_md5: '',

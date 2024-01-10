@@ -28,7 +28,7 @@ module QingStor
       end
 
       # delete_bucket: Delete a bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/delete.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/basic_opt/delete/
       def delete
         request = delete_request
         request.send
@@ -67,7 +67,7 @@ module QingStor
       public
 
       # delete_bucket_cname: Delete bucket CNAME setting of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cname/delete_cname.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/cname/delete_cname/
       def delete_cname(domain: '')
         request = delete_cname_request domain: domain
         request.send
@@ -111,7 +111,7 @@ module QingStor
       public
 
       # delete_bucket_cors: Delete CORS information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cors/delete_cors.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/cors/delete_cors/
       def delete_cors
         request = delete_cors_request
         request.send
@@ -150,7 +150,7 @@ module QingStor
       public
 
       # delete_bucket_external_mirror: Delete external mirror of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/external_mirror/delete_external_mirror.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/external_mirror/delete_external_mirror/
       def delete_external_mirror
         request = delete_external_mirror_request
         request.send
@@ -189,7 +189,7 @@ module QingStor
       public
 
       # delete_bucket_lifecycle: Delete Lifecycle information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/lifecycle/delete_lifecycle.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/lifecycle/delete_lifecycle/
       def delete_lifecycle
         request = delete_lifecycle_request
         request.send
@@ -228,7 +228,7 @@ module QingStor
       public
 
       # delete_bucket_logging: Delete bucket logging setting of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/logging/delete_logging.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/logging/delete_logging/
       def delete_logging
         request = delete_logging_request
         request.send
@@ -267,7 +267,7 @@ module QingStor
       public
 
       # delete_bucket_notification: Delete Notification information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/notification/delete_notification.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/notification/delete_notification/
       def delete_notification
         request = delete_notification_request
         request.send
@@ -306,7 +306,7 @@ module QingStor
       public
 
       # delete_bucket_policy: Delete policy information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/policy/delete_policy.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/policy/delete_policy/
       def delete_policy
         request = delete_policy_request
         request.send
@@ -345,7 +345,7 @@ module QingStor
       public
 
       # delete_bucket_replication: Delete Replication information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/replication/delete_replication.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/replication/delete_replication/
       def delete_replication
         request = delete_replication_request
         request.send
@@ -384,7 +384,7 @@ module QingStor
       public
 
       # delete_multiple_objects: Delete multiple objects from the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/delete_multiple.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/basic_opt/delete_multiple/
       def delete_multiple_objects(objects: [],
                                   quiet: nil)
         request = delete_multiple_objects_request objects: objects,
@@ -435,7 +435,7 @@ module QingStor
       public
 
       # get_bucket_acl: Get ACL information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/get_acl.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/acl/get_acl/
       def get_acl
         request = get_acl_request
         request.send
@@ -474,7 +474,7 @@ module QingStor
       public
 
       # get_bucket_cname: Get bucket CNAME setting of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cname/get_cname.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/cname/get_cname/
       def get_cname(type: '')
         request = get_cname_request type: type
         request.send
@@ -525,7 +525,7 @@ module QingStor
       public
 
       # get_bucket_cors: Get CORS information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cors/get_cors.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/cors/get_cors/
       def get_cors
         request = get_cors_request
         request.send
@@ -564,7 +564,7 @@ module QingStor
       public
 
       # get_bucket_external_mirror: Get external mirror of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/external_mirror/get_external_mirror.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/external_mirror/get_external_mirror/
       def get_external_mirror
         request = get_external_mirror_request
         request.send
@@ -603,7 +603,7 @@ module QingStor
       public
 
       # get_bucket_lifecycle: Get Lifecycle information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/lifecycle/get_lifecycle.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/lifecycle/get_lifecycle/
       def get_lifecycle
         request = get_lifecycle_request
         request.send
@@ -642,7 +642,7 @@ module QingStor
       public
 
       # get_bucket_logging: Get bucket logging setting of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/logging/get_logging.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/logging/get_logging/
       def get_logging
         request = get_logging_request
         request.send
@@ -681,7 +681,7 @@ module QingStor
       public
 
       # get_bucket_notification: Get Notification information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/notification/get_notification.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/notification/get_notification/
       def get_notification
         request = get_notification_request
         request.send
@@ -720,7 +720,7 @@ module QingStor
       public
 
       # get_bucket_policy: Get policy information of the bucket.
-      # Documentation URL: https://https://docs.qingcloud.com/qingstor/api/bucket/policy/get_policy.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/policy/get_policy/
       def get_policy
         request = get_policy_request
         request.send
@@ -759,7 +759,7 @@ module QingStor
       public
 
       # get_bucket_replication: Get Replication information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/replication/get_replication.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/replication/get_replication/
       def get_replication
         request = get_replication_request
         request.send
@@ -798,7 +798,7 @@ module QingStor
       public
 
       # get_bucket_statistics: Get statistics information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/get_stats.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/basic_opt/get_stats/
       def get_statistics
         request = get_statistics_request
         request.send
@@ -837,7 +837,7 @@ module QingStor
       public
 
       # head_bucket: Check whether the bucket exists and available.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/head.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/basic_opt/head/
       def head
         request = head_request
         request.send
@@ -876,7 +876,7 @@ module QingStor
       public
 
       # list_multipart_uploads: List multipart uploads in the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/list_multipart_uploads.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/object/multipart/list/
       def list_multipart_uploads(delimiter: '',
                                  key_marker: '',
                                  limit: nil,
@@ -932,7 +932,7 @@ module QingStor
       public
 
       # list_objects: Retrieve the object list in a bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/get.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/basic_opt/get/
       def list_objects(delimiter: '',
                        limit: nil,
                        marker: '',
@@ -984,7 +984,7 @@ module QingStor
       public
 
       # put_bucket: Create a new bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/put.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/basic_opt/put/
       def put
         request = put_request
         request.send
@@ -1023,7 +1023,7 @@ module QingStor
       public
 
       # put_bucket_acl: Set ACL information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/put_acl.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/acl/put_acl/
       def put_acl(acl: [])
         request = put_acl_request acl: acl
         request.send
@@ -1103,7 +1103,7 @@ module QingStor
       public
 
       # put_bucket_cname: Set bucket CNAME of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cname/put_cname.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/cname/put_cname/
       def put_cname(domain: '',
                     type: '')
         request = put_cname_request domain: domain,
@@ -1162,7 +1162,7 @@ module QingStor
       public
 
       # put_bucket_cors: Set CORS information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/cors/put_cors.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/cors/put_cors/
       def put_cors(cors_rules: [])
         request = put_cors_request cors_rules: cors_rules
         request.send
@@ -1216,7 +1216,7 @@ module QingStor
       public
 
       # put_bucket_external_mirror: Set external mirror of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/external_mirror/put_external_mirror.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/external_mirror/put_external_mirror/
       def put_external_mirror(source_site: '')
         request = put_external_mirror_request source_site: source_site
         request.send
@@ -1260,7 +1260,7 @@ module QingStor
       public
 
       # put_bucket_lifecycle: Set Lifecycle information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/lifecycle/put_lifecycle.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/lifecycle/put_lifecycle/
       def put_lifecycle(rule: [])
         request = put_lifecycle_request rule: rule
         request.send
@@ -1355,7 +1355,7 @@ module QingStor
       public
 
       # put_bucket_logging: Set bucket logging of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/logging/put_logging.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/logging/put_logging/
       def put_logging(target_bucket: '',
                       target_prefix: '')
         request = put_logging_request target_bucket: target_bucket,
@@ -1407,7 +1407,7 @@ module QingStor
       public
 
       # put_bucket_notification: Set Notification information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/notification/put_notification.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/notification/put_notification/
       def put_notification(notifications: [])
         request = put_notification_request notifications: notifications
         request.send
@@ -1484,7 +1484,7 @@ module QingStor
       public
 
       # put_bucket_policy: Set policy information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/policy/put_policy.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/policy/put_policy/
       def put_policy(statement: [])
         request = put_policy_request statement: statement
         request.send
@@ -1581,7 +1581,7 @@ module QingStor
       public
 
       # put_bucket_replication: Set Replication information of the bucket.
-      # Documentation URL: https://docs.qingcloud.com/qingstor/api/bucket/replication/put_replication.html
+      # Documentation URL: https://docsv4.qingcloud.com/user_guide/storage/object_storage/api/bucket/replication/put_replication/
       def put_replication(rules: [])
         request = put_replication_request rules: rules
         request.send
